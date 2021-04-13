@@ -23,9 +23,9 @@ public class ProductController {
 
     @GetMapping("/get")
     public List<Product> getAllProducts(){
-       // ProductDAO productDB = new ProductDAO();
         return productService.getProductDB();
     }
+
 
     @PostMapping("/add")
     public void addProduct(@RequestBody Product product){
