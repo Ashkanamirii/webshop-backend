@@ -20,7 +20,7 @@ public class ProductService {
     private ProductDAO productDAO;
 
 
-    public List<Product> getProductDB() {
+    public List<Product> getAllProducts() {
         return productDAO.findAll();
     }
 

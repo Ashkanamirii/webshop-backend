@@ -25,19 +25,19 @@ public class UserDAO {
 
     public List<User> getAllUsers(){
         List<User> list = new ArrayList<>();
-        list.add(new User(1,"hans.erik@gmail.com","123","Hans","Erik"
+        list.add(new User(1L,"hans.erik@gmail.com","123","Hans","Erik"
                 ,"+46700000000",addresses.get(0),0,false));
-        list.add(new User(2,"Inga.Månsson@outlook.com","123","Inga","Månsson"
+        list.add(new User(2L,"Inga.Månsson@outlook.com","123","Inga","Månsson"
                 ,"+46732000770",addresses.get(1),0,false));
-        list.add(new User(3,"Ellen.Berggren@outlook.com","123","Ellen","Berggren"
+        list.add(new User(3L,"Ellen.Berggren@outlook.com","123","Ellen","Berggren"
                 ,"+46732000770",addresses.get(2),0,false));
-        list.add(new User(4, "Ebba.Berggren@outlook.com","123","Ebba","Berggren"
+        list.add(new User(4L, "Ebba.Berggren@outlook.com","123","Ebba","Berggren"
                 ,"+46732000770",addresses.get(3),0,false));
-        list.add(new User(5,"Lovisa.Nyberg@outlook.com","123","Lovisa","Nyberg"
+        list.add(new User(5L,"Lovisa.Nyberg@outlook.com","123","Lovisa","Nyberg"
                 ,"+46732000770",addresses.get(4),0,false));
-        list.add(new User(6,"Matilda.Johnsson@outlook.com","123","Matilda","Johnsson"
+        list.add(new User(6L,"Matilda.Johnsson@outlook.com","123","Matilda","Johnsson"
                 ,"+46732000770",addresses.get(5),0,false));
-        list.add(new User(7,"Hakim@livs.com","123","Hakim","Hakim"
+        list.add(new User(7L,"Hakim@livs.com","123","Hakim","Hakim"
                 ,"+46700000000",addresses.get(0),1,false));
         return list;
     }

@@ -8,25 +8,25 @@ package com.nackademin.webshopbackend.models;
  */
 public class Address {
 
-    private int id;
+    private Long id;
     private String street;
     private String zipcode;
     private String city;
 
     public Address(){}
 
-    public Address(int id, String street, String zipcode, String city) {
+    public Address(Long id, String street, String zipcode, String city) {
         this.id = id;
         this.street = street;
         this.zipcode = zipcode;
         this.city = city;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

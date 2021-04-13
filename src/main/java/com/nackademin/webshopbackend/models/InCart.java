@@ -8,23 +8,23 @@ package com.nackademin.webshopbackend.models;
  */
 public class InCart {
 
-    private int id;
+    private Long id;
     private Product productId;
     private User customerId;
 
     public InCart(){}
 
-    public InCart(int id, int quantity, Product productId, User customerId) {
+    public InCart(Long id, Product productId, User customerId) {
         this.id = id;
         this.productId = productId;
         this.customerId = customerId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

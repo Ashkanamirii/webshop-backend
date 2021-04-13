@@ -20,7 +20,7 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
 
     private String name;

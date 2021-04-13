@@ -26,10 +26,10 @@ public class OrderDAO {
 
     public List<Order> getAllOrders(){
         List<Order> list = new ArrayList<>();
-        list.add(new Order(1, customers.get(0),1,LocalDate.parse("2014-03-12"),"Beställd"));
-        list.add(new Order(2, customers.get(1),2,LocalDate.parse("2018-01-01"), "Påbörjad"));
-        list.add(new Order(3, customers.get(2),3,LocalDate.parse("2020-05-30"), "Påbörjad"));
-        list.add(new Order(4, customers.get(3),4,LocalDate.parse("2020-02-20"), "Levererad"));
+        list.add(new Order(1L, customers.get(0),1,LocalDate.parse("2014-03-12"),"Beställd"));
+        list.add(new Order(2L, customers.get(1),2,LocalDate.parse("2018-01-01"), "Påbörjad"));
+        list.add(new Order(3L, customers.get(2),3,LocalDate.parse("2020-05-30"), "Påbörjad"));
+        list.add(new Order(4L, customers.get(3),4,LocalDate.parse("2020-02-20"), "Levererad"));
         return list;
     }
 }

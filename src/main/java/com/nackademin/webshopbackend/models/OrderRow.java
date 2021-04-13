@@ -8,25 +8,25 @@ package com.nackademin.webshopbackend.models;
  */
 public class OrderRow {
 
-    private int id;
+    private Long id;
     private Product productId;
     private Order orderId;
     private int quantity;
 
     public OrderRow(){}
 
-    public OrderRow(int id, Product productId, Order orderId, int quantity) {
+    public OrderRow(Long id, Product productId, Order orderId, int quantity) {
         this.id = id;
         this.productId = productId;
         this.orderId = orderId;
         this.quantity = quantity;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

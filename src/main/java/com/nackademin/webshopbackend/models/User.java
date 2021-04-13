@@ -8,7 +8,7 @@ package com.nackademin.webshopbackend.models;
  */
 public class User {
 
-    private int id;
+    private Long id;
     private String email;
     private String password;
     private String firstname;
@@ -20,7 +20,7 @@ public class User {
 
     public User(){}
 
-    public User(int id, String email, String password, String firstname, String lastname, String number, Address address, int accountType, boolean status) {
+    public User(Long id, String email, String password, String firstname, String lastname, String number, Address address, int accountType, boolean status) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -32,12 +32,16 @@ public class User {
         this.status = status;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAccountType() {
+        return accountType;
     }
 
     public String getEmail() {

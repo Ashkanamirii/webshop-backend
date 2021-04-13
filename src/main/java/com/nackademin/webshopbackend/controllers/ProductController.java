@@ -23,7 +23,7 @@ public class ProductController {
 
     @GetMapping("/get")
     public List<Product> getAllProducts(){
-        return productService.getProductDB();
+        return productService.getAllProducts();
     }
 
 
@@ -37,7 +37,7 @@ public class ProductController {
         productService.addProductList(products);
     }
 
-    @DeleteMapping("/remove")
+    @DeleteMapping("/removeAll")
     public void deleteProductList(){
         productService.removeProducts();
     }

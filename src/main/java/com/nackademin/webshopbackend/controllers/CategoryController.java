@@ -23,7 +23,6 @@ public class CategoryController {
     private CategoryService categoryService;
     @GetMapping("/get")
     public List<Category> getAllCategory(){
-        // ProductDAO productDB = new ProductDAO();
         return categoryService.getAllCategories();
     }
 
@@ -37,7 +36,7 @@ public class CategoryController {
         categoryService.addCategoryList(categories);
     }
 
-    @DeleteMapping("/remove")
+    @DeleteMapping("/removeAll")
     public void deleteAllCategories(){
         categoryService.removeCategory();
     }
