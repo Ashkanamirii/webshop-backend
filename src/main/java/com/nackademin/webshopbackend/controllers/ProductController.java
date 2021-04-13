@@ -1,7 +1,7 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.example.webshopbackend.models.Product;
-import com.example.webshopbackend.services.ProductService;
+import com.nackademin.webshopbackend.models.Product;
+import com.nackademin.webshopbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

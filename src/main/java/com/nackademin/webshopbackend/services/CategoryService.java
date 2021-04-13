@@ -1,7 +1,7 @@
 package com.nackademin.webshopbackend.services;
 
-import com.example.webshopbackend.models.Category;
-import com.example.webshopbackend.repos.CategoryDAO;
+import com.nackademin.webshopbackend.models.Category;
+import com.nackademin.webshopbackend.repos.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

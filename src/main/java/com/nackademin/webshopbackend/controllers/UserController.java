@@ -1,7 +1,7 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.example.webshopbackend.models.User;
-import com.example.webshopbackend.repos.UserDAO;
+import com.nackademin.webshopbackend.models.User;
+import com.nackademin.webshopbackend.repos.UserDAO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

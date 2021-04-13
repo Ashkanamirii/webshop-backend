@@ -1,7 +1,7 @@
 package com.nackademin.webshopbackend.repos;
 
-import com.example.webshopbackend.models.Order;
-import com.example.webshopbackend.models.User;
+import com.nackademin.webshopbackend.models.Order;
+import com.nackademin.webshopbackend.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

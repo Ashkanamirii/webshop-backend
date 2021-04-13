@@ -1,9 +1,9 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.example.webshopbackend.models.Order;
-import com.example.webshopbackend.models.OrderRow;
-import com.example.webshopbackend.repos.OrderDAO;
-import com.example.webshopbackend.repos.OrderRowDAO;
+import com.nackademin.webshopbackend.models.Order;
+import com.nackademin.webshopbackend.models.OrderRow;
+import com.nackademin.webshopbackend.repos.OrderDAO;
+import com.nackademin.webshopbackend.repos.OrderRowDAO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

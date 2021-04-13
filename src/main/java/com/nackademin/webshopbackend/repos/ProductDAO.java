@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.repos;
 
-import com.example.webshopbackend.models.Product;
+import com.nackademin.webshopbackend.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
