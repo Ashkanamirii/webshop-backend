@@ -42,4 +42,22 @@ public class ProductController {
         productService.removeProducts();
     }
 
+
+//    @PostMapping("/book/upsert")
+//    public String upsertBook(@RequestBody Product b){
+//        int indexToUpdate = -1;
+//
+//        for(int i =0; i< mybooks.size(); i++){
+//            if(mybooks.get(i).getId() == b.getId()){
+//                indexToUpdate = i;
+//            }
+//        }
+//        if(indexToUpdate == -1){
+//            mybooks.add(b);
+//        }else {
+//            mybooks.set(indexToUpdate,b);
+//        }
+//        return "book update";
+//    }
+
 }
