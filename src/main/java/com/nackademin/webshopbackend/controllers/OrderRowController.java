@@ -2,11 +2,10 @@ package com.nackademin.webshopbackend.controllers;
 
 
 import com.nackademin.webshopbackend.models.OrderRow;
+import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +26,16 @@ public class OrderRowController {
     @GetMapping("/get")
     public List<OrderRow> getAllOrderRow(){
         return orderRowService.getAllOrderRow();
+    }
+
+
+    @PostMapping("/add")
+    public void addOrderRow(@RequestBody OrderRow orderRow){
+        orderRowService.addOrderRow(orderRow);
+    }
+
+    @PostMapping("/add/list")
+    public void addOrderRowList(@RequestBody List<OrderRow> orderRows){
+        orderRowService.addOrderRowList(orderRows);
     }
 }
