@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.nackademin.webshopbackend.models.Address;
+
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import org.springframework.beans.factory.annotation.Autowired;

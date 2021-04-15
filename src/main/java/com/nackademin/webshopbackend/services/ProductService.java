@@ -4,7 +4,6 @@ import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.repos.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

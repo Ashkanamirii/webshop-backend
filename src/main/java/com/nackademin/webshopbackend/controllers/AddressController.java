@@ -1,10 +1,7 @@
 package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.models.Address;
-import com.nackademin.webshopbackend.models.Category;
-import com.nackademin.webshopbackend.models.User;
 import com.nackademin.webshopbackend.services.AddressService;
-import com.nackademin.webshopbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,6 @@
 package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Address;
-import com.nackademin.webshopbackend.models.User;
 import com.nackademin.webshopbackend.repos.AddressDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
