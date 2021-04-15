@@ -13,13 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryDAO extends JpaRepository<Category , Integer> {
 
-/*    public List<Category> getAllCategories(){
-        List<Category> list = new ArrayList<>();
-        list.add(new Category(1,"Skafferi"));
-        list.add(new Category(2,"Snacks-godis"));
-        list.add(new Category(3,"Hem-städ"));
-        return list;
-    }*/
-
 }
 

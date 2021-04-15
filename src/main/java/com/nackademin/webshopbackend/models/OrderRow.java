@@ -10,8 +10,21 @@ public class OrderRow {
 
     private Long id;
     private Product productId;
-    private Order orderId;
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="orderId", referencedColumnName="id")
+    @JsonBackReference
+    private Orders orderId;
+
     private int quantity;
+
+    private Status status;
+
+    private enum Status{
+        Confirmed,
+        Canceled,
+        Paying,
+    };
 
     public OrderRow(){}
 

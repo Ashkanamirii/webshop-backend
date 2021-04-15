@@ -7,41 +7,35 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 
 /**
  * Created by Tomas Dahlander <br>
  * Date: 2021-04-09 <br>
- * Time: 15:32 <br>
+ * Time: 15:11 <br>
  * Project: webshop-back-end <br>
  */
-@Entity(name="User")
-@Table(name="user")
+@Entity(name="Orders")
+@Table(name="orders")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
-public class User {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String email;
-    private String password;
-    private String firstname;
-    private String lastname;
-    private String number;
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="addressId", referencedColumnName="id")
+    @JoinColumn(name="userId", referencedColumnName="id")
     @JsonBackReference
-    private Address address;
+    private User userId;
 
-    private int accountType;
-    private boolean status;
+    private int orderNumber;
+    private LocalDate date;
+    private String status;
 
-    public User(){}
-
-
-
+    public Orders(){}
 }
+

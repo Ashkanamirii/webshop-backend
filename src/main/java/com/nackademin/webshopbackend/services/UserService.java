@@ -19,7 +19,8 @@ public class UserService {
 
     @Autowired
     private UserDAO userDAO;
-    public List<User> getUserDAO() {
-        return userDAO.getAllUsers();
+
+    public List<User> getAllUsers() {
+        return userDAO.findAll();
     }
 }

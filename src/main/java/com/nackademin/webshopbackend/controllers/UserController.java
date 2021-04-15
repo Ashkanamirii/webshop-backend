@@ -2,6 +2,8 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.models.User;
 import com.nackademin.webshopbackend.repos.UserDAO;
+import com.nackademin.webshopbackend.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +22,11 @@ import java.util.List;
 @CrossOrigin
 public class UserController {
 
-    @GetMapping("/getusers")
+    @Autowired
+    UserService userService;
+
+    @GetMapping("/getUsers")
     public List<User> getAllUsers(){
-        UserDAO customerDB = new UserDAO();
-        return customerDB.getAllUsers();
+        return userService.getAllUsers();
     }
 }

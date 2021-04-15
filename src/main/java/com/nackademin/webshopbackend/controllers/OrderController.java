@@ -4,6 +4,9 @@ import com.nackademin.webshopbackend.models.Order;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.OrderRowDAO;
+import com.nackademin.webshopbackend.services.OrderService;
+import com.nackademin.webshopbackend.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,18 +22,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/order")
-@CrossOrigin
 public class OrderController {
+    @Autowired
+    private OrderService orderService;
 
-    @GetMapping("/getorders")
-    public List<Order> getAllOrders(){
-        OrderDAO orderDB = new OrderDAO();
-        return orderDB.getAllOrders();
+    @GetMapping("/get")
+    public List<Orders> getAllOrders(){
+        return orderService.getAllOrders();
     }
 
-    @GetMapping("/getorderrows")
-    public List<OrderRow> getAllOrderRows(){
-        OrderRowDAO orderRowDB = new OrderRowDAO();
-        return orderRowDB.getAllOrderRows();
-    }
+//    @GetMapping("/getorderrows")
+//    public List<OrderRow> getAllOrderRows(){
+//        OrderRowDAO orderRowDB = new OrderRowDAO();
+//        return orderRowDB.getAllOrderRows();
+//    }
 }

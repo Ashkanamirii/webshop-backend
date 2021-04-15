@@ -2,6 +2,7 @@ package com.nackademin.webshopbackend.repos;
 
 import com.nackademin.webshopbackend.models.Address;
 import com.nackademin.webshopbackend.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,31 +15,5 @@ import java.util.List;
  * Project: webshop-back-end <br>
  */
 @Repository
-public class UserDAO {
-
-    private List<Address> addresses;
-
-    public UserDAO(){
-        AddressDAO cityDB = new AddressDAO();
-        addresses = cityDB.getAllAddresses();
-    }
-
-    public List<User> getAllUsers(){
-        List<User> list = new ArrayList<>();
-        list.add(new User(1L,"hans.erik@gmail.com","123","Hans","Erik"
-                ,"+46700000000",addresses.get(0),0,false));
-        list.add(new User(2L,"Inga.Månsson@outlook.com","123","Inga","Månsson"
-                ,"+46732000770",addresses.get(1),0,false));
-        list.add(new User(3L,"Ellen.Berggren@outlook.com","123","Ellen","Berggren"
-                ,"+46732000770",addresses.get(2),0,false));
-        list.add(new User(4L, "Ebba.Berggren@outlook.com","123","Ebba","Berggren"
-                ,"+46732000770",addresses.get(3),0,false));
-        list.add(new User(5L,"Lovisa.Nyberg@outlook.com","123","Lovisa","Nyberg"
-                ,"+46732000770",addresses.get(4),0,false));
-        list.add(new User(6L,"Matilda.Johnsson@outlook.com","123","Matilda","Johnsson"
-                ,"+46732000770",addresses.get(5),0,false));
-        list.add(new User(7L,"Hakim@livs.com","123","Hakim","Hakim"
-                ,"+46700000000",addresses.get(0),1,false));
-        return list;
-    }
+public interface UserDAO extends JpaRepository<User,Long> {
 }
