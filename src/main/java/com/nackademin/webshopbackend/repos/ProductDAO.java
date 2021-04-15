@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductDAO extends JpaRepository<Product, Long> {
-    //public Product findByTitle(String title);
+    //public Product findByNameAnd(String title);
 }
