@@ -1,6 +1,5 @@
 package com.nackademin.webshopbackend.repos;
 
-import com.nackademin.webshopbackend.models.Order;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

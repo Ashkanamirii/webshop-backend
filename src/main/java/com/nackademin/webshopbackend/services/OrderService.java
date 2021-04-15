@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.services;
 
-import com.nackademin.webshopbackend.models.Order;
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

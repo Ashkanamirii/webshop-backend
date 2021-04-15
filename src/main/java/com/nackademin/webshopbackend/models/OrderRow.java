@@ -1,14 +1,35 @@
 package com.nackademin.webshopbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.List;
+
 /**
  * Created by Tomas Dahlander <br>
  * Date: 2021-04-09 <br>
  * Time: 15:44 <br>
  * Project: webshop-back-end <br>
  */
+@Entity(name="OrderRow")
+@Table(name="orderRow")
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 public class OrderRow {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="productId", referencedColumnName="id")
+    @JsonBackReference
     private Product productId;
 
     @ManyToOne(cascade=CascadeType.ALL)
@@ -28,42 +49,4 @@ public class OrderRow {
 
     public OrderRow(){}
 
-    public OrderRow(Long id, Product productId, Order orderId, int quantity) {
-        this.id = id;
-        this.productId = productId;
-        this.orderId = orderId;
-        this.quantity = quantity;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Product getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Product productId) {
-        this.productId = productId;
-    }
-
-    public Order getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Order orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

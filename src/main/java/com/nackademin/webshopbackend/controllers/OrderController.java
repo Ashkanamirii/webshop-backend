@@ -1,6 +1,7 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.nackademin.webshopbackend.models.Order;
+import com.nackademin.webshopbackend.models.Category;
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.OrderRowDAO;

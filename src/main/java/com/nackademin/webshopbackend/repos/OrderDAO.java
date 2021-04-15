@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.repos;
 
-import com.nackademin.webshopbackend.models.Order;
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
