@@ -22,4 +22,12 @@ public class OrderService {
     public List<Orders> getAllOrders() {
         return orderDAO.findAll();
     }
+
+    public void addOrder(Orders order) {
+        orderDAO.save(order);
+    }
+
+    public void addOrderList(List<Orders> orders) {
+        orderDAO.saveAll(orders);
+    }
 }

@@ -7,10 +7,7 @@ import com.nackademin.webshopbackend.repos.OrderRowDAO;
 import com.nackademin.webshopbackend.services.OrderService;
 import com.nackademin.webshopbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,9 +28,13 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-//    @GetMapping("/getorderrows")
-//    public List<OrderRow> getAllOrderRows(){
-//        OrderRowDAO orderRowDB = new OrderRowDAO();
-//        return orderRowDB.getAllOrderRows();
-//    }
+    @PostMapping("/add")
+    public void addOrder(@RequestBody Orders order){
+        orderService.addOrder(order);
+    }
+
+    @PostMapping("/add/list")
+    public void addOrderList(@RequestBody List<Orders> orders){
+        orderService.addOrderList(orders);
+    }
 }

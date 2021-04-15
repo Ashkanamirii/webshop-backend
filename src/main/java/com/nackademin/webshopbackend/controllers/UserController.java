@@ -1,13 +1,11 @@
 package com.nackademin.webshopbackend.controllers;
 
+import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.models.User;
 import com.nackademin.webshopbackend.repos.UserDAO;
 import com.nackademin.webshopbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +17,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/user")
-@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -28,5 +25,16 @@ public class UserController {
     @GetMapping("/getUsers")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+
+    @PostMapping("/add")
+    public void addUser(@RequestBody User user){
+        userService.addProduct(user);
+    }
+
+    @PostMapping("/add/list")
+    public void addUsers(@RequestBody List<User> users){
+        userService.addProductList(users);
     }
 }

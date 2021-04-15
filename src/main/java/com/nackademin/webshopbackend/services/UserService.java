@@ -23,4 +23,12 @@ public class UserService {
     public List<User> getAllUsers() {
         return userDAO.findAll();
     }
+
+    public void addProduct(User user) {
+        userDAO.save(user);
+    }
+
+    public void addProductList(List<User> users) {
+        userDAO.saveAll(users);
+    }
 }

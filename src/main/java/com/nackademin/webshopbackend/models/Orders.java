@@ -34,7 +34,13 @@ public class Orders {
 
     private int orderNumber;
     private LocalDate date;
-    private String status;
+    private Status status;
+
+    private enum Status{
+        PENDING,
+        PRINTED,
+        DELIVERED,
+    };
 
     public Orders(){}
 }

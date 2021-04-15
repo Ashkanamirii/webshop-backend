@@ -21,9 +21,9 @@ public class OrderRow {
     private Status status;
 
     private enum Status{
-        Confirmed,
-        Canceled,
-        Paying,
+        CONFIRMED,
+        CANCELED,
+        PAYING,
     };
 
     public OrderRow(){}
