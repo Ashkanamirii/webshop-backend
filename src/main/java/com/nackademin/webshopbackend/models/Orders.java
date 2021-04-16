@@ -32,7 +32,7 @@ public class Orders {
     private User userId;
 
     private int orderNumber;
-    private LocalDate date;
+    private String date;
     private Status status;
 
     private enum Status{
@@ -42,5 +42,12 @@ public class Orders {
     };
 
     public Orders(){}
+
+    public Orders(User userId, int orderNumber, String date, Status status) {
+        this.userId = userId;
+        this.orderNumber = orderNumber;
+        this.date = date;
+        this.status = status;
+    }
 }
 

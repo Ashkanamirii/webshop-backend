@@ -28,11 +28,13 @@ public class UserController {
 
     @PostMapping("/add")
     public void addUser(@RequestBody User user){
+
         userService.addProduct(user);
     }
 
     @PostMapping("/add/list")
     public void addUsers(@RequestBody List<User> users){
+
         userService.addProductList(users);
     }
-}
+   }

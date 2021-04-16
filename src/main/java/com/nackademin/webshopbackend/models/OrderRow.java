@@ -48,4 +48,10 @@ public class OrderRow {
 
     public OrderRow(){}
 
+    public OrderRow(Product productId, Orders orderId, int quantity, Status status) {
+        this.productId = productId;
+        this.orderId = orderId;
+        this.quantity = quantity;
+        this.status = status;
+    }
 }

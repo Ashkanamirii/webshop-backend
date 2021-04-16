@@ -42,6 +42,14 @@ public class User {
 
     public User(){}
 
-
-
+    public User(String email, String password, String firstname, String lastname, String number, Address address, int accountType, boolean status) {
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.number = number;
+        this.address = address;
+        this.accountType = accountType;
+        this.status = status;
+    }
 }

@@ -45,7 +45,17 @@ public class Product {
     public Product(){}
 
 
-
+    public Product(String title, String description, double price, String unit, String brand, String image, int quantity, boolean isFeatured, List<Category> category) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.unit = unit;
+        this.brand = brand;
+        this.image = image;
+        this.quantity = quantity;
+        this.isFeatured = isFeatured;
+        this.category = category;
+    }
 }
 
 
