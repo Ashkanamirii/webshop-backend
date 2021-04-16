@@ -24,6 +24,10 @@ public class UserService {
         return userDAO.findAll();
     }
 
+    public User getUserById(Long id) {
+        return userDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
+    }
+
     public void addProduct(User user) {
         userDAO.save(user);
     }
@@ -39,4 +43,6 @@ public class UserService {
     public void removeUsers(){
         userDAO.deleteAllInBatch();
     }
+
+
 }

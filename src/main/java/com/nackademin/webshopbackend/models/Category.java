@@ -13,7 +13,7 @@ import javax.persistence.*;
  * Project: webshop-back-end <br>
  */
 @Entity
-//@Table(name = "category")
+@Table(name = "category")
 @Getter
 @Setter
 @AllArgsConstructor

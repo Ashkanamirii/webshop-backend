@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.controllers;
 
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.User;
 import com.nackademin.webshopbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class UserController {
     @GetMapping("/get")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/get/id")
+    public User getUserById(@RequestParam Long id) {
+        return userService.getUserById(id);
     }
 
     @PostMapping("/add")

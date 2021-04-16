@@ -23,6 +23,10 @@ public class OrderService {
         return orderDAO.findAll();
     }
 
+    public Orders getOrderById(Long id) {
+        return orderDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
+    }
+
     public void addOrder(Orders order) {
         orderDAO.save(order);
     }
@@ -34,4 +38,9 @@ public class OrderService {
     public void removeOrderById(Long id) {
         orderDAO.deleteById(id);
     }
+
+    public void removeAllOrders(){
+        orderDAO.deleteAllInBatch();
+    }
+
 }

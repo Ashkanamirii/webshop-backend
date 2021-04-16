@@ -31,4 +31,16 @@ public class OrderRowService {
     public void addOrderRowList(List<OrderRow> orderRows) {
         orderRowDAO.saveAll(orderRows);
     }
+
+    public void removeOrderRows() {
+        orderRowDAO.deleteAllInBatch();
+    }
+
+    public void removeOrderRowsById(Long id) {
+        orderRowDAO.deleteById(id);
+    }
+
+    public void removeOrderRowsByOrderId(Long id) {
+        orderRowDAO.deleteByOrderId(id);
+    }
 }

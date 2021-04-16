@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.controllers;
 
+import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class OrderController {
     @GetMapping("/get")
     public List<Orders> getAllOrders(){
         return orderService.getAllOrders();
+    }
+
+    @GetMapping("/get/id")
+    public Orders getOrdersById(@RequestParam Long id) {
+        return orderService.getOrderById(id);
     }
 
     @PostMapping("/add")

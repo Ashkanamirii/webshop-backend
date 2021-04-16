@@ -25,6 +25,10 @@ public class CategoryService {
         return categoryDAO.findAll();
     }
 
+    public Category getCategoryById(Long id) {
+        return categoryDAO.findById(Math.toIntExact(id)).orElse(null); // Makes it possible to return Category instead of Optional
+    }
+
     public void addCategory(Category category) {
         categoryDAO.save(category);
     }
@@ -37,7 +41,9 @@ public class CategoryService {
         categoryDAO.deleteAllInBatch();
     }
 
-//    public void removeCategoryById(Long id) {
-//        categoryDAO.deleteById(id);
-//    }
+    public void removeCategoryById(Long id) {
+        categoryDAO.deleteById(Math.toIntExact(id));
+    }
+
+
 }

@@ -38,4 +38,19 @@ public class OrderRowController {
     public void addOrderRowList(@RequestBody List<OrderRow> orderRows){
         orderRowService.addOrderRowList(orderRows);
     }
+
+    @PostMapping("/delete/id")
+    public void deleteOrderRowById(Long id){
+        orderRowService.removeOrderRowsById(id);
+    }
+
+    @PostMapping("/delete/orderid")
+    public void deleteOrderRowsByOrderId(Long id){
+        orderRowService.removeOrderRowsByOrderId(id);
+    }
+
+    @PostMapping("/delete/all")
+    public void deleteOrderRowList(){
+        orderRowService.removeOrderRows();
+    }
 }
