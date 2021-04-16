@@ -14,7 +14,7 @@ import javax.persistence.*;
  * Project: webshop-back-end <br>
  */
 @Entity(name="Address")
-@Table(name="address")
+//@Table(name="address")
 @Getter
 @Setter
 @ToString

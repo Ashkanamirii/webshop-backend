@@ -15,7 +15,7 @@ import java.time.LocalDate;
  * Project: webshop-back-end <br>
  */
 @Entity(name="Orders")
-@Table(name="orders")
+//@Table(name="orders")
 @Getter
 @Setter
 @ToString

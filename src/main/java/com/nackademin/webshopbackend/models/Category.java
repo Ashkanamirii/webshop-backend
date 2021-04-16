@@ -13,7 +13,7 @@ import javax.persistence.*;
  * Project: webshop-back-end <br>
  */
 @Entity
-@Table(name = "category")
+//@Table(name = "category")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String name;
 

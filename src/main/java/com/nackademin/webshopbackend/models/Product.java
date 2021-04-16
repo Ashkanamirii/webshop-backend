@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Entity(name="Product")
-@Table(name="product")
+//@Table(name="product")
 @Getter
 @Setter
 @ToString
