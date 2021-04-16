@@ -13,6 +13,7 @@ import java.util.List;
  * Time: 11:55 <br>
  * Project: webshop-back-end <br>
  */
+//
 @RestController
 @RequestMapping(value = "/product")
 @CrossOrigin
@@ -26,6 +27,10 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/get/id")
+    public Product getProductById(@RequestParam Long id){
+        return productService.getProductById(id);
+    }
 
     @PostMapping("/add")
     public void addProduct(@RequestBody Product product){
@@ -37,7 +42,7 @@ public class ProductController {
         productService.addProductList(products);
     }
 
-    @DeleteMapping("/delete/all")
+    @PostMapping("/delete/all")
     public void deleteProductList(){
         productService.removeProducts();
     }

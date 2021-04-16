@@ -14,6 +14,7 @@ import java.util.List;
  * Time: 11:55 <br>
  * Project: webshop-back-end <br>
  */
+//
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
@@ -43,5 +44,10 @@ public class OrderController {
     @PostMapping("/delete/id")
     public void deleteOrderById(@RequestParam Long id) {
         orderService.removeOrderById(id);
+    }
+
+    @PostMapping("/delete/all")
+    public void deleteAllOrders(){
+        orderService.removeAllOrders();
     }
 }

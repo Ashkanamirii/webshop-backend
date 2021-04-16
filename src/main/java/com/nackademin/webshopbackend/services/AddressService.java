@@ -14,6 +14,7 @@ import java.util.List;
  * Project: webshop-backend
  * Copyright: MIT
  */
+//
 @Service
 public class AddressService {
 
@@ -24,6 +25,10 @@ public class AddressService {
         return addressDAO.findAll();
     }
 
+    public Address getAddressById(Long id) {
+        return addressDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
+    }
+
 
     public void addAddress(Address address) {
         addressDAO.save(address);
@@ -32,4 +37,14 @@ public class AddressService {
     public void addAddresses(List<Address> addresses) {
         addressDAO.saveAll(addresses);
     }
+
+    public void removeProducts() {
+        addressDAO.deleteAllInBatch();
+    }
+
+    public void removeProductById(Long id) {
+        addressDAO.deleteById(id);
+    }
+
+
 }

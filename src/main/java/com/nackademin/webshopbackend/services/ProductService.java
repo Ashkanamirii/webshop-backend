@@ -2,6 +2,7 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.repos.ProductDAO;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * Time: 12:09 <br>
  * Project: webshop-back-end <br>
  */
+//
 @Service
 public class ProductService {
 
@@ -21,6 +23,10 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return productDAO.findAll();
+    }
+
+    public Product getProductById(Long id) {
+        return productDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
     public void addProduct(Product product) {
@@ -39,4 +45,7 @@ public class ProductService {
     public void removeProductById(Long id){
         productDAO.deleteById(id);
     }
+
+
+
 }

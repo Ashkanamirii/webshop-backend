@@ -14,6 +14,7 @@ import java.util.List;
  * Project: webshop-back-end
  * Copyright: MIT
  */
+//
 @RestController
 @CrossOrigin
 @RequestMapping("/category")
@@ -42,13 +43,13 @@ public class CategoryController {
         categoryService.addCategoryList(categories);
     }
 
-    @DeleteMapping("/removeAll")
+    @PostMapping("/delete/all")
     public void deleteAllCategories(){
         categoryService.removeCategory();
     }
 
-//    @PostMapping("/delete/id")
-//    public void deleteCategoryById(Long id) {
-//        categoryService.removeCategoryById(id);
-//    }
+    @PostMapping("/delete/id")
+    public void deleteCategoryById(Long id) {
+        categoryService.removeCategoryById(id);
+    }
 }

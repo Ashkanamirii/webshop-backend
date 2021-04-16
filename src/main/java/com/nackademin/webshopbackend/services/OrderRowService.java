@@ -14,6 +14,7 @@ import java.util.List;
  * Project: webshop-backend
  * Copyright: MIT
  */
+//
 @Service
 public class OrderRowService {
 
@@ -22,6 +23,10 @@ public class OrderRowService {
 
     public List<OrderRow> getAllOrderRow() {
         return orderRowDAO.findAll();
+    }
+
+    public OrderRow getOrderRowById(Long id) {
+        return orderRowDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
     public void addOrderRow(OrderRow orderRow) {
@@ -43,4 +48,7 @@ public class OrderRowService {
     public void removeOrderRowsByOrderId(Long id) {
         orderRowDAO.deleteByOrderId(id);
     }
+
+
+
 }

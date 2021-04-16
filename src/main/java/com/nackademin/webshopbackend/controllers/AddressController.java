@@ -19,11 +19,16 @@ import java.util.List;
 public class AddressController {
     @Autowired
     AddressService addressService;
-
+    //
 
     @GetMapping("/get")
     public List<Address> getAllAddresses(){
         return addressService.getAllAddresses();
+    }
+
+    @GetMapping("/get/id")
+    public Address getAddressById(Long id){
+        return addressService.getAddressById(id);
     }
 
     @PostMapping("/add")
@@ -34,6 +39,16 @@ public class AddressController {
     @PostMapping("/add/list")
     public void addAddresses(@RequestBody List<Address> Addresses){
         addressService.addAddresses(Addresses);
+    }
+
+    @PostMapping("/delete/all")
+    public void deleteProductList(){
+        addressService.removeProducts();
+    }
+
+    @PostMapping("/delete/id")
+    public void deleteProductById(@RequestParam Long id) {
+        addressService.removeProductById(id);
     }
 
 }

@@ -5,6 +5,7 @@ import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  * Project: webshop-backend
  * Copyright: MIT
  */
+//
 @RestController
 @RequestMapping(value = "/orderRow")
 public class OrderRowController {
@@ -28,6 +30,10 @@ public class OrderRowController {
         return orderRowService.getAllOrderRow();
     }
 
+    @GetMapping("/get/id")
+    public OrderRow getOrderRowById(Long id){
+        return orderRowService.getOrderRowById(id);
+    }
 
     @PostMapping("/add")
     public void addOrderRow(@RequestBody OrderRow orderRow){
