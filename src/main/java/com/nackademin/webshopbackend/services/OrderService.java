@@ -30,4 +30,8 @@ public class OrderService {
     public void addOrderList(List<Orders> orders) {
         orderDAO.saveAll(orders);
     }
+
+    public void removeOrderById(Long id) {
+        orderDAO.deleteById(id);
+    }
 }

@@ -21,6 +21,7 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
     @GetMapping("/get")
     public List<Category> getAllCategory(){
         return categoryService.getAllCategories();
@@ -40,4 +41,9 @@ public class CategoryController {
     public void deleteAllCategories(){
         categoryService.removeCategory();
     }
+
+//    @PostMapping("/delete/id")
+//    public void deleteCategoryById(Long id) {
+//        categoryService.removeCategoryById(id);
+//    }
 }

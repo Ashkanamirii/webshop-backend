@@ -20,21 +20,33 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/getUsers")
-    public List<User> getAllUsers(){
+    @GetMapping("/get")
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
 
     @PostMapping("/add")
-    public void addUser(@RequestBody User user){
+    public void addUser(@RequestBody User user) {
 
         userService.addProduct(user);
     }
 
     @PostMapping("/add/list")
-    public void addUsers(@RequestBody List<User> users){
+    public void addUsers(@RequestBody List<User> users) {
 
         userService.addProductList(users);
     }
-   }
+
+    @PostMapping("/delete/id")
+    public void deleteUserById(@RequestParam Long id) {
+        userService.removeUserById(id);
+    }
+
+    @PostMapping("delete/all")
+    public void deleteUserList(){
+        userService.removeUsers();
+    }
+
+
+}

@@ -31,4 +31,12 @@ public class UserService {
     public void addProductList(List<User> users) {
         userDAO.saveAll(users);
     }
+
+    public void removeUserById(Long id) {
+        userDAO.deleteById(id);
+    }
+
+    public void removeUsers(){
+        userDAO.deleteAllInBatch();
+    }
 }

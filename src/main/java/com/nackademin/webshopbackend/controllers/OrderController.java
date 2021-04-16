@@ -33,4 +33,9 @@ public class OrderController {
     public void addOrderList(@RequestBody List<Orders> orders){
         orderService.addOrderList(orders);
     }
+
+    @PostMapping("/delete/id")
+    public void deleteOrderById(@RequestParam Long id) {
+        orderService.removeOrderById(id);
+    }
 }

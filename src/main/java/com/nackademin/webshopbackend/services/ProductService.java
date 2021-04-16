@@ -35,4 +35,8 @@ public class ProductService {
         productDAO.deleteAllInBatch();
 
     }
+
+    public void removeProductById(Long id){
+        productDAO.deleteById(id);
+    }
 }

@@ -36,4 +36,8 @@ public class CategoryService {
     public void removeCategory() {
         categoryDAO.deleteAllInBatch();
     }
+
+//    public void removeCategoryById(Long id) {
+//        categoryDAO.deleteById(id);
+//    }
 }
