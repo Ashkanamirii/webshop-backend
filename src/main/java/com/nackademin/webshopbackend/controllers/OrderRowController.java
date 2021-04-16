@@ -31,6 +31,7 @@ public class OrderRowController {
 
     @PostMapping("/add")
     public void addOrderRow(@RequestBody OrderRow orderRow){
+        System.out.println("TEEEEEEEEEEEEEEEEEESSSSSSSSSSSSSSSSSSTTT");
         orderRowService.addOrderRow(orderRow);
     }
 

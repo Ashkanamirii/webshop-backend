@@ -26,10 +26,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="userId", referencedColumnName="id")
-    @JsonBackReference
-    private User userId;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name="user_id")
+    private User user;
 
     private int orderNumber;
     private String date;
@@ -43,11 +42,5 @@ public class Orders {
 
     public Orders(){}
 
-    public Orders(User userId, int orderNumber, String date, Status status) {
-        this.userId = userId;
-        this.orderNumber = orderNumber;
-        this.date = date;
-        this.status = status;
-    }
 }
 

@@ -26,15 +26,15 @@ public class OrderRow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="productId", referencedColumnName="id")
-    @JsonBackReference
-    private Product productId;
+    @ManyToOne(targetEntity = Product.class)
+    @JoinColumn(name="product_id")
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="orderId", referencedColumnName="id")
-    @JsonBackReference
-    private Orders orderId;
+    private Product product;
+
+    @ManyToOne(targetEntity = Orders.class)
+    @JoinColumn(name="order_id")
+
+    private Orders order;
 
     private int quantity;
 
@@ -48,10 +48,5 @@ public class OrderRow {
 
     public OrderRow(){}
 
-    public OrderRow(Product productId, Orders orderId, int quantity, Status status) {
-        this.productId = productId;
-        this.orderId = orderId;
-        this.quantity = quantity;
-        this.status = status;
-    }
+
 }
