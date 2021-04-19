@@ -14,7 +14,6 @@ import java.util.List;
  * Project: webshop-backend
  * Copyright: MIT
  */
-//
 @Service
 public class AddressService {
 
@@ -47,4 +46,8 @@ public class AddressService {
     }
 
 
+
+    public void deleteAddress(Address address){
+
+    }
 }

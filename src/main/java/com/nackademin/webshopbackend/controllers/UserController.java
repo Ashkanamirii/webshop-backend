@@ -32,21 +32,45 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody User user) {
+    public User addUser(@RequestBody User user) {
+        User u = userService.addUser(user);
 
-        userService.addProduct(user);
+        System.out.println(u.getAddress().getCity());
+        return u;
     }
 
     @PostMapping("/add/list")
     public void addUsers(@RequestBody List<User> users) {
+    public List<User> addUsers(@RequestBody List<User> users) {
+        return userService.addProductList(users);
+    }
 
-        userService.addProductList(users);
+    @PostMapping(value = "/authentication/{email}/{password}")
+    public User findUserByEmailAndPassword(@PathVariable String email,
+                                           @PathVariable String password) {
+        return userService.findUserByEmailAndPassword(email, password);
+    }
+
+    @PostMapping("/update")
+    public User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@RequestBody User user) {
+        userService.deleteUser(user);
+        String email = user.getEmail();
+        String deleteMessage = email + " has been deleted";
+        return deleteMessage;
     }
 
     @PostMapping("/delete/id")
     public void deleteUserById(@RequestParam Long id) {
         userService.removeUserById(id);
     }
+
+}
+
 
     @PostMapping("delete/all")
     public void deleteUserList(){

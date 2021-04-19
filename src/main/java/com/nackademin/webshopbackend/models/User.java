@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,15 +26,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "email", unique = true)
+    @NotNull
+
     private String email;
     private String password;
     private String firstname;
     private String lastname;
     private String number;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="addressId", referencedColumnName="id")
-    @JsonBackReference
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
     private int accountType;
@@ -42,14 +44,4 @@ public class User {
 
     public User(){}
 
-    public User(String email, String password, String firstname, String lastname, String number, Address address, int accountType, boolean status) {
-        this.email = email;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.number = number;
-        this.address = address;
-        this.accountType = accountType;
-        this.status = status;
-    }
 }

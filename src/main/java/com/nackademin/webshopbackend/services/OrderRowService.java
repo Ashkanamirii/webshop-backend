@@ -14,7 +14,6 @@ import java.util.List;
  * Project: webshop-backend
  * Copyright: MIT
  */
-//
 @Service
 public class OrderRowService {
 

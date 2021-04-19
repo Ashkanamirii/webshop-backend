@@ -2,7 +2,6 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.repos.ProductDAO;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
  * Time: 12:09 <br>
  * Project: webshop-back-end <br>
  */
-//
 @Service
 public class ProductService {
 

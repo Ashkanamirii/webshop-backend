@@ -16,4 +16,5 @@ import java.util.List;
  */
 @Repository
 public interface UserDAO extends JpaRepository<User,Long> {
+    User findByEmailAndPassword(String email, String password);
 }

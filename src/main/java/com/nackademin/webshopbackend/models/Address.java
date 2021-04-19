@@ -31,9 +31,4 @@ public class Address {
 
     public Address(){}
 
-    public Address(String street, String zipcode, String city) {
-        this.street = street;
-        this.zipcode = zipcode;
-        this.city = city;
-    }
 }
