@@ -35,9 +35,7 @@ public class UserService {
        return userDAO.save(user);
     }
 
-    public List<User> addProductList(List<User> users) {
-        return userDAO.saveAll(users);
-    }
+
 
     public User findUserByEmailAndPassword(String email, String password) {
         User u = new User();
@@ -76,4 +74,7 @@ public class UserService {
     }
 
 
+    public List<User> addUsers(List<User> users) {
+        return userDAO.saveAll(users);
+    }
 }

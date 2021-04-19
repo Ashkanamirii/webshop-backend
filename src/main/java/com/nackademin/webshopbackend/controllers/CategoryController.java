@@ -34,13 +34,13 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public void addCategory(@RequestBody Category category){
-        categoryService.addCategory(category);
+    public Category addCategory(@RequestBody Category category){
+        return categoryService.addCategory(category);
     }
 
     @PostMapping("/add/list")
-    public void addCategoryList(@RequestBody List<Category> categories){
-        categoryService.addCategoryList(categories);
+    public List<Category> addCategoryList(@RequestBody List<Category> categories){
+       return  categoryService.addCategoryList(categories);
     }
 
     @PostMapping("/delete/all")

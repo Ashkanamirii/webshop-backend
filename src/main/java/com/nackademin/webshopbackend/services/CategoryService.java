@@ -28,12 +28,12 @@ public class CategoryService {
         return categoryDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
-    public void addCategory(Category category) {
-        categoryDAO.save(category);
+    public Category addCategory(Category category) {
+       return categoryDAO.save(category);
     }
 
-    public void addCategoryList(List<Category> categories) {
-        categoryDAO.saveAll(categories);
+    public List<Category> addCategoryList(List<Category> categories) {
+        return categoryDAO.saveAll(categories);
     }
 
     public void removeAllCategories() {

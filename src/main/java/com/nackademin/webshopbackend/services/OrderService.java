@@ -27,12 +27,12 @@ public class OrderService {
         return orderDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
-    public void addOrder(Orders order) {
-        orderDAO.save(order);
+    public Orders addOrder(Orders order) {
+        return orderDAO.save(order);
     }
 
-    public void addOrderList(List<Orders> orders) {
-        orderDAO.saveAll(orders);
+    public List<Orders> addOrderList(List<Orders> orders) {
+        return orderDAO.saveAll(orders);
     }
 
     public void removeOrderById(Long id) {

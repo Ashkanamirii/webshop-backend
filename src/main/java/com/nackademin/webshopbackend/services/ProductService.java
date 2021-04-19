@@ -27,12 +27,12 @@ public class ProductService {
         return productDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
-    public void addProduct(Product product) {
-        productDAO.save(product);
+    public Product addProduct(Product product) {
+        return productDAO.save(product);
     }
 
-    public void addProductList(List<Product> products) {
-        productDAO.saveAll(products);
+    public List<Product> addProductList(List<Product> products) {
+        return productDAO.saveAll(products);
     }
 
     public void removeProducts() {

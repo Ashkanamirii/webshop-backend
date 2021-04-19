@@ -1,6 +1,5 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.User;
 import com.nackademin.webshopbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +31,13 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public User addUser(@RequestBody User user) {
+       return  userService.addUser(user);
     }
 
     @PostMapping("/add/list")
-    public void addUsers(@RequestBody List<User> users) {
-        userService.addProductList(users);
+    public List<User> addUsers(@RequestBody List<User> users) {
+        return userService.addUsers(users);
     }
 
     @PostMapping(value = "/authentication/{email}/{password}")

@@ -4,7 +4,6 @@ package com.nackademin.webshopbackend.controllers;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,13 +34,13 @@ public class OrderRowController {
     }
 
     @PostMapping("/add")
-    public void addOrderRow(@RequestBody OrderRow orderRow){
-        orderRowService.addOrderRow(orderRow);
+    public OrderRow addOrderRow(@RequestBody OrderRow orderRow){
+        return orderRowService.addOrderRow(orderRow);
     }
 
     @PostMapping("/add/list")
-    public void addOrderRowList(@RequestBody List<OrderRow> orderRows){
-        orderRowService.addOrderRowList(orderRows);
+    public List<OrderRow> addOrderRowList(@RequestBody List<OrderRow> orderRows){
+       return orderRowService.addOrderRowList(orderRows);
     }
 
     @PostMapping("/delete/id")

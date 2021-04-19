@@ -1,6 +1,5 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +32,8 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public void addOrder(@RequestBody Orders order){
-        orderService.addOrder(order);
+    public Orders addOrder(@RequestBody Orders order){
+        return orderService.addOrder(order);
     }
 
     @PostMapping("/add/list")
