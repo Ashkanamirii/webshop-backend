@@ -28,8 +28,6 @@ public class Orders {
     @ManyToOne(targetEntity = Users.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private Users users;
-
-    private int orderNumber;
     private String date;
     private Status status;
 
