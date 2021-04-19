@@ -15,7 +15,7 @@ import javax.persistence.*;
  * Time: 15:32 <br>
  * Project: webshop-back-end <br>
  */
-@Entity(name="User")
+@Entity(name="Users")
 @Table(name="users")
 @Getter
 @Setter
