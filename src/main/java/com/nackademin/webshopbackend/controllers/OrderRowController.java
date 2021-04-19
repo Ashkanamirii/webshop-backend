@@ -57,4 +57,8 @@ public class OrderRowController {
     public void deleteOrderRowList(){
         orderRowService.removeOrderRows();
     }
+    @GetMapping("/get/byOrderID/{orderId}")
+    public List<OrderRow> getByOrderId(@PathVariable Long orderId){
+        return orderRowService.getByOrderId(orderId);
+    }
 }

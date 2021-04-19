@@ -25,9 +25,10 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(targetEntity = Users.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @ManyToOne(targetEntity = Users.class)
+    @JoinColumn(name="user_id", referencedColumnName="id")
     private Users users;
+    private double totalPrice;
     private String date;
     private Status status;
 

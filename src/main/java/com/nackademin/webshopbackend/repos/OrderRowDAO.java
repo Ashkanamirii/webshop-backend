@@ -4,6 +4,8 @@ import com.nackademin.webshopbackend.models.OrderRow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 //
 /**
  * Created by Tomas Dahlander <br>
@@ -14,4 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRowDAO extends JpaRepository<OrderRow,Long> {
     void deleteByOrderId(Long id);
+
+
+    List<OrderRow> findByOrderId(Long orderId);
 }

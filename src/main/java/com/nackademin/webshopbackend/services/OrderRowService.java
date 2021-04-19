@@ -20,6 +20,7 @@ public class OrderRowService {
     @Autowired
     OrderRowDAO orderRowDAO;
 
+
     public List<OrderRow> getAllOrderRow() {
         return orderRowDAO.findAll();
     }
@@ -49,5 +50,7 @@ public class OrderRowService {
     }
 
 
-
+    public List<OrderRow> getByOrderId(Long orderId) {
+        return orderRowDAO.findByOrderId(orderId);
+    }
 }
