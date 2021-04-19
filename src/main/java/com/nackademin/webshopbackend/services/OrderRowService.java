@@ -24,11 +24,11 @@ public class OrderRowService {
         return orderRowDAO.findAll();
     }
 
-    public void addOrderRow(OrderRow orderRow) {
-        orderRowDAO.save(orderRow);
+    public OrderRow addOrderRow(OrderRow orderRow) {
+        return orderRowDAO.save(orderRow);
     }
 
-    public void addOrderRowList(List<OrderRow> orderRows) {
-        orderRowDAO.saveAll(orderRows);
+    public List<OrderRow> addOrderRowList(List<OrderRow> orderRows) {
+        return orderRowDAO.saveAll(orderRows);
     }
 }

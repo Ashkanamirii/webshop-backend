@@ -25,13 +25,12 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public void addOrder(@RequestBody Orders order){
-        System.out.println("HEEEEEEEEEEEEEEEEJJJJJ"+ order);
-        orderService.addOrder(order);
+    public Orders addOrder(@RequestBody Orders order){
+        return orderService.addOrder(order);
     }
 
     @PostMapping("/add/list")
-    public void addOrderList(@RequestBody List<Orders> orders){
-        orderService.addOrderList(orders);
+    public List<Orders> addOrderList(@RequestBody List<Orders> orders){
+        return orderService.addOrderList(orders);
     }
 }

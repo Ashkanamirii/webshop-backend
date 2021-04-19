@@ -32,4 +32,8 @@ public class AddressService {
     public void addAddresses(List<Address> addresses) {
         addressDAO.saveAll(addresses);
     }
+
+    public void deleteAddress(Address address){
+
+    }
 }

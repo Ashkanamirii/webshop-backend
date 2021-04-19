@@ -1,12 +1,11 @@
 package com.nackademin.webshopbackend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -26,7 +25,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 

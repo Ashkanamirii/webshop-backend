@@ -1,10 +1,10 @@
 package com.nackademin.webshopbackend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 import javax.persistence.*;
 
 
@@ -28,12 +28,10 @@ public class OrderRow {
 
     @ManyToOne(targetEntity = Product.class)
     @JoinColumn(name="product_id")
-
     private Product product;
 
     @ManyToOne(targetEntity = Orders.class)
     @JoinColumn(name="order_id")
-
     private Orders order;
 
     private int quantity;

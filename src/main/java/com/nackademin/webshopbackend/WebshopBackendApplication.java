@@ -1,18 +1,7 @@
 package com.nackademin.webshopbackend;
 
-import com.nackademin.webshopbackend.models.Address;
-import com.nackademin.webshopbackend.models.Category;
-import com.nackademin.webshopbackend.models.Product;
-import com.nackademin.webshopbackend.repos.AddressDAO;
-import com.nackademin.webshopbackend.repos.CategoryDAO;
-import com.nackademin.webshopbackend.repos.ProductDAO;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class WebshopBackendApplication {
