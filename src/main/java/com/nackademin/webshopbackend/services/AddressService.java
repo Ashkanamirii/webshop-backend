@@ -25,9 +25,8 @@ public class AddressService {
     }
 
     public Address getAddressById(Long id) {
-        return addressDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
+        return addressDAO.findById(id).orElse(null); // Makes it possible to return Address instead of Optional
     }
-
 
     public void addAddress(Address address) {
         addressDAO.save(address);
@@ -37,17 +36,11 @@ public class AddressService {
         addressDAO.saveAll(addresses);
     }
 
-    public void removeProducts() {
+    public void removeAllAddresses() {
         addressDAO.deleteAllInBatch();
     }
 
-    public void removeProductById(Long id) {
+    public void removeAddressById(Long id) {
         addressDAO.deleteById(id);
-    }
-
-
-
-    public void deleteAddress(Address address){
-
     }
 }

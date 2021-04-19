@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
+
     @Autowired
     private OrderService orderService;
 
@@ -32,13 +33,13 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public Orders addOrder(@RequestBody Orders order){
-        return orderService.addOrder(order);
+    public void addOrder(@RequestBody Orders order){
+        orderService.addOrder(order);
     }
 
     @PostMapping("/add/list")
-    public List<Orders> addOrderList(@RequestBody List<Orders> orders){
-        return orderService.addOrderList(orders);
+    public void addOrderList(@RequestBody List<Orders> orders){
+        orderService.addOrderList(orders);
     }
 
     @PostMapping("/delete/id")

@@ -45,7 +45,7 @@ public class CategoryController {
 
     @PostMapping("/delete/all")
     public void deleteAllCategories(){
-        categoryService.removeCategory();
+        categoryService.removeAllCategories();
     }
 
     @PostMapping("/delete/id")

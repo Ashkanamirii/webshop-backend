@@ -33,13 +33,13 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public Product addProduct(@RequestBody Product product){
-        return productService.addProduct(product);
+    public void addProduct(@RequestBody Product product){
+        productService.addProduct(product);
     }
 
     @PostMapping("/add/list")
-    public List<Product> addProductList(@RequestBody List<Product> products){
-       return  productService.addProductList(products);
+    public void addProductList(@RequestBody List<Product> products){
+        productService.addProductList(products);
     }
 
     @PostMapping("/delete/all")
@@ -51,23 +51,5 @@ public class ProductController {
     public void deleteProductById(@RequestParam Long id) {
         productService.removeProductById(id);
     }
-
-
-//    @PostMapping("/book/upsert")
-//    public String upsertBook(@RequestBody Product b){
-//        int indexToUpdate = -1;
-//
-//        for(int i =0; i< mybooks.size(); i++){
-//            if(mybooks.get(i).getId() == b.getId()){
-//                indexToUpdate = i;
-//            }
-//        }
-//        if(indexToUpdate == -1){
-//            mybooks.add(b);
-//        }else {
-//            mybooks.set(indexToUpdate,b);
-//        }
-//        return "book update";
-//    }
 
 }

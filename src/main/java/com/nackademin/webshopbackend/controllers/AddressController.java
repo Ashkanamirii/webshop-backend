@@ -42,13 +42,13 @@ public class AddressController {
     }
 
     @PostMapping("/delete/all")
-    public void deleteProductList(){
-        addressService.removeProducts();
+    public void deleteAllAddresses(){
+        addressService.removeAllAddresses();
     }
 
     @PostMapping("/delete/id")
-    public void deleteProductById(@RequestParam Long id) {
-        addressService.removeProductById(id);
+    public void deleteAddressById(@RequestParam Long id) {
+        addressService.removeAddressById(id);
     }
 
 }

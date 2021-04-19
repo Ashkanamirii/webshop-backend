@@ -35,13 +35,13 @@ public class OrderRowController {
     }
 
     @PostMapping("/add")
-    public OrderRow addOrderRow(@RequestBody OrderRow orderRow){
-        return orderRowService.addOrderRow(orderRow);
+    public void addOrderRow(@RequestBody OrderRow orderRow){
+        orderRowService.addOrderRow(orderRow);
     }
 
     @PostMapping("/add/list")
-    public List<OrderRow> addOrderRowList(@RequestBody List<OrderRow> orderRows){
-        return orderRowService.addOrderRowList(orderRows);
+    public void addOrderRowList(@RequestBody List<OrderRow> orderRows){
+        orderRowService.addOrderRowList(orderRows);
     }
 
     @PostMapping("/delete/id")

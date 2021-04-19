@@ -32,17 +32,13 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        User u = userService.addUser(user);
-
-        System.out.println(u.getAddress().getCity());
-        return u;
+    public void addUser(@RequestBody User user) {
+        userService.addUser(user);
     }
 
     @PostMapping("/add/list")
     public void addUsers(@RequestBody List<User> users) {
-    public List<User> addUsers(@RequestBody List<User> users) {
-        return userService.addProductList(users);
+        userService.addProductList(users);
     }
 
     @PostMapping(value = "/authentication/{email}/{password}")
@@ -69,13 +65,9 @@ public class UserController {
         userService.removeUserById(id);
     }
 
-}
-
-
     @PostMapping("delete/all")
     public void deleteUserList(){
         userService.removeUsers();
     }
-
 
 }

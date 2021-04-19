@@ -20,13 +20,12 @@ public class CategoryService {
     @Autowired
     private CategoryDAO categoryDAO;
 
-
     public List<Category> getAllCategories() {
         return categoryDAO.findAll();
     }
 
-    public Category getCategoryById(Long id) {
-        return categoryDAO.findById(Math.toIntExact(id)).orElse(null); // Makes it possible to return Category instead of Optional
+    public Category getCategoryById(Long id) { ;
+        return categoryDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
     public void addCategory(Category category) {
@@ -37,12 +36,12 @@ public class CategoryService {
         categoryDAO.saveAll(categories);
     }
 
-    public void removeCategory() {
+    public void removeAllCategories() {
         categoryDAO.deleteAllInBatch();
     }
 
     public void removeCategoryById(Long id) {
-        categoryDAO.deleteById(Math.toIntExact(id));
+        categoryDAO.deleteById(id);
     }
 
 

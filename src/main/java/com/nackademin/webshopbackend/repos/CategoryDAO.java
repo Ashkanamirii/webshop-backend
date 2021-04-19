@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
  * Project: webshop-back-end <br>
  */
 @Repository
-public interface CategoryDAO extends JpaRepository<Category , Integer> {
-
+public interface CategoryDAO extends JpaRepository<Category,Long> {
 }
 

@@ -18,7 +18,6 @@ import java.util.List;
 @Service
 public class UserService {
 
-
     @Autowired
     private UserDAO userDAO;
     @Autowired
@@ -29,11 +28,11 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        return userDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
+        return userDAO.findById(id).orElse(null); // Makes it possible to return User instead of Optional
     }
 
     public User addUser(User user) {
-       return  userDAO.save(user);
+       return userDAO.save(user);
     }
 
     public List<User> addProductList(List<User> users) {
@@ -45,7 +44,7 @@ public class UserService {
         try {
             u = userDAO.findByEmailAndPassword(email, password);
         }catch(NonUniqueResultException e){
-            throw new RuntimeException("heloo");
+            throw new RuntimeException("hello");
         }
         return u;
     }
