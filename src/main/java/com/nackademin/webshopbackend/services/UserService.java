@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.services;
 
-import com.nackademin.webshopbackend.models.User;
+import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.AddressDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
 import org.hibernate.NonUniqueResultException;
@@ -23,22 +23,22 @@ public class UserService {
     @Autowired
     private AddressDAO addressDAO;
 
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userDAO.findAll();
     }
 
-    public User getUserById(Long id) {
+    public Users getUserById(Long id) {
         return userDAO.findById(id).orElse(null); // Makes it possible to return User instead of Optional
     }
 
-    public User addUser(User user) {
-       return userDAO.save(user);
+    public Users addUser(Users users) {
+       return userDAO.save(users);
     }
 
 
 
-    public User findUserByEmailAndPassword(String email, String password) {
-        User u = new User();
+    public Users findUserByEmailAndPassword(String email, String password) {
+        Users u = new Users();
         try {
             u = userDAO.findByEmailAndPassword(email, password);
         }catch(NonUniqueResultException e){
@@ -47,21 +47,21 @@ public class UserService {
         return u;
     }
 
-    public User updateUser(User user) {
-        User u = userDAO.getOne(user.getId());
-        u.setFirstname(user.getFirstname());
-        u.setLastname(user.getLastname());
-        u.setPassword(user.getPassword());
-        u.getAddress().setCity(user.getAddress().getCity());
-        u.getAddress().setStreet(user.getAddress().getStreet());
-        u.getAddress().setZipcode(user.getAddress().getZipcode());
+    public Users updateUser(Users users) {
+        Users u = userDAO.getOne(users.getId());
+        u.setFirstname(users.getFirstname());
+        u.setLastname(users.getLastname());
+        u.setPassword(users.getPassword());
+        u.getAddress().setCity(users.getAddress().getCity());
+        u.getAddress().setStreet(users.getAddress().getStreet());
+        u.getAddress().setZipcode(users.getAddress().getZipcode());
 
         return userDAO.save(u);
     }
 
-    public User deleteUser(User user) {
-        userDAO.delete(user);
-        return user;
+    public Users deleteUser(Users users) {
+        userDAO.delete(users);
+        return users;
     }
 
     public String removeUserById(Long id) {
@@ -75,7 +75,7 @@ public class UserService {
     }
 
 
-    public List<User> addUsers(List<User> users) {
+    public List<Users> addUsers(List<Users> users) {
         return userDAO.saveAll(users);
     }
 }

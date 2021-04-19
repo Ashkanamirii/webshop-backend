@@ -21,7 +21,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @AllArgsConstructor
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +42,6 @@ public class User {
     private int accountType;
     private boolean status;
 
-    public User(){}
+    public Users(){}
 
 }

@@ -1,6 +1,6 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.nackademin.webshopbackend.models.User;
+import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,40 +21,40 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/get")
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/get/id")
-    public User getUserById(@RequestParam Long id) {
+    public Users getUserById(@RequestParam Long id) {
         return userService.getUserById(id);
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-       return  userService.addUser(user);
+    public Users addUser(@RequestBody Users users) {
+       return  userService.addUser(users);
     }
 
     @PostMapping("/add/list")
-    public List<User> addUsers(@RequestBody List<User> users) {
+    public List<Users> addUsers(@RequestBody List<Users> users) {
         return userService.addUsers(users);
     }
 
     @PostMapping(value = "/authentication/{email}/{password}")
-    public User findUserByEmailAndPassword(@PathVariable String email,
-                                           @PathVariable String password) {
+    public Users findUserByEmailAndPassword(@PathVariable String email,
+                                            @PathVariable String password) {
         return userService.findUserByEmailAndPassword(email, password);
     }
 
     @PostMapping("/update")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public Users updateUser(@RequestBody Users users) {
+        return userService.updateUser(users);
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestBody User user) {
-        userService.deleteUser(user);
-        String email = user.getEmail();
+    public String deleteUser(@RequestBody Users users) {
+        userService.deleteUser(users);
+        String email = users.getEmail();
         String deleteMessage = email + " has been deleted";
         return deleteMessage;
     }

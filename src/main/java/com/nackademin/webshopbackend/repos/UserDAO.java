@@ -1,12 +1,8 @@
 package com.nackademin.webshopbackend.repos;
 
-import com.nackademin.webshopbackend.models.Address;
-import com.nackademin.webshopbackend.models.User;
+import com.nackademin.webshopbackend.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -15,6 +11,6 @@ import java.util.List;
  * Project: webshop-back-end <br>
  */
 @Repository
-public interface UserDAO extends JpaRepository<User,Long> {
-    User findByEmailAndPassword(String email, String password);
+public interface UserDAO extends JpaRepository<Users,Long> {
+    Users findByEmailAndPassword(String email, String password);
 }
