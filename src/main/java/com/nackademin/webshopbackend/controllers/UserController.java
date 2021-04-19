@@ -60,13 +60,13 @@ public class UserController {
     }
 
     @PostMapping("/delete/id")
-    public void deleteUserById(@RequestParam Long id) {
-        userService.removeUserById(id);
+    public String deleteUserById(@RequestParam Long id) {
+        return userService.removeUserById(id);
     }
 
     @PostMapping("delete/all")
-    public void deleteUserList(){
-        userService.removeUsers();
+    public String deleteUserList(){
+        return userService.removeUsers();
     }
 
 }

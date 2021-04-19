@@ -59,18 +59,19 @@ public class UserService {
         return userDAO.save(u);
     }
 
-    public void deleteUser(User user) {
-       // Address address =user.getAddress();
-       // addressDAO.delete(address);
+    public User deleteUser(User user) {
         userDAO.delete(user);
+        return user;
     }
 
-    public void removeUserById(Long id) {
+    public String removeUserById(Long id) {
         userDAO.deleteById(id);
+        return "User with id " + id + " remved.";
     }
 
-    public void removeUsers(){
+    public String removeUsers(){
         userDAO.deleteAllInBatch();
+        return "All users deleted.";
     }
 
 

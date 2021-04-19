@@ -43,13 +43,13 @@ public class ProductController {
     }
 
     @PostMapping("/delete/all")
-    public void deleteProductList(){
-        productService.removeProducts();
+    public String deleteProductList(){
+        return productService.removeProducts();
     }
 
     @PostMapping("/delete/id")
-    public void deleteProductById(@RequestParam Long id) {
-        productService.removeProductById(id);
+    public String deleteProductById(@RequestParam Long id) {
+        return productService.removeProductById(id);
     }
 
 }

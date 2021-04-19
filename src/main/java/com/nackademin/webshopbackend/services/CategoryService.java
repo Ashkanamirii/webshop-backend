@@ -36,12 +36,14 @@ public class CategoryService {
         return categoryDAO.saveAll(categories);
     }
 
-    public void removeAllCategories() {
+    public String removeAllCategories() {
         categoryDAO.deleteAllInBatch();
+        return "Deleted all categories.";
     }
 
-    public void removeCategoryById(Long id) {
+    public String removeCategoryById(Long id) {
         categoryDAO.deleteById(id);
+        return "Deleted category with id "+ id;
     }
 
 

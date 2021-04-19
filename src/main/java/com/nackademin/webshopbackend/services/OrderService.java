@@ -35,12 +35,14 @@ public class OrderService {
         return orderDAO.saveAll(orders);
     }
 
-    public void removeOrderById(Long id) {
+    public String removeOrderById(Long id) {
         orderDAO.deleteById(id);
+        return "Deleted order with id " + id;
     }
 
-    public void removeAllOrders(){
+    public String removeAllOrders(){
         orderDAO.deleteAllInBatch();
+        return "Deleted all orders.";
     }
 
 }

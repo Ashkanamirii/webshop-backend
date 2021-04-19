@@ -37,17 +37,17 @@ public class OrderController {
     }
 
     @PostMapping("/add/list")
-    public void addOrderList(@RequestBody List<Orders> orders){
-        orderService.addOrderList(orders);
+    public List<Orders> addOrderList(@RequestBody List<Orders> orders){
+        return orderService.addOrderList(orders);
     }
 
     @PostMapping("/delete/id")
-    public void deleteOrderById(@RequestParam Long id) {
-        orderService.removeOrderById(id);
+    public String deleteOrderById(@RequestParam Long id) {
+        return orderService.removeOrderById(id);
     }
 
     @PostMapping("/delete/all")
-    public void deleteAllOrders(){
-        orderService.removeAllOrders();
+    public String deleteAllOrders(){
+        return orderService.removeAllOrders();
     }
 }

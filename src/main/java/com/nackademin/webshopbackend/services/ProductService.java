@@ -35,12 +35,14 @@ public class ProductService {
         return productDAO.saveAll(products);
     }
 
-    public void removeProducts() {
+    public String removeProducts() {
         productDAO.deleteAllInBatch();
+        return "All products deleted.";
     }
 
-    public void removeProductById(Long id){
+    public String removeProductById(Long id){
         productDAO.deleteById(id);
+        return "Produc with id " + id + " deleted.";
     }
 
 }
