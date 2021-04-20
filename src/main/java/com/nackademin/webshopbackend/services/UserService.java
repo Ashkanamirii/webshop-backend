@@ -8,7 +8,6 @@ import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Types;
 import java.util.List;
 
 /**
@@ -66,7 +65,7 @@ public class UserService {
         List<Orders> o = orderDAO.findByUsersId(users.getId());
         if(!o.isEmpty()){
             for (Orders order : o){
-                order.getUsers().setId((long) Types.NULL);
+                order.setUsers(null);
                 orderDAO.save(order);
             }
         }
