@@ -1,12 +1,14 @@
 package com.nackademin.webshopbackend.services;
 
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
-import com.nackademin.webshopbackend.repos.AddressDAO;
+import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
 import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Types;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    private AddressDAO addressDAO;
+    private OrderDAO orderDAO;
 
     public List<Users> getAllUsers() {
         return userDAO.findAll();
@@ -60,6 +62,14 @@ public class UserService {
     }
 
     public Users deleteUser(Users users) {
+
+        List<Orders> o = orderDAO.findByUsersId(users.getId());
+        if(!o.isEmpty()){
+            for (Orders order : o){
+                order.getUsers().setId((long) Types.NULL);
+                orderDAO.save(order);
+            }
+        }
         userDAO.delete(users);
         return users;
     }

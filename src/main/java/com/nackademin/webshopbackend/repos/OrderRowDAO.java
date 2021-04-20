@@ -16,7 +16,5 @@ import java.util.List;
 @Repository
 public interface OrderRowDAO extends JpaRepository<OrderRow,Long> {
     void deleteByOrderId(Long id);
-
-
     List<OrderRow> findByOrderId(Long orderId);
 }
