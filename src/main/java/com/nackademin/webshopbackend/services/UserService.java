@@ -52,6 +52,7 @@ public class UserService {
         u.setFirstname(users.getFirstname());
         u.setLastname(users.getLastname());
         u.setPassword(users.getPassword());
+        u.setNumber(users.getNumber());
         u.getAddress().setCity(users.getAddress().getCity());
         u.getAddress().setStreet(users.getAddress().getStreet());
         u.getAddress().setZipcode(users.getAddress().getZipcode());
