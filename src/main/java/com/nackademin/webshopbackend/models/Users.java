@@ -35,7 +35,7 @@ public class Users {
     private String lastname;
     private String number;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
