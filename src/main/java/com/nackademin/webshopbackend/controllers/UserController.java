@@ -60,12 +60,11 @@ public class UserController {
         return userService.addUsers(users);
     }
 
-    @PostMapping(value = "/authentication/{email}/{password}")
-    public ResponseEntity<Object> findUserByEmailAndPassword(@PathVariable String email,
-                                                             @PathVariable String password) {
+    @PostMapping(value = "/authentication")
+    public ResponseEntity<Object> findUserByEmailAndPassword(@RequestBody Users user) {
         Users u = null;
         try {
-            u= userService.findUserByEmailAndPassword(email, password);
+            u= userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
         } catch (UserException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
