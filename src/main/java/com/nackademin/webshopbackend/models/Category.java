@@ -3,8 +3,11 @@ package com.nackademin.webshopbackend.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -25,9 +28,14 @@ public class Category {
 
     private String name;
 
-    public Category(String name) {
-        this.name = name;
-    }
+
+    @CreationTimestamp
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
+
+    @UpdateTimestamp
+    @Column(name = "modify_date")
+    private LocalDateTime  modifyDate;
 
     public Category(){}
 

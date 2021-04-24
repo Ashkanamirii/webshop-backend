@@ -4,6 +4,8 @@ import com.nackademin.webshopbackend.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Created by Tomas Dahlander <br>
  * Date: 2021-04-09 <br>
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDAO extends JpaRepository<Users,Long> {
     Users findByEmailAndPassword(String email, String password);
+    Users findByEmail(String email);
+
+    Optional<Users> findById(Long id);
 }

@@ -46,8 +46,8 @@ public class AddressController {
         addressService.removeAllAddresses();
     }
 
-    @PostMapping("/delete/id")
-    public void deleteAddressById(@RequestParam Long id) {
+    @PostMapping("/delete/{id}")
+    public void deleteAddressById(@PathVariable Long id) {
         addressService.removeAddressById(id);
     }
 

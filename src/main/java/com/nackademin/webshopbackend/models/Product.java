@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -41,6 +44,14 @@ public class Product {
             joinColumns=@JoinColumn(name="product_id"),
             inverseJoinColumns=@JoinColumn(name="category_id"))
     private List<Category> category;
+
+    @CreationTimestamp
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
+
+    @UpdateTimestamp
+    @Column(name = "modify_date")
+    private LocalDateTime  modifyDate;
 
     public Product(){}
 
