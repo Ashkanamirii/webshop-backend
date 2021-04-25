@@ -40,7 +40,7 @@ public class OrderController {
         try {
              o = orderService.addOrder(order);
         } catch (UserException e) {
-            ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok(o);
     }
