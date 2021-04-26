@@ -1,11 +1,15 @@
 package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Orders;
+import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
+import com.nackademin.webshopbackend.repos.UserDAO;
+import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -18,6 +22,8 @@ public class OrderService {
 
     @Autowired
     private OrderDAO orderDAO;
+    @Autowired
+    private UserDAO userDAO;
 
     public List<Orders> getAllOrders() {
         return orderDAO.findAll();
@@ -27,8 +33,13 @@ public class OrderService {
         return orderDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
-    public Orders addOrder(Orders order) {
-        return orderDAO.save(order);
+    public Orders addOrder(Orders order) throws UserException {
+        Optional<Users> user= userDAO.findById(order.getUsers().getId());
+        if(user.isEmpty()){
+            throw new UserException("The customer does not exist");
+        }else {
+            return orderDAO.save(order);
+        }
     }
 
     public List<Orders> addOrderList(List<Orders> orders) {

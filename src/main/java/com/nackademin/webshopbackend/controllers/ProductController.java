@@ -47,8 +47,8 @@ public class ProductController {
         return productService.removeProducts();
     }
 
-    @PostMapping("/delete/id")
-    public String deleteProductById(@RequestParam Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteProductById(@PathVariable Long id) {
         return productService.removeProductById(id);
     }
 

@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 /**
@@ -35,12 +38,20 @@ public class Users {
     private String lastname;
     private String number;
 
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="address_id", referencedColumnName="id")
     private Address address;
 
     private int accountType;
     private boolean status;
+
+    @CreationTimestamp
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
+
+    @UpdateTimestamp
+    @Column(name = "modify_date")
+    private LocalDateTime  modifyDate;
 
     public Users(){}
 

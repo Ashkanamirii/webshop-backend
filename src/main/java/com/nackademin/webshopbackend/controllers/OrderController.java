@@ -2,7 +2,9 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
+import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
     @GetMapping("/get")
     public List<Orders> getAllOrders(){
         return orderService.getAllOrders();
@@ -32,8 +35,14 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public Orders addOrder(@RequestBody Orders order){
-        return orderService.addOrder(order);
+    public ResponseEntity<Object> addOrder(@RequestBody Orders order){
+        Orders o = null;
+        try {
+             o = orderService.addOrder(order);
+        } catch (UserException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok(o);
     }
 
     @PostMapping("/add/list")
@@ -41,8 +50,8 @@ public class OrderController {
         return orderService.addOrderList(orders);
     }
 
-    @PostMapping("/delete/id")
-    public String deleteOrderById(@RequestParam Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteOrderById(@PathVariable Long id) {
         return orderService.removeOrderById(id);
     }
 

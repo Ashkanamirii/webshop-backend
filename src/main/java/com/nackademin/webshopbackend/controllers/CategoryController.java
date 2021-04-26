@@ -48,8 +48,8 @@ public class CategoryController {
         return categoryService.removeAllCategories();
     }
 
-    @PostMapping("/delete/id")
-    public String deleteCategoryById(Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteCategoryById(@PathVariable Long id) {
         return categoryService.removeCategoryById(id);
     }
 }
