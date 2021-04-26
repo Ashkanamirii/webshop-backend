@@ -4,6 +4,7 @@ import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
+import com.nackademin.webshopbackend.utils.Encrypt;
 import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,9 +58,11 @@ public class UserService {
 
     public Users updateUser(Users users) {
         Users u = userDAO.getOne(users.getId());
+        if(!users.getPassword().equalsIgnoreCase(u.getPassword())){
+            u.setPassword(Encrypt.getMd5(users.getPassword()));
+        }
         u.setFirstname(users.getFirstname());
         u.setLastname(users.getLastname());
-        u.setPassword(users.getPassword());
         u.setNumber(users.getNumber());
         u.getAddress().setCity(users.getAddress().getCity());
         u.getAddress().setStreet(users.getAddress().getStreet());

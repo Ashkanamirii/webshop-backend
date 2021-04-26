@@ -2,6 +2,7 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
+import com.nackademin.webshopbackend.utils.Encrypt;
 import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,7 @@ public class UserController {
     public ResponseEntity<Object> addUser(@RequestBody Users users) {
         Users u = null;
         try {
+            users.setPassword(Encrypt.getMd5(users.getPassword()));
             u = userService.addUser(users);
         } catch (UserException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -57,6 +59,9 @@ public class UserController {
 
     @PostMapping("/add/list")
     public List<Users> addUsers(@RequestBody List<Users> users) {
+        for (Users u : users){
+            u.setPassword(Encrypt.getMd5(u.getPassword()));
+        }
         return userService.addUsers(users);
     }
 
@@ -64,7 +69,7 @@ public class UserController {
     public ResponseEntity<Object> findUserByEmailAndPassword(@RequestBody Users user) {
         Users u = null;
         try {
-            u= userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
+            u= userService.findUserByEmailAndPassword(user.getEmail(), Encrypt.getMd5(user.getPassword()));
         } catch (UserException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
