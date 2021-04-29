@@ -1,9 +1,11 @@
 package com.nackademin.webshopbackend.services;
 
+import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.repos.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -45,4 +47,23 @@ public class ProductService {
         return "Produc with id " + id + " deleted.";
     }
 
+    public Product updateProduct(Product product) {
+        Product p = productDAO.getOne(product.getId());
+        p.setTitle(product.getTitle());
+        p.setBrand(product.getBrand());
+        p.setDescription(product.getDescription());
+        p.setImage(product.getImage());
+        p.setPrice(product.getPrice());
+        p.setQuantity(product.getQuantity());
+        p.setUnit(product.getUnit());
+        List<Category> categories = p.getCategory();
+        List<Category> c = product.getCategory();
+        for (int i = 0; i < c.size() ; i++) {
+            categories.get(i).setId(c.get(i).getId());
+        }
+        p.setFeatured(product.isFeatured());
+
+
+        return productDAO.save(p);
+    }
 }
