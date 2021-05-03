@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 /**
  * Created by Tomas Dahlander <br>
  * Date: 2021-04-09 <br>
@@ -38,6 +37,8 @@ public class OrderRow {
     private Orders order;
 
     private int quantity;
+
+    private double productPriceWhenOrdering;
 
     private Status status;
 

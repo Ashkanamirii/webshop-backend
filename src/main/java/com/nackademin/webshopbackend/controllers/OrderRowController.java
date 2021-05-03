@@ -3,7 +3,10 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.services.OrderRowService;
+import com.nackademin.webshopbackend.services.OrderService;
+import com.nackademin.webshopbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +23,15 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/orderRow")
 public class OrderRowController {
+
     @Autowired
     OrderRowService orderRowService;
 
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/get")
     public List<OrderRow> getAllOrderRow(){
@@ -40,8 +49,23 @@ public class OrderRowController {
     }
 
     @PostMapping("/add/list")
-    public List<OrderRow> addOrderRowList(@RequestBody List<OrderRow> orderRows){
-       return orderRowService.addOrderRowList(orderRows);
+    public ResponseEntity<Object> addOrderRowList(@RequestBody List<OrderRow> orderRows){
+
+        List<OrderRow> correctInStock = productService.checkQuantity(orderRows);
+
+        if(correctInStock.isEmpty()){ // Om ingenting fanns i lager
+            orderService.removeOrderById(orderRows.get(0).getOrder().getId());
+            return ResponseEntity.badRequest().body("Lagersaldona var mindre i lager än i beställningen");
+        }
+        else if(orderRows.isEmpty()){ // Om allt går bra
+            List<OrderRow> or = orderRowService.addOrderRowList(correctInStock);
+            return ResponseEntity.ok(or);
+        }
+        else{ // Om bara några saker finns i lager
+            orderRowService.addOrderRowList(correctInStock);
+            return ResponseEntity.ok(orderRows);
+        }
+
     }
 
     @PostMapping("/delete/id")
