@@ -16,6 +16,7 @@ import java.util.List;
  * Date: 2021-04-12 <br>
  * Time: 12:10 <br>
  * Project: webshop-back-end <br>
+ * Class that performs logic on User objects.
  */
 @Service
 public class UserService {
@@ -32,10 +33,6 @@ public class UserService {
     public Users getUserById(Long id) {
         return userDAO.findById(id).orElse(null); // Makes it possible to return User instead of Optional
     }
-
-//    public Users addUser(Users users) throws Exception {
-//        return userDAO.save(users);
-//    }
 
     public Users addUser(Users users) throws UserException {
         Users u = userDAO.findByEmail(users.getEmail());
@@ -83,6 +80,11 @@ public class UserService {
         return users;
     }
 
+    /**
+     * OBS! Method that might be used in later front-end versions.
+     * @param id of a user.
+     * @return A String with the id of the deleted User.
+     */
     public String removeUserById(Long id) {
         // Det ska kollas om det finns order med det här user eller inte
         userDAO.deleteById(id);
@@ -93,7 +95,6 @@ public class UserService {
         userDAO.deleteAllInBatch();
         return "All users deleted.";
     }
-
 
     public List<Users> addUsers(List<Users> users) {
         return userDAO.saveAll(users);

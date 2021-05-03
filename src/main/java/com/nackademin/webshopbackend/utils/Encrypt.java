@@ -10,9 +10,15 @@ import java.security.NoSuchAlgorithmException;
  * Time:  15:34
  * Project: webshop-backend
  * Copyright: MIT
+ * Class that is used to Encrypt passwords (Strings)
  */
 public class Encrypt {
 
+    /**
+     * Method that takes a String and returns it encrypted as per MD5 standard.
+     * @param password A String value from use input that will be Encrypted.
+     * @return An encrypted String.
+     */
     public static String getMd5(String password) {
         try {
 

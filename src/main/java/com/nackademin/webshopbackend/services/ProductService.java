@@ -13,13 +13,13 @@ import java.util.List;
  * Date: 2021-04-12 <br>
  * Time: 12:09 <br>
  * Project: webshop-back-end <br>
+ * Class that performs logic on Product objects.
  */
 @Service
 public class ProductService {
 
     @Autowired
     private ProductDAO productDAO;
-
 
     public List<Product> getAllProducts() {
         return productDAO.findAll();
@@ -44,9 +44,15 @@ public class ProductService {
 
     public String removeProductById(Long id){
         productDAO.deleteById(id);
-        return "Produc with id " + id + " deleted.";
+        return "Product with id " + id + " deleted.";
     }
 
+    /**
+     * Method that might be used from the admin portal to update products.
+     * Checks if the ID exists and then updates every variable from the input.
+     * @param product Object containing all the information to be updated.
+     * @return The updated product.
+     */
     public Product updateProduct(Product product) {
         Product p = productDAO.getOne(product.getId());
         p.setTitle(product.getTitle());
@@ -62,7 +68,6 @@ public class ProductService {
             categories.get(i).setId(c.get(i).getId());
         }
         p.setFeatured(product.isFeatured());
-
 
         return productDAO.save(p);
     }

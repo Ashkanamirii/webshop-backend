@@ -4,7 +4,6 @@ import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -13,8 +12,9 @@ import java.util.List;
  * Time:  17:27
  * Project: webshop-back-end
  * Copyright: MIT
+ * Controller for calls to category urls.
+ * Logic is performed in CategoryService.
  */
-//
 @RestController
 @CrossOrigin
 @RequestMapping("/category")

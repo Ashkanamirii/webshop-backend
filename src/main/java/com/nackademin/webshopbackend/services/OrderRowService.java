@@ -13,13 +13,13 @@ import java.util.List;
  * Time:  19:19
  * Project: webshop-backend
  * Copyright: MIT
+ * Class that performs logic on OrderRow objects.
  */
 @Service
 public class OrderRowService {
 
     @Autowired
     OrderRowDAO orderRowDAO;
-
 
     public List<OrderRow> getAllOrderRow() {
         return orderRowDAO.findAll();
@@ -48,7 +48,6 @@ public class OrderRowService {
     public void removeOrderRowsByOrderId(Long id) {
         orderRowDAO.deleteByOrderId(id);
     }
-
 
     public List<OrderRow> getByOrderId(Long orderId) {
         return orderRowDAO.findByOrderId(orderId);

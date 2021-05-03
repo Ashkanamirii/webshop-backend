@@ -16,6 +16,7 @@ import java.util.Optional;
  * Date: 2021-04-12 <br>
  * Time: 12:10 <br>
  * Project: webshop-back-end <br>
+ * Class that performs logic on Order objects.
  */
 @Service
 public class OrderService {
@@ -33,6 +34,13 @@ public class OrderService {
         return orderDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 
+    /**
+     * Method that adds an Order object to the database.
+     * Check if the user ID exists otherwise it returns an UserException.
+     * @param order Contains information about the order.
+     * @return The order that was saved or Exception.
+     * @throws UserException
+     */
     public Orders addOrder(Orders order) throws UserException {
         Optional<Users> user= userDAO.findById(order.getUsers().getId());
         if(user.isEmpty()){

@@ -13,6 +13,7 @@ import java.util.List;
  * Time:  19:19
  * Project: webshop-backend
  * Copyright: MIT
+ * Class that performs logic on Address objects.
  */
 @Service
 public class AddressService {
