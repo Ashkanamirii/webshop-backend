@@ -1,11 +1,13 @@
 package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Category;
+import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.repos.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,5 +72,24 @@ public class ProductService {
         p.setFeatured(product.isFeatured());
 
         return productDAO.save(p);
+    }
+
+    public List<OrderRow> checkQuantity(List<OrderRow> orderRows) {
+        List<OrderRow> list = new ArrayList<>();
+
+        // manuellt för att ändra orderRows till att bara felaktiga är kvar samt att lagerstatus hämtas från databasen.
+        for(int i = orderRows.size()-1; i >= 0; i--){
+            long id = orderRows.get(i).getProduct().getId();
+            Product product = productDAO.getOne(id);
+
+            if(orderRows.get(i).getQuantity() <= product.getQuantity()){
+                int newQuantity = product.getQuantity() - orderRows.get(i).getQuantity();
+                product.setQuantity(newQuantity);
+                Product p = productDAO.save(product);
+                orderRows.get(i).setProductPriceWhenOrdering(p.getPrice());
+                list.add(orderRows.remove(i));
+            }
+        }
+        return list;
     }
 }
