@@ -11,8 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Time:  22:35
  * Project: webshop-backend
  * Copyright: MIT
+ * Class that removes the need for every class to have the CrossConfig notation.
+ * Makes that all websites have access to this back-end.
  */
-
 @Configuration
 public class CrossConfig {
     @Bean

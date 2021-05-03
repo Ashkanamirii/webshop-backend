@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * Time: 16:15 <br>
  * Project: webshop-back-end <br>
  */
-//
+
 @Repository
 public interface AddressDAO extends JpaRepository<Address,Long> {
 }

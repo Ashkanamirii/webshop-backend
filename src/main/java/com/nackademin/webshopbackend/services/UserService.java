@@ -16,6 +16,7 @@ import java.util.List;
  * Date: 2021-04-12 <br>
  * Time: 12:10 <br>
  * Project: webshop-back-end <br>
+ * Class that performs logic on User objects.
  */
 @Service
 public class UserService {
@@ -33,10 +34,12 @@ public class UserService {
         return userDAO.findById(id).orElse(null); // Makes it possible to return User instead of Optional
     }
 
-//    public Users addUser(Users users) throws Exception {
-//        return userDAO.save(users);
-//    }
-
+    /**
+     * Method that adds user to User repository, using the findByEmail method in User repository .
+     * @param users Accepts a user object
+     * @return a Users object
+     * @throws UserException if user already exists an exception is thrown
+     */
     public Users addUser(Users users) throws UserException {
         Users u = userDAO.findByEmail(users.getEmail());
         if (u != null) {
@@ -46,7 +49,13 @@ public class UserService {
         }
     }
 
-
+    /**
+     * Method that checks if user inputs correct email and password.
+     * @param email Email String from frontend request
+     * @param password password String from frontend request
+     * @return a User object that matches correct email and password.
+     * @throws UserException if either email or password is incorrect
+     */
     public Users findUserByEmailAndPassword(String email, String password) throws UserException {
         Users u = userDAO.findByEmailAndPassword(email, password);
         if (u == null) {
@@ -56,6 +65,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Method that updates a Users preferences when password is validated using Encrypt class
+     * @param users Accepts a Users object
+     * @return an updates Users object
+     */
     public Users updateUser(Users users) {
         Users u = userDAO.getOne(users.getId());
         if(!users.getPassword().equalsIgnoreCase(u.getPassword())){
@@ -71,6 +85,12 @@ public class UserService {
         return userDAO.save(u);
     }
 
+    /**
+     * Method that removes a user from database.
+     * First checks if specified user has an active order. If so, the order will be deleted.
+     * @param users Acccepts a Users object from frontend
+     * @return A Users object
+     */
     public Users deleteUser(Users users) {
         List<Orders> o = orderDAO.findByUsersId(users.getId());
         if(!o.isEmpty()){
@@ -83,6 +103,11 @@ public class UserService {
         return users;
     }
 
+    /**
+     * OBS! Method that might be used in later front-end versions.
+     * @param id of a user.
+     * @return A String with the id of the deleted User.
+     */
     public String removeUserById(Long id) {
         // Det ska kollas om det finns order med det här user eller inte
         userDAO.deleteById(id);
@@ -93,7 +118,6 @@ public class UserService {
         userDAO.deleteAllInBatch();
         return "All users deleted.";
     }
-
 
     public List<Users> addUsers(List<Users> users) {
         return userDAO.saveAll(users);

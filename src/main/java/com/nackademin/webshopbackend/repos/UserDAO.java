@@ -14,6 +14,7 @@ import java.util.Optional;
  */
 @Repository
 public interface UserDAO extends JpaRepository<Users,Long> {
+
     Users findByEmailAndPassword(String email, String password);
     Users findByEmail(String email);
 

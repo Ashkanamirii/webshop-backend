@@ -14,8 +14,9 @@ import java.util.List;
  * Time:  19:18
  * Project: webshop-backend
  * Copyright: MIT
+ * Controller for calls to orderRow urls.
+ * Logic is performed in OrderRowService.
  */
-//
 @RestController
 @RequestMapping(value = "/orderRow")
 public class OrderRowController {
@@ -57,6 +58,7 @@ public class OrderRowController {
     public void deleteOrderRowList(){
         orderRowService.removeOrderRows();
     }
+
     @GetMapping("/get/byOrderID/{orderId}")
     public List<OrderRow> getByOrderId(@PathVariable Long orderId){
         return orderRowService.getByOrderId(orderId);

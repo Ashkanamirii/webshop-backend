@@ -14,15 +14,15 @@ import java.util.List;
  * Date: 2021-04-12 <br>
  * Time: 11:55 <br>
  * Project: webshop-back-end <br>
+ * Controller for calls to order urls.
+ * Logic is performed in OrderService.
  */
-//
 @RestController
 @RequestMapping( "/order")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
 
     @GetMapping("/get")
     public List<Orders> getAllOrders(){

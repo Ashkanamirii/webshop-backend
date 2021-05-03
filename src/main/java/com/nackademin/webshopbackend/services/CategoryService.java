@@ -13,6 +13,7 @@ import java.util.List;
  * Time:  17:28
  * Project: webshop-back-end
  * Copyright: MIT
+ * Class that performs logic on Category objects.
  */
 @Service
 public class CategoryService {

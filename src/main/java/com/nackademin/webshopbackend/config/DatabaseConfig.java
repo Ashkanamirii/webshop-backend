@@ -10,9 +10,8 @@ import javax.sql.DataSource;
  * Time:  18:10
  * Project: webshop-backend
  * Copyright: MIT
+ * Class that helps Springboot with database config if error would occur.
  */
-
-
 @Configuration
 public class DatabaseConfig {
 
@@ -23,7 +22,6 @@ public class DatabaseConfig {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
-
 
     @Bean
     public DataSource dataSource() {

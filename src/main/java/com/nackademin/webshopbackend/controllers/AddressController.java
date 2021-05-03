@@ -13,13 +13,14 @@ import java.util.List;
  * Time:  19:17
  * Project: webshop-backend
  * Copyright: MIT
+ * Controller for calls to address urls.
+ * Logic is performed in AddressService.
  */
 @RestController
 @RequestMapping(value = "/address")
 public class AddressController {
     @Autowired
     AddressService addressService;
-    //
 
     @GetMapping("/get")
     public List<Address> getAllAddresses(){
