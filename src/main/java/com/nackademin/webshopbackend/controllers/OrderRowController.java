@@ -71,14 +71,15 @@ public class OrderRowController {
                 totalPrice += p;
             }
             Orders order = orderService.getOrderById(orderRows.get(0).getOrder().getId());
+            if (totalPrice < 250){
+                totalPrice = totalPrice + 49;
+            }
             order.setTotalPrice(totalPrice);
             try{
                 orderService.addOrder(order);
             }catch(UserException e){
                 System.out.println(e.getMessage());
             }
-
-            // Sparar alla orderrows
             orderRowService.addOrderRowList(correctInStock);
             return ResponseEntity.ok(orderRows);
         }
