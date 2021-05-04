@@ -2,9 +2,11 @@ package com.nackademin.webshopbackend.controllers;
 
 
 import com.nackademin.webshopbackend.models.OrderRow;
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import com.nackademin.webshopbackend.services.OrderService;
 import com.nackademin.webshopbackend.services.ProductService;
+import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,10 +64,24 @@ public class OrderRowController {
             return ResponseEntity.ok(or);
         }
         else{ // Om bara några saker finns i lager
+            // Uppdatera totalpriset
+            double totalPrice = 0;
+            for(OrderRow or : correctInStock){
+                double p = or.getQuantity() * or.getProductPriceWhenOrdering();
+                totalPrice += p;
+            }
+            Orders order = orderService.getOrderById(orderRows.get(0).getOrder().getId());
+            order.setTotalPrice(totalPrice);
+            try{
+                orderService.addOrder(order);
+            }catch(UserException e){
+                System.out.println(e.getMessage());
+            }
+
+            // Sparar alla orderrows
             orderRowService.addOrderRowList(correctInStock);
             return ResponseEntity.ok(orderRows);
         }
-
     }
 
     @PostMapping("/delete/id")
