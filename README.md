@@ -15,3 +15,7 @@ trogna kunder!
 • OBS! Betallösningar kommer han att få hjälp av via Klarna senare!
 • Ni skall hjälpa Hakim att ta fram kravanalys och systemdesign.
 • Ni skall utveckla webbshopen enligt hans önskemål
+
+https://github.com/Ashkanamirii/webshopMS (frontend)
+https://github.com/Ashkanamirii/webshop-backend (backend)
+https://maxerling.github.io/webshopMS/index.html (Webb sida)
