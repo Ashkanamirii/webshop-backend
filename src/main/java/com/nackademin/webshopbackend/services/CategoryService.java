@@ -25,7 +25,7 @@ public class CategoryService {
         return categoryDAO.findAll();
     }
 
-    public Category getCategoryById(Long id) { ;
+    public Category getCategoryById(Long id) {
         return categoryDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
     }
 

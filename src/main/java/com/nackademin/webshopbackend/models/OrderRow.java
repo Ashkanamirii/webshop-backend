@@ -46,7 +46,7 @@ public class OrderRow {
         CONFIRMED,
         CANCELED,
         PAYING,
-    };
+    }
 
     @CreationTimestamp
     @Column(name = "create_date")

@@ -39,7 +39,7 @@ public class Orders {
         PENDING,
         PRINTED,
         DELIVERED,
-    };
+    }
 
     @CreationTimestamp
     @Column(name = "create_date")

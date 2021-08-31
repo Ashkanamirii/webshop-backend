@@ -37,15 +37,16 @@ public class OrderService {
     /**
      * Method that adds an Order object to the database.
      * Check if the user ID exists otherwise it returns an UserException.
+     *
      * @param order Contains information about the order.
      * @return The order that was saved or Exception.
      * @throws UserException
      */
     public Orders addOrder(Orders order) throws UserException {
-        Optional<Users> user= userDAO.findById(order.getUsers().getId());
-        if(user.isEmpty()){
+        Optional<Users> user = userDAO.findById(order.getUsers().getId());
+        if (user.isEmpty()) {
             throw new UserException("The customer does not exist");
-        }else {
+        } else {
             return orderDAO.save(order);
         }
     }
@@ -59,7 +60,7 @@ public class OrderService {
         return "Deleted order with id " + id;
     }
 
-    public String removeAllOrders(){
+    public String removeAllOrders() {
         orderDAO.deleteAllInBatch();
         return "Deleted all orders.";
     }
