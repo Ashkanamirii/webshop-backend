@@ -19,9 +19,10 @@ public class ClientEmailDTO {
 	private final ClientEmail clientEmail;
 
 	@JsonCreator
-	public ClientEmailDTO(@JsonProperty() ClientEmail clientEmail ) {
+	public ClientEmailDTO(@JsonProperty("message") ClientEmail clientEmail) {
 		this.clientEmail = clientEmail;
 	}
+
 
 	public ClientEmail getClientEmail() {
 		return clientEmail;

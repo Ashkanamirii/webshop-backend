@@ -1,8 +1,10 @@
 package com.nackademin.webshopbackend.client.emailClient;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Ashkan Amiri
@@ -14,13 +16,16 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
+@Component
 public class EmailContent {
 	private String to;
 	private String subject;
 	private String body;
 
+
 	@JsonCreator
-	public EmailContent(String to, String subject, String body) {
+	public EmailContent(@JsonProperty("to") String to, @JsonProperty("subject") String subject,
+	                    @JsonProperty("body") String body) {
 		this.to = to;
 		this.subject = subject;
 		this.body = body;
