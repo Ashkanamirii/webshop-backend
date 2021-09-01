@@ -81,6 +81,7 @@ public class OrderRowController {
                 System.out.println(e.getMessage());
             }
             orderRowService.addOrderRowList(correctInStock);
+
             return ResponseEntity.ok(orderRows);
         }
     }
