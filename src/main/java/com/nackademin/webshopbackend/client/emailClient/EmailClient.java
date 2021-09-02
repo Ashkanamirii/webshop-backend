@@ -47,7 +47,7 @@ public class EmailClient {
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
 
 		final ResponseEntity<ClientEmailDTO> response = restTemplate.
-				postForEntity("http://localhost:8081/sendemail", entity, ClientEmailDTO.class);
+				postForEntity("http://localhost:8085/sendemail", entity, ClientEmailDTO.class);
 
 
 		if (response.getStatusCode().is2xxSuccessful()) {
