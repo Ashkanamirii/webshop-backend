@@ -2,14 +2,18 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+import com.nackademin.webshopbackend.models.Role;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
 import com.nackademin.webshopbackend.utils.Encrypt;
 import com.nackademin.webshopbackend.utils.UserException;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -107,4 +111,25 @@ public class UserController {
 		return userService.removeUsers();
 	}
 
+	@PostMapping("/role/save")
+	public ResponseEntity<Role> saveRole(@RequestBody Role role) {
+		URI uri = URI.create(ServletUriComponentsBuilder
+				.fromCurrentContextPath()
+				.path("/api/role/save").toUriString());
+		return ResponseEntity.created(uri).body(userService.saveRole(role));
+	}
+
+	@PostMapping("/role/addtouser")
+	public ResponseEntity<?> addRoleRoUser(@RequestBody RoleToUserForm form) {
+		userService.addRoleToUser(form.getEmail(), form.getRoleName());
+		return ResponseEntity.ok().build();
+	}
+
+}
+
+
+@Data
+class RoleToUserForm {
+	private String email;
+	private String roleName;
 }

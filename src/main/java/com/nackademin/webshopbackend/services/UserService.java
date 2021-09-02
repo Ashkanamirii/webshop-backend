@@ -1,14 +1,18 @@
 package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Orders;
+import com.nackademin.webshopbackend.models.Role;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
+import com.nackademin.webshopbackend.repos.RoleDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
 import com.nackademin.webshopbackend.utils.Encrypt;
 import com.nackademin.webshopbackend.utils.UserException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -19,12 +23,17 @@ import java.util.List;
  * Class that performs logic on User objects.
  */
 @Service
+@Transactional
+@Slf4j
 public class UserService {
 
     @Autowired
     private UserDAO userDAO;
     @Autowired
     private OrderDAO orderDAO;
+
+    @Autowired
+    private RoleDAO roleDAO;
 
     public List<Users> getAllUsers() {
         return userDAO.findAll();
@@ -121,5 +130,18 @@ public class UserService {
 
     public List<Users> addUsers(List<Users> users) {
         return userDAO.saveAll(users);
+    }
+
+
+    public Role saveRole(Role role) {
+        log.info("Saving new role {} to the database", role.getName());
+        return roleDAO.save(role);
+    }
+
+    public void addRoleToUser(String email, String roleName) {
+        log.info("Adding role {} to user {}", roleName, email);
+        Users u = userDAO.findByEmail(email);
+        Role r = roleDAO.findByName(roleName);
+        u.getRoles().add(r);
     }
 }
