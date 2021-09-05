@@ -33,7 +33,7 @@ public interface UserService {
 
 	void deleteUser(String username) throws IOException;
 
-	void resetPassword(String email, String password) throws  EmailNotFoundException;
+	void resetPassword(String email, String newPassword) throws  EmailNotFoundException;
 
 	Users getUserById(Long id);
 }

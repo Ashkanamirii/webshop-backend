@@ -187,16 +187,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public void resetPassword(String email, String password) throws EmailNotFoundException {
+	public void resetPassword(String email, String newPassword) throws EmailNotFoundException {
 		Users user = userDAO.findByEmail(email);
 		if (user == null) {
 			throw new EmailNotFoundException(NO_USER_FOUND_BY_EMAIL + email);
 		}
 
-		user.setPassword(encodePassword(password));
+		user.setPassword(encodePassword(newPassword));
 		userDAO.save(user);
-		log.info("New user password: " + password);
-		//emailService.sendNewPasswordEmail(user.getFirstName(), password, user.getEmail());
+		log.info("New user password: " + newPassword);
+		//SEND EMAIL
 	}
 
 

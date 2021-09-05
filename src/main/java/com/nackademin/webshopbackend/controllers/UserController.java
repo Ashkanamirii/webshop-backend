@@ -2,10 +2,7 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.domain.HttpResponse;
 import com.nackademin.webshopbackend.domain.UserPrincipal;
-import com.nackademin.webshopbackend.exception.domain.EmailExistException;
-import com.nackademin.webshopbackend.exception.domain.NotAnImageFileException;
-import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
-import com.nackademin.webshopbackend.exception.domain.UsernameExistException;
+import com.nackademin.webshopbackend.exception.domain.*;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
@@ -38,9 +35,9 @@ import static org.springframework.http.HttpStatus.OK;
 public class UserController {
 	public static final String EMAIL_SENT = "An email with a new password was sent to: ";
 	public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
-	private AuthenticationManager authenticationManager;
-	private UserService userService;
-	private JWTTokenProvider jwtTokenProvider;
+	private final AuthenticationManager authenticationManager;
+	private final UserService userService;
+	private final JWTTokenProvider jwtTokenProvider;
 
 	@Autowired
 	public UserController(AuthenticationManager authenticationManager,
@@ -64,12 +61,6 @@ public class UserController {
 			EmailExistException {
 		Users newUser = userService.register(user);
 		return new ResponseEntity<>(newUser, OK);
-	}
-
-
-	@GetMapping("/get")
-	public List<Users> getAllUsers() {
-		return userService.getUsers();
 	}
 
 	@GetMapping("/get/{id}")
@@ -99,10 +90,24 @@ public class UserController {
 		return response(OK, USER_DELETED_SUCCESSFULLY);
 	}
 
+	@GetMapping("/list")
+	public ResponseEntity<List<Users>> getAllUsers() {
+		List<Users> users = userService.getUsers();
+		return new ResponseEntity<>(users, OK);
+	}
+
+	@GetMapping("/resetpassword")
+	public ResponseEntity<HttpResponse> resetPassword(@RequestParam("email") String email,
+	                                                  @RequestParam("newPassword") String newPassword)
+			throws  EmailNotFoundException {
+		userService.resetPassword(email,newPassword);
+		return response(OK, EMAIL_SENT + email);
+	}
+
 
 
 //////////////******************************************************************************************//////
-//////////////******************************************************************************************//////
+//////////////********************************UTILS**********************************************************//////
 //////////////******************************************************************************************//////
 
 	private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
