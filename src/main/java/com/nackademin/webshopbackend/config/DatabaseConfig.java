@@ -5,7 +5,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 /**
@@ -36,8 +35,5 @@ public class DatabaseConfig {
         return new HikariDataSource(config);
     }
 
-    @Bean
-    public RestTemplate getTemplate() {
-        return new RestTemplate();
-    }
+
 }

@@ -6,7 +6,6 @@ import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import com.nackademin.webshopbackend.services.OrderService;
 import com.nackademin.webshopbackend.services.ProductService;
-import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +76,7 @@ public class OrderRowController {
             order.setTotalPrice(totalPrice);
             try{
                 orderService.addOrder(order);
-            }catch(UserException e){
+            }catch(Exception e){
                 System.out.println(e.getMessage());
             }
             orderRowService.addOrderRowList(correctInStock);

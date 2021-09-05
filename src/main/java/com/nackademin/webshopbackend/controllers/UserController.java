@@ -1,20 +1,29 @@
 package com.nackademin.webshopbackend.controllers;
 
-import com.nackademin.webshopbackend.client.emailClient.EmailClient;
-import com.nackademin.webshopbackend.client.emailClient.EmailContent;
-import com.nackademin.webshopbackend.models.Role;
+import com.nackademin.webshopbackend.domain.HttpResponse;
+import com.nackademin.webshopbackend.domain.UserPrincipal;
+import com.nackademin.webshopbackend.exception.domain.EmailExistException;
+import com.nackademin.webshopbackend.exception.domain.NotAnImageFileException;
+import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
+import com.nackademin.webshopbackend.exception.domain.UsernameExistException;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
-import com.nackademin.webshopbackend.utils.Encrypt;
-import com.nackademin.webshopbackend.utils.UserException;
-import lombok.Data;
+import com.nackademin.webshopbackend.utility.JWTTokenProvider;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import java.io.IOException;
 import java.util.List;
+
+import static com.nackademin.webshopbackend.constant.SecurityConstant.JWT_TOKEN_HEADER;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -27,13 +36,40 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
+	public static final String EMAIL_SENT = "An email with a new password was sent to: ";
+	public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
+	private AuthenticationManager authenticationManager;
+	private UserService userService;
+	private JWTTokenProvider jwtTokenProvider;
 
 	@Autowired
-	UserService userService;
+	public UserController(AuthenticationManager authenticationManager,
+	                      UserService userService, JWTTokenProvider jwtTokenProvider) {
+		this.authenticationManager = authenticationManager;
+		this.userService = userService;
+		this.jwtTokenProvider = jwtTokenProvider;
+	}
+
+
+	@PostMapping("/login")
+	public ResponseEntity<Users> login(@RequestBody Users user) {
+		authenticate(user.getUsername(), user.getPassword());
+		Users loginUser = userService.findUserByUsername(user.getUsername());
+		UserPrincipal userPrincipal = new UserPrincipal(loginUser);
+		HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
+		return new ResponseEntity<>(loginUser, jwtHeader, OK);
+	}
+	@PostMapping("/register")
+	public ResponseEntity<Users> register(@RequestBody Users user) throws UserNotFoundException, UsernameExistException,
+			EmailExistException {
+		Users newUser = userService.register(user);
+		return new ResponseEntity<>(newUser, OK);
+	}
+
 
 	@GetMapping("/get")
 	public List<Users> getAllUsers() {
-		return userService.getAllUsers();
+		return userService.getUsers();
 	}
 
 	@GetMapping("/get/{id}")
@@ -41,95 +77,48 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 
-//    @PostMapping("/add")
-//    public ResponseEntity<Object> addUser(@RequestBody Users users) {
-//        Users u = null;
-//        try {
-//            u = userService.addUser(users);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return ResponseEntity.badRequest().body("This E-mail already exist " + e.getMessage() + e.getCause());
-//        }
-//        return ResponseEntity.ok(u);
-//    }
 
 	@PostMapping("/add")
-	public ResponseEntity<Object> addUser(@RequestBody Users users) {
-		Users u = null;
-		try {
-			users.setPassword(Encrypt.getMd5(users.getPassword()));
-			u = userService.addUser(users);
-		} catch (UserException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-		EmailClient e = new EmailClient();
-		EmailContent emailContent = new EmailContent(u.getEmail(), "Sign up",
-				"You have been signed up successfully!-->" + u.getEmail());
-		e.sendEmail(emailContent);
-		return ResponseEntity.ok(u);
+	public ResponseEntity<Users> addNewUser(@RequestBody Users user)
+			throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
+		Users newUser = userService.addNewUser(user);
+		return new ResponseEntity<>(newUser, OK);
 	}
 
-	@PostMapping("/add/list")
-	public List<Users> addUsers(@RequestBody List<Users> users) {
-		for (Users u : users) {
-			u.setPassword(Encrypt.getMd5(u.getPassword()));
-		}
-		return userService.addUsers(users);
-	}
-
-	@PostMapping(value = "/authentication")
-	public ResponseEntity<Object> findUserByEmailAndPassword(@RequestBody Users user) {
-		Users u = null;
-		try {
-			u = userService.findUserByEmailAndPassword(user.getEmail(), Encrypt.getMd5(user.getPassword()));
-		} catch (UserException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-		return ResponseEntity.ok(u);
-	}
-
+	@SneakyThrows
 	@PostMapping("/update")
-	public Users updateUser(@RequestBody Users users) {
+	public Users updateUser(@RequestBody Users users) throws UserNotFoundException,
+			EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
 		return userService.updateUser(users);
 	}
 
-	@PostMapping("/delete")
-	public String deleteUser(@RequestBody Users users) {
-		userService.deleteUser(users);
-		String email = users.getEmail();
-		String deleteMessage = email + " has been deleted";
-		return deleteMessage;
+	@DeleteMapping("/delete/{username}")
+	@PreAuthorize("hasAnyAuthority('user:delete')")
+	public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username) throws IOException {
+		userService.deleteUser(username);
+		return response(OK, USER_DELETED_SUCCESSFULLY);
 	}
 
-	@PostMapping("/delete/{id}")
-	public String deleteUserById(@PathVariable Long id) {
-		return userService.removeUserById(id);
+
+
+//////////////******************************************************************************************//////
+//////////////******************************************************************************************//////
+//////////////******************************************************************************************//////
+
+	private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message) {
+		return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus,
+				httpStatus.getReasonPhrase().toUpperCase(),
+				message), httpStatus);
 	}
 
-	@PostMapping("delete/all")
-	public String deleteUserList() {
-		return userService.removeUsers();
+	private HttpHeaders getJwtHeader(UserPrincipal user) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(JWT_TOKEN_HEADER, jwtTokenProvider.generateJwtToken(user));
+		return headers;
 	}
 
-	@PostMapping("/role/save")
-	public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-		URI uri = URI.create(ServletUriComponentsBuilder
-				.fromCurrentContextPath()
-				.path("/api/role/save").toUriString());
-		return ResponseEntity.created(uri).body(userService.saveRole(role));
+
+	private void authenticate(String username, String password) {
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 	}
-
-	@PostMapping("/role/addtouser")
-	public ResponseEntity<?> addRoleRoUser(@RequestBody RoleToUserForm form) {
-		userService.addRoleToUser(form.getEmail(), form.getRoleName());
-		return ResponseEntity.ok().build();
-	}
-
-}
-
-
-@Data
-class RoleToUserForm {
-	private String email;
-	private String roleName;
 }

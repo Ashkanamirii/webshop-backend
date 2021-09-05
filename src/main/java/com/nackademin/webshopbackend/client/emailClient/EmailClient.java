@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.nackademin.webshopbackend.constant.EmailConstant.BASEURL;
+
 /**
  * Created by Ashkan Amiri
  * Date:  2021-09-01
@@ -47,7 +49,7 @@ public class EmailClient {
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
 
 		final ResponseEntity<ClientEmailDTO> response = restTemplate.
-				postForEntity("http://localhost:8085/sendemail", entity, ClientEmailDTO.class);
+				postForEntity(BASEURL, entity, ClientEmailDTO.class);
 
 
 		if (response.getStatusCode().is2xxSuccessful()) {
@@ -56,11 +58,4 @@ public class EmailClient {
 
 		throw new RuntimeException("Could not send email");
 	}
-
-//	public static void main(String[] args) {
-//		EmailClient e = new EmailClient();
-//		String s = e.sendEmail(new EmailContent("amiri.ashkan.d@gmail.com",
-//				"test from code 2", "bbb"));
-//		System.out.println(s);
-//	}
 }

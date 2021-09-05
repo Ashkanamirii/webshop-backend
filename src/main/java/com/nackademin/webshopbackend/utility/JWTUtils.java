@@ -1,64 +1,57 @@
-package com.nackademin.webshopbackend.security;
+//package com.nackademin.webshopbackend.utility;
+//
+//import java.security.Key;
+//import java.time.Duration;
+//
+//
+//public class JWTUtils {
+//
+//	private final Key key;
+//	private final Duration validity;
+//
+//	public JWTUtils(final Key key, final Duration validity) {
+//		this.key = key;
+//		this.validity = validity;
+//	}
 
-import com.nackademin.webshopbackend.models.Users;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import org.springframework.security.core.GrantedAuthority;
+//	public String generateToken(final Users user) {
+//
+//		final String authorities = user.getAuthorities().stream()
+//				.map(GrantedAuthority :: getAuthority)
+//				.collect(Collectors.joining(","));
+//
+//		return Jwts.builder()
+//				.setSubject(user.getUsername())
+//				.claim("authorities", authorities)
+//				.signWith(key)
+//				.setIssuedAt(Date.from(Instant.now()))
+//				.setExpiration(Date.from(Instant.now().plus(validity)))
+//				.compact();
+//	}
 
-import java.security.Key;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-
-public class JWTUtils {
-
-	private final Key key;
-	private final Duration validity;
-
-	public JWTUtils(final Key key, final Duration validity) {
-		this.key = key;
-		this.validity = validity;
-	}
-
-	public String generateToken(final Users user) {
-
-		final String authorities = user.getAuthorities().stream()
-				.map(GrantedAuthority :: getAuthority)
-				.collect(Collectors.joining(","));
-
-		return Jwts.builder()
-				.setSubject(user.getUsername())
-				.claim("authorities", authorities)
-				.signWith(key)
-				.setIssuedAt(Date.from(Instant.now()))
-				.setExpiration(Date.from(Instant.now().plus(validity)))
-				.compact();
-	}
-
-	public Users validate(String token) {
-		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-/*
-String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-					stream(roles).forEach(role -> {
-						authorities.add(new SimpleGrantedAuthority(role));
-					});
- */
-
-		String authorities = (String) claims.get("authorities");
-		List<String> roles = Arrays.stream(authorities.split(",")).map(r -> r.substring(5)).collect(Collectors.toList());
-		Users u = new Users();
-		u.setEmail(claims.getSubject());
-		for (String role : roles) {
-			u.getRoles().forEach(r -> r.setName(role));
-		}
-		return u;
-	}
-}
+//	public Users validate(String token) {
+//		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+///*
+//String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+//					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//					stream(roles).forEach(role -> {
+//						authorities.add(new SimpleGrantedAuthority(role));
+//					});
+// */
+//
+//		String authorities = (String) claims.get("authorities");
+//		// kolla efter en bättre lösning TODO:
+////		List<Role> roles = Arrays.stream(authorities.split(",")).map(r -> r.substring(5)).map(Role ::getName()).collect(Collectors.toList());
+//		List<String> roles = Arrays.stream(authorities.split(","))
+//				.map(r -> r.substring(5)).collect(Collectors.toList());
+//		Users user = new Users();
+//		user.setEmail(claims.getSubject());
+//		for (String role : roles) {
+//			user.getRoles().forEach(r -> r.setName(role));
+//		}
+//		return user;
+//	}
+//}
 
 /*
 public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
@@ -119,3 +112,4 @@ public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
  */
+//}

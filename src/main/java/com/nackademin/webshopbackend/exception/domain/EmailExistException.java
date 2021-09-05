@@ -1,0 +1,7 @@
+package com.nackademin.webshopbackend.exception.domain;
+
+public class EmailExistException extends Exception {
+    public EmailExistException(String message) {
+        super(message);
+    }
+}

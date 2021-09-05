@@ -6,13 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
 
 
 /**
@@ -21,82 +17,52 @@ import java.util.*;
  * Time: 15:32 <br>
  * Project: webshop-back-end <br>
  */
-@Entity(name="Users")
-@Table(name="users")
+@Entity(name = "Users")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Users implements UserDetails {
+public class Users{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "email", unique = true)
-    @NotNull
-    private String email;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String password;
-    private String firstname;
-    private String lastname;
-    private String number;
+	@Column(name = "email", unique = true)
+	@NotNull
+	private String email;
+    private String username;
+	private String password;
+	private String firstName;
+	private String lastName;
+	private String number;
+	private String role;//ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
+	private String[] authorities;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<Role>();
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
+	private Address address;
 
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name="address_id", referencedColumnName="id")
-    private Address address;
+    private boolean isActive;
+    private boolean isNotLocked;
 
-//    private int accountType;
-//    private boolean status;
+	@CreationTimestamp
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
 
-    @CreationTimestamp
-    @Column(name = "create_date")
-    private LocalDateTime createDate;
-
-    @UpdateTimestamp
-    @Column(name = "modify_date")
-    private LocalDateTime  modifyDate;
+	@UpdateTimestamp
+	@Column(name = "modify_date")
+	private LocalDateTime modifyDate;
 
 
+//	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//		Set<GrantedAuthority> setAuths = new HashSet<>();
+//		for (Role userRole : roles) {
+//			setAuths.add(new SimpleGrantedAuthority("ROLE_" + userRole.getName()));
+//		}
+//
+//		return Collections.unmodifiableSet(setAuths);
+//	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> setAuths = new HashSet<>();
-        for (Role userRole : roles) {
-            setAuths.add(new SimpleGrantedAuthority("ROLE_" + userRole.getName()));
-        }
-
-        return Collections.unmodifiableSet(setAuths);
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }

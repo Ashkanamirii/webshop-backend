@@ -4,7 +4,6 @@ import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
-import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,12 +39,12 @@ public class OrderService {
      *
      * @param order Contains information about the order.
      * @return The order that was saved or Exception.
-     * @throws UserException
+     * @throws Exception
      */
-    public Orders addOrder(Orders order) throws UserException {
+    public Orders addOrder(Orders order) throws Exception {
         Optional<Users> user = userDAO.findById(order.getUsers().getId());
         if (user.isEmpty()) {
-            throw new UserException("The customer does not exist");
+            throw new Exception("The customer does not exist");
         } else {
             return orderDAO.save(order);
         }
