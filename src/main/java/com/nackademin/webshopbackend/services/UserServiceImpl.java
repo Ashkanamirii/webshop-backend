@@ -48,23 +48,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private OrderDAO orderDAO;
 	private LoginAttemptService loginAttemptService;
 	private BCryptPasswordEncoder passwordEncoder;
-	private EmailContent emailContent;
 	private EmailClient emailClient;
 
 	public UserServiceImpl(UserDAO userDAO, OrderDAO orderDAO, LoginAttemptService loginAttemptService,
-	                       BCryptPasswordEncoder passwordEncoder, EmailContent emailContent, EmailClient emailClient) {
+	                       BCryptPasswordEncoder passwordEncoder,EmailClient emailClient) {
 		this.userDAO = userDAO;
 		this.orderDAO = orderDAO;
 		this.loginAttemptService = loginAttemptService;
 		this.passwordEncoder = passwordEncoder;
-		this.emailContent = emailContent;
 		this.emailClient = emailClient;
 	}
 
-//		EmailClient e = new EmailClient();
-//		EmailContent emailContent = new EmailContent(u.getEmail(), "Sign up",
-//				"You have been signed up successfully!-->" + u.getEmail());
-//		e.sendEmail(emailContent);
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
