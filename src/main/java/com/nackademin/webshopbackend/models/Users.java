@@ -1,10 +1,10 @@
 package com.nackademin.webshopbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,41 +18,41 @@ import java.time.LocalDateTime;
  * Time: 15:32 <br>
  * Project: webshop-back-end <br>
  */
-@Entity(name="Users")
-@Table(name="users")
-@Getter
-@Setter
-@ToString
+@Entity(name = "Users")
+@Table(name = "users")
+@NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+@Data
+public class Users{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "email", unique = true)
-    @NotNull
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String email;
-    private String password;
-    private String firstname;
-    private String lastname;
-    private String number;
+	@Column(name = "email", unique = true)
+	@NotNull
+	private String email;
+    private String username;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
+	private String firstName;
+	private String lastName;
+	private String number;
+	private String role;//ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
+	private String[] authorities;
 
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name="address_id", referencedColumnName="id")
-    private Address address;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
+	private Address address;
 
-    private int accountType;
-    private boolean status;
+    private boolean isActive;
+    private boolean isNotLocked;
 
-    @CreationTimestamp
-    @Column(name = "create_date")
-    private LocalDateTime createDate;
+	@CreationTimestamp
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
 
-    @UpdateTimestamp
-    @Column(name = "modify_date")
-    private LocalDateTime  modifyDate;
-
-    public Users(){}
-
+	@UpdateTimestamp
+	@Column(name = "modify_date")
+	private LocalDateTime modifyDate;
 }

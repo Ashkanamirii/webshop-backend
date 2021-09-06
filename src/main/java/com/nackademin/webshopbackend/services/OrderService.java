@@ -1,15 +1,17 @@
 package com.nackademin.webshopbackend.services;
 
+import com.nackademin.webshopbackend.client.emailClient.EmailClient;
+import com.nackademin.webshopbackend.client.emailClient.EmailContent;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
-import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -21,48 +23,55 @@ import java.util.Optional;
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderDAO orderDAO;
-    @Autowired
-    private UserDAO userDAO;
+	@Autowired
+	private OrderDAO orderDAO;
+	@Autowired
+	private UserDAO userDAO;
 
-    public List<Orders> getAllOrders() {
-        return orderDAO.findAll();
-    }
+	@Autowired
+	private EmailClient emailClient;
 
-    public Orders getOrderById(Long id) {
-        return orderDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
-    }
+	public List<Orders> getAllOrders() {
+		return orderDAO.findAll();
+	}
 
-    /**
-     * Method that adds an Order object to the database.
-     * Check if the user ID exists otherwise it returns an UserException.
-     *
-     * @param order Contains information about the order.
-     * @return The order that was saved or Exception.
-     * @throws UserException
-     */
-    public Orders addOrder(Orders order) throws UserException {
-        Optional<Users> user = userDAO.findById(order.getUsers().getId());
-        if (user.isEmpty()) {
-            throw new UserException("The customer does not exist");
-        } else {
-            return orderDAO.save(order);
-        }
-    }
+	public Orders getOrderById(Long id) {
+		return orderDAO.findById(id).orElse(null); // Makes it possible to return Category instead of Optional
+	}
 
-    public List<Orders> addOrderList(List<Orders> orders) {
-        return orderDAO.saveAll(orders);
-    }
+	/**
+	 * Method that adds an Order object to the database.
+	 * Check if the user ID exists otherwise it returns an UserException.
+	 *
+	 * @param order Contains information about the order.
+	 * @return The order that was saved or Exception.
+	 * @throws Exception
+	 */
+	public Orders addOrder(Orders order) throws Exception {
+		Users user = userDAO.findById(order.getUsers().getId()).orElse(null);
+		if (user == null) {
+			throw new Exception("The customer does not exist");
+		} else {
+			Orders newOrder = orderDAO.save(order);
+			emailClient.sendEmail(new EmailContent(user.getEmail(),
+					"Order confirmation", CONFIRMATION +
+					newOrder.getId()));
+			return newOrder;
+		}
+	}
 
-    public String removeOrderById(Long id) {
-        orderDAO.deleteById(id);
-        return "Deleted order with id " + id;
-    }
+	public List<Orders> addOrderList(List<Orders> orders) {
+		return orderDAO.saveAll(orders);
+	}
 
-    public String removeAllOrders() {
-        orderDAO.deleteAllInBatch();
-        return "Deleted all orders.";
-    }
+	public String removeOrderById(Long id) {
+		orderDAO.deleteById(id);
+		return "Deleted order with id " + id;
+	}
+
+	public String removeAllOrders() {
+		orderDAO.deleteAllInBatch();
+		return "Deleted all orders.";
+	}
 
 }
