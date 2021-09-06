@@ -78,9 +78,10 @@ public class UserController {
 
 	@SneakyThrows
 	@PostMapping("/update")
-	public Users updateUser(@RequestBody Users users) throws UserNotFoundException,
+	public ResponseEntity<Users> updateUser(@RequestBody Users users) throws UserNotFoundException,
 			EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
-		return userService.updateUser(users);
+		Users updatedUser = userService.updateUser(users);
+		return new ResponseEntity<>(updatedUser, OK);
 	}
 
 	@DeleteMapping("/delete/{username}")

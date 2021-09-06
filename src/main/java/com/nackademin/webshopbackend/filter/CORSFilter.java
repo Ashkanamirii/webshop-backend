@@ -1,4 +1,4 @@
-package com.nackademin.webshopbackend.config;
+package com.nackademin.webshopbackend.filter;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

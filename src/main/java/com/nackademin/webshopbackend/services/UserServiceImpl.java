@@ -8,6 +8,7 @@ import com.nackademin.webshopbackend.exception.domain.EmailExistException;
 import com.nackademin.webshopbackend.exception.domain.EmailNotFoundException;
 import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
 import com.nackademin.webshopbackend.exception.domain.UsernameExistException;
+import com.nackademin.webshopbackend.models.Address;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
@@ -25,6 +26,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
+import static com.nackademin.webshopbackend.constant.EmailConstant.REGISTRATION;
 import static com.nackademin.webshopbackend.constant.UserImplConstant.*;
 import static com.nackademin.webshopbackend.enumeration.Role.ROLE_USER;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -101,13 +103,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		u.setNumber(user.getNumber());
 		u.setActive(true);
 		u.setNotLocked(true);
-//		u.getAddress().setCity(user.getAddress().getCity());
-//		u.getAddress().setStreet(user.getAddress().getStreet());
-//		u.getAddress().setZipcode(user.getAddress().getZipcode());
+		Address address = new Address();
+		address.setCity(user.getAddress().getCity());
+		address.setStreet(user.getAddress().getStreet());
+		address.setZipcode(user.getAddress().getZipcode());
+		u.setAddress(address);
 		userDAO.save(u);
 
 		log.info("New  password: " + u.getPassword());
-		//emailClient.sendEmail(new EmailContent(user.getEmail(),"Register User",REGISTRATION));
+		emailClient.sendEmail(new EmailContent(user.getEmail(),"Register User",REGISTRATION));
 		return u;
 
 	}
@@ -141,9 +145,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		u.setNumber(user.getNumber());
 		u.setActive(true);
 		u.setNotLocked(true);
-//		u.getAddress().setCity(user.getAddress().getCity());
-//		u.getAddress().setStreet(user.getAddress().getStreet());
-//		u.getAddress().setZipcode(user.getAddress().getZipcode());
+		Address address = new Address();
+		address.setCity(user.getAddress().getCity());
+		address.setStreet(user.getAddress().getStreet());
+		address.setZipcode(user.getAddress().getZipcode());
 		userDAO.save(u);
 
 		log.info("New  password: " + u.getPassword());
@@ -159,9 +164,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		currentUser.setFirstName(user.getFirstName());
 		currentUser.setLastName(user.getLastName());
 		currentUser.setNumber(user.getNumber());
-//		currentUser.getAddress().setCity(user.getAddress().getCity());
-//		currentUser.getAddress().setStreet(user.getAddress().getStreet());
-//		currentUser.getAddress().setZipcode(user.getAddress().getZipcode());
+		log.info(currentUser.getAddress().toString());
+		currentUser.getAddress().setId(user.getAddress().getId());
+		currentUser.getAddress().setCity(user.getAddress().getCity());
+		currentUser.getAddress().setStreet(user.getAddress().getStreet());
+		currentUser.getAddress().setZipcode(user.getAddress().getZipcode());
 		currentUser.setUsername(user.getUsername());
 		currentUser.setEmail(user.getEmail());
 		currentUser.setRole(getRoleEnumName(user.getRole()).name());
@@ -199,6 +206,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		//SEND EMAIL
 	}
 
+	/*
+	 * ************************************UTILS*****************************************************
+	 */
 
 	private String encodePassword(String password) {
 		return passwordEncoder.encode(password);

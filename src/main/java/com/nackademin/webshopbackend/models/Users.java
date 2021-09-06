@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class Users{
 	@NotNull
 	private String email;
     private String username;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -53,16 +55,4 @@ public class Users{
 	@UpdateTimestamp
 	@Column(name = "modify_date")
 	private LocalDateTime modifyDate;
-
-
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		Set<GrantedAuthority> setAuths = new HashSet<>();
-//		for (Role userRole : roles) {
-//			setAuths.add(new SimpleGrantedAuthority("ROLE_" + userRole.getName()));
-//		}
-//
-//		return Collections.unmodifiableSet(setAuths);
-//	}
-
 }
