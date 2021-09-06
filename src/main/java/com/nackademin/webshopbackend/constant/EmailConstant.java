@@ -16,4 +16,5 @@ public class EmailConstant {
     public static final String SMTP_STARTTLS_REQUIRED = "mail.smtp.starttls.required";
     public static final String REGISTRATION = "WELCOME TO HAKIM LIVS  you have been registered successfully";
     public static final String BASEURL = "https://hakim-emailservice.herokuapp.com/mail/send";
+    public static final String CONFIRMATION="Your order has been confirmed by order number: ";
 }

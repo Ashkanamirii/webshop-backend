@@ -1,8 +1,6 @@
 package com.nackademin.webshopbackend.controllers;
 
 
-import com.nackademin.webshopbackend.client.emailClient.EmailClient;
-import com.nackademin.webshopbackend.client.emailClient.EmailContent;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +42,9 @@ public class OrderController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        EmailClient e = new EmailClient();
-        e.sendEmail(new EmailContent(o.getUsers().getEmail(), "Order",
-                "du har lagt en order med order number"+o.getTotalPrice()+o.getId()));
+//        EmailClient e = new EmailClient();
+//        e.sendEmail(new EmailContent(o.getUsers().getEmail(), "Order",
+//                "du har lagt en order med order number"+o.getTotalPrice()+o.getId()));
         return ResponseEntity.ok(o);
     }
 
