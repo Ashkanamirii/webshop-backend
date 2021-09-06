@@ -6,15 +6,15 @@ server:
     port: 8082
 spring:
     datasource:
-        password: Ashkan1885A!
-        url: jdbc:mysql://localhost:3306/hakim_webbshop?createDatabaseIfNotExist=true
-        username: root
+        password: 477e7fd79d528c0a6d436f5fc3f47a76bb54aa9ef07fed91c67bf43c2f9f4c3f
+        url: jdbc:postgresql://ec2-54-220-53-223.eu-west-1.compute.amazonaws.com:5432/d3han8hkq49ogh
+        username: zdzitimnurhmkf
+        driverClassName: org.postgresql.Driver
     jpa:
         hibernate:
             ddl-auto: update
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.MySQL8Dialect
                 format_sql: true
         show-sql: true
     mvc:
