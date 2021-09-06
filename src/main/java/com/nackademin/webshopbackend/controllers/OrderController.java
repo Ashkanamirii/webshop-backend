@@ -3,13 +3,11 @@ package com.nackademin.webshopbackend.controllers;
 
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
-import com.nackademin.webshopbackend.utils.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -41,9 +39,12 @@ public class OrderController {
         Orders o = null;
         try {
              o = orderService.addOrder(order);
-        } catch (UserException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+//        EmailClient e = new EmailClient();
+//        e.sendEmail(new EmailContent(o.getUsers().getEmail(), "Order",
+//                "du har lagt en order med order number"+o.getTotalPrice()+o.getId()));
         return ResponseEntity.ok(o);
     }
 

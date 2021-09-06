@@ -1,0 +1,24 @@
+jwt:
+    algorithm: HS512
+    secret: ${JWT_SECRET}
+    validMinutes: 10
+server:
+    port: 8082
+spring:
+    datasource:
+        password: Ashkan1885A!
+        url: jdbc:mysql://localhost:3306/hakim_webbshop?createDatabaseIfNotExist=true
+        username: root
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                format_sql: true
+        show-sql: true
+    mvc:
+        throw-exception-if-no-handler-found: true
+    web:
+        resources:
+            add-mappings: false
