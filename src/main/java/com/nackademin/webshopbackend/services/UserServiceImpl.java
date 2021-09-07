@@ -82,7 +82,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userDAO.findById(id).orElse(null); // Makes it possible to return User instead of Optional
 	}
 
-
 	@Override
 	public Users register(Users user) throws UserNotFoundException, UsernameExistException, EmailExistException {
 		validateNewUsernameAndEmail(EMPTY, user.getUsername(), user.getEmail());

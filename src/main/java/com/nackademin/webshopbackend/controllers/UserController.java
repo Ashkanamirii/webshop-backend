@@ -6,6 +6,9 @@ import com.nackademin.webshopbackend.exception.domain.*;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,12 +51,14 @@ public class UserController {
 
 
 	@PostMapping("/login")
-	public ResponseEntity<Users> login(@RequestBody Users user) {
+	public ResponseEntity<UserTokenDTO> login(@RequestBody Users user) {
 		authenticate(user.getUsername(), user.getPassword());
 		Users loginUser = userService.findUserByUsername(user.getUsername());
 		UserPrincipal userPrincipal = new UserPrincipal(loginUser);
 		HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
-		return new ResponseEntity<>(loginUser, jwtHeader, OK);
+		String token = jwtHeader.get("Jwt-Token").get(0);
+		UserTokenDTO u = new UserTokenDTO(token, loginUser);
+		return new ResponseEntity<>(u, jwtHeader, OK);
 	}
 	@PostMapping("/register")
 	public ResponseEntity<Users> register(@RequestBody Users user) throws UserNotFoundException, UsernameExistException,
@@ -125,4 +130,13 @@ public class UserController {
 	private void authenticate(String username, String password) {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 	}
+}
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class UserTokenDTO{
+	private String token;
+	private Users user;
+
 }
