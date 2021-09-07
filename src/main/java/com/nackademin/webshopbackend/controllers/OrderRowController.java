@@ -23,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/orderRow")
+@CrossOrigin("*")
 public class OrderRowController {
 
     @Autowired

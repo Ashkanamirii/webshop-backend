@@ -18,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/address")
+@CrossOrigin("*")
 public class AddressController {
     @Autowired
     AddressService addressService;

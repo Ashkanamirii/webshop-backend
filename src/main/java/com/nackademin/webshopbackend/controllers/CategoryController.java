@@ -16,7 +16,7 @@ import java.util.List;
  * Logic is performed in CategoryService.
  */
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("/category")
 public class CategoryController {
 
