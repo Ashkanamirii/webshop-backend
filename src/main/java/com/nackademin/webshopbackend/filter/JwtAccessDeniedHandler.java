@@ -18,6 +18,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
+    /**
+     * 401
+     * @param request
+     * @param response
+     * @param exception
+     * @throws IOException
+     */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception)
             throws IOException {

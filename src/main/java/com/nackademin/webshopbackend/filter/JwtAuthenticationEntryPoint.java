@@ -18,6 +18,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
 
+    /**
+     * When request is forbidden then start this method 403
+     * @param request
+     * @param response
+     * @param exception
+     * @throws IOException
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException {

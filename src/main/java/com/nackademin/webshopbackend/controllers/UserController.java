@@ -6,7 +6,6 @@ import com.nackademin.webshopbackend.exception.domain.*;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -76,10 +75,9 @@ public class UserController {
 		return new ResponseEntity<>(newUser, OK);
 	}
 
-	@SneakyThrows
 	@PostMapping("/update")
 	public ResponseEntity<Users> updateUser(@RequestBody Users users) throws UserNotFoundException,
-			EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
+			EmailExistException,UsernameExistException {
 		Users updatedUser = userService.updateUser(users);
 		return new ResponseEntity<>(updatedUser, OK);
 	}
