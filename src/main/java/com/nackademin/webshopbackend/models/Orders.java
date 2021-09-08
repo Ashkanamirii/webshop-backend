@@ -33,7 +33,7 @@ public class Orders {
     @JoinColumn(name="users_id")
     private Users users;
     private String date;
-    private String status;
+    private OrderStatus status;
     private double totalPrice;
 
     @CreationTimestamp

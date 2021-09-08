@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.models;
 
+import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,13 +41,7 @@ public class OrderRow {
 
     private double productPriceWhenOrdering;
 
-    private Status status;
-
-    private enum Status{
-        CONFIRMED,
-        CANCELED,
-        PAYING,
-    }
+    private OrderStatus status;
 
     @CreationTimestamp
     @Column(name = "create_date")
