@@ -2,6 +2,7 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
@@ -47,17 +48,14 @@ public class OrderService {
 	 * @return The order that was saved or Exception.
 	 * @throws Exception
 	 */
-	public Orders addOrder(Orders order) throws Exception {
-		Users user = userDAO.findById(order.getUsers().getId()).orElse(null);
-		if (user == null) {
-			throw new Exception("The customer does not exist");
-		} else {
-			Orders newOrder = orderDAO.save(order);
-			emailClient.sendEmail(new EmailContent(user.getEmail(),
-					"Order confirmation", CONFIRMATION +
-					newOrder.getId()));
-			return newOrder;
-		}
+	public Orders addOrder(Orders order) throws UserNotFoundException {
+		Users user = userDAO.findById(order.getUsers().getId()).orElseThrow(() -> new UserNotFoundException("Customer not found."));
+		Orders newOrder = orderDAO.save(order);
+
+		emailClient.sendEmail(new EmailContent(user.getEmail(),
+				"Order confirmation", CONFIRMATION + newOrder.getId()));
+		return newOrder;
+
 	}
 
 	public List<Orders> addOrderList(List<Orders> orders) {

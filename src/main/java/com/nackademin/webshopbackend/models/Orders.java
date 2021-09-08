@@ -35,7 +35,7 @@ public class Orders {
     private Status status;
     private double totalPrice;
 
-    private enum Status{
+    public enum Status{
         PENDING,
         PRINTED,
         DELIVERED,

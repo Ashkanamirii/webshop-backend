@@ -1,6 +1,7 @@
 package com.nackademin.webshopbackend.controllers;
 
 
+import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,10 @@ public class OrderController {
         Orders o = null;
         try {
              o = orderService.addOrder(order);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (UserNotFoundException userNotFoundException) {
+            return ResponseEntity.badRequest().body(userNotFoundException.getMessage());
         }
-//        EmailClient e = new EmailClient();
-//        e.sendEmail(new EmailContent(o.getUsers().getEmail(), "Order",
-//                "du har lagt en order med order number"+o.getTotalPrice()+o.getId()));
+
         return ResponseEntity.ok(o);
     }
 
