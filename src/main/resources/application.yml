@@ -35,8 +35,15 @@ spring:
     resources:
       add-mappings: false
   rabbitmq:
-    host: localhost
+    host: stingray.rmq.cloudamqp.com
     port: 5672
-    username: guest
-    password: guest
+    username: yfngzrvr
+    password: zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
     queue: payments
+    addresses: amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
+
+    #spring.rabbitmq.host=stingray.rmq.cloudamqp.com
+    #spring.rabbitmq.port=5672
+    #spring.rabbitmq.password=zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
+    #spring.rabbitmq.username=yfngzrvr
+    #spring.rabbitmq.addresses=amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
