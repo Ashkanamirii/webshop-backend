@@ -7,12 +7,12 @@ public class PaymentDto {
     @JsonProperty(value = "reference")
     private String reference;
     @JsonProperty(value = "amount")
-    private long amount;
+    private double amount;
 
     public PaymentDto() {
     }
 
-    public PaymentDto(String reference, long amount) {
+    public PaymentDto(String reference, double amount) {
         this.reference = reference;
         this.amount = amount;
     }
@@ -21,7 +21,7 @@ public class PaymentDto {
         return reference;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 }

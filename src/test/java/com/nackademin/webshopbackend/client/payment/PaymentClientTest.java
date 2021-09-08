@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PaymentClientTest {
 
-    @Test
-    void sendPayment() {
-        PaymentClient pc = new PaymentClient(new RestTemplate());
-        String response = pc.sendPayment(new PaymentDto("hej", 20L));
-        System.out.println(response);
-
-        assertEquals("204 NO_CONTENT", response );
-    }
+//    @Test
+//    void sendPayment() {
+//        PaymentClient pc = new PaymentClient(new RestTemplate());
+//        String response = pc.sendPayment(new PaymentDto("hej", 20L));
+//        System.out.println(response);
+//
+//        assertEquals("204 NO_CONTENT", response );
+//    }
 }

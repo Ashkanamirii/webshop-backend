@@ -2,6 +2,8 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+import com.nackademin.webshopbackend.client.payment.PaymentClient;
+import com.nackademin.webshopbackend.client.payment.PaymentDto;
 import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
@@ -33,6 +35,9 @@ public class OrderService {
 	@Autowired
 	private EmailClient emailClient;
 
+	@Autowired
+	private PaymentClient paymentClient;
+
 	public List<Orders> getAllOrders() {
 		return orderDAO.findAll();
 	}
@@ -55,6 +60,7 @@ public class OrderService {
 			throw new Exception("The customer does not exist");
 		} else {
 			Orders newOrder = orderDAO.save(order);
+			paymentClient.sendPayment(new PaymentDto(newOrder.getId().toString(), newOrder.getTotalPrice()));
 			emailClient.sendEmail(new EmailContent(user.getEmail(),
 					"Order confirmation", CONFIRMATION +
 					newOrder.getId()));
@@ -79,7 +85,8 @@ public class OrderService {
 	public String setOrderStatusToPaid(Long id) {
 		Orders orders = orderDAO.findById(id).orElse(null);
 		if (orders != null) {
-			orders.setStatus(PAID);
+			orders.setStatus("PAID");
+			orderDAO.save(orders);
 			return "Order " + orders.getId() + " has been PAID";
 		}
 		return "Order not found";

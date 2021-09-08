@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -22,10 +23,12 @@ import static com.nackademin.webshopbackend.constant.EmailConstant.BASEURL;
  * Project: webshop-backend
  * Copyright: MIT
  */
+
+@Component
 public class PaymentClient {
 
     private RestTemplate restTemplate;
-    private final String url = "http://localhost:8080/payment";
+    private final String url = "https://hakimlivs-payment-gateway.herokuapp.com/payment";
 
     public PaymentClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
