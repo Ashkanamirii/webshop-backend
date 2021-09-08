@@ -2,6 +2,7 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
+import static com.nackademin.webshopbackend.enumeration.OrderStatus.PAID;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -73,5 +75,15 @@ public class OrderService {
 		orderDAO.deleteAllInBatch();
 		return "Deleted all orders.";
 	}
+
+	public String setOrderStatusToPaid(Long id) {
+		Orders orders = orderDAO.findById(id).orElse(null);
+		if (orders != null) {
+			orders.setStatus(PAID);
+			return "Order " + orders.getId() + " has been PAID";
+		}
+		return "Order not found";
+	}
+
 
 }
