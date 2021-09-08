@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.config;
 
+import com.nackademin.webshopbackend.client.payment.PaymentClient;
 import com.nackademin.webshopbackend.filter.JwtAccessDeniedHandler;
 import com.nackademin.webshopbackend.filter.JwtAuthenticationEntryPoint;
 import com.nackademin.webshopbackend.filter.JwtAuthorizationFilter;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 
 import static com.nackademin.webshopbackend.constant.SecurityConstant.PUBLIC_URLS;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
