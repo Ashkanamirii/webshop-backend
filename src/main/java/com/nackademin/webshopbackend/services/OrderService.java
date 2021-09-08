@@ -60,7 +60,12 @@ public class OrderService {
 			throw new Exception("The customer does not exist");
 		} else {
 			Orders newOrder = orderDAO.save(order);
-			paymentClient.sendPayment(new PaymentDto(newOrder.getId().toString(), newOrder.getTotalPrice()));
+			try {
+				paymentClient.sendPayment(new PaymentDto(newOrder.getId().toString(), newOrder.getTotalPrice()));
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			emailClient.sendEmail(new EmailContent(user.getEmail(),
 					"Order confirmation", CONFIRMATION +
 					newOrder.getId()));
@@ -85,7 +90,7 @@ public class OrderService {
 	public String setOrderStatusToPaid(Long id) {
 		Orders orders = orderDAO.findById(id).orElse(null);
 		if (orders != null) {
-			orders.setStatus("PAID");
+			orders.setStatus(PAID);
 			orderDAO.save(orders);
 			return "Order " + orders.getId() + " has been PAID";
 		}
