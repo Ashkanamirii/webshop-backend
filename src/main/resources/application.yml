@@ -17,7 +17,20 @@ spring:
             hibernate:
                 format_sql: true
         show-sql: true
-#spring:
+    mvc:
+      throw-exception-if-no-handler-found: true
+      web:
+        resources:
+          add-mappings: false
+    rabbitmq:
+      host: stingray.rmq.cloudamqp.com
+      port: 5672
+      username: yfngzrvr
+      password: zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
+      queue: payments
+      addresses: amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
+
+  #spring:
 #  datasource:
 #    url: jdbc:mysql://localhost:3306/hakim_webbshop?createDatabaseIfNotExist=true #change this to your database url
 #    password: Ashkan1885A! #change this to your database username
@@ -29,21 +42,3 @@ spring:
 #    properties:
 #      hibernate:
 #        dialect: org.hibernate.dialect.MySQL8Dialect
-  mvc:
-    throw-exception-if-no-handler-found: true
-  web:
-    resources:
-      add-mappings: false
-  rabbitmq:
-    host: stingray.rmq.cloudamqp.com
-    port: 5672
-    username: yfngzrvr
-    password: zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
-    queue: payments
-    addresses: amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
-
-    #spring.rabbitmq.host=stingray.rmq.cloudamqp.com
-    #spring.rabbitmq.port=5672
-    #spring.rabbitmq.password=zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
-    #spring.rabbitmq.username=yfngzrvr
-    #spring.rabbitmq.addresses=amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
