@@ -40,7 +40,7 @@ public class Users{
 	private String number;
 	private String role;//ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
 	private String[] authorities;
-	private String token;
+
 
 
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
