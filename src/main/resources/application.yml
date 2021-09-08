@@ -1,24 +1,49 @@
 jwt:
-    algorithm: HS512
-    secret: ${JWT_SECRET}
-    validMinutes: 10
+  algorithm: HS512
+  secret: ${JWT_SECRET}
+  validMinutes: 10
 server:
-    port: 8082
+  port: 8082
+#spring:
+#    datasource:
+#        password: 477e7fd79d528c0a6d436f5fc3f47a76bb54aa9ef07fed91c67bf43c2f9f4c3f
+#        url: jdbc:postgresql://ec2-54-220-53-223.eu-west-1.compute.amazonaws.com:5432/d3han8hkq49ogh
+#        username: zdzitimnurhmkf
+#        driverClassName: org.postgresql.Driver
+#    jpa:
+#        hibernate:
+#            ddl-auto: update
+#        properties:
+#            hibernate:
+#                format_sql: true
+#        show-sql: true
 spring:
-    datasource:
-        password: 477e7fd79d528c0a6d436f5fc3f47a76bb54aa9ef07fed91c67bf43c2f9f4c3f
-        url: jdbc:postgresql://ec2-54-220-53-223.eu-west-1.compute.amazonaws.com:5432/d3han8hkq49ogh
-        username: zdzitimnurhmkf
-        driverClassName: org.postgresql.Driver
-    jpa:
-        hibernate:
-            ddl-auto: update
-        properties:
-            hibernate:
-                format_sql: true
-        show-sql: true
-    mvc:
-        throw-exception-if-no-handler-found: true
-    web:
-        resources:
-            add-mappings: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/hakim_webbshop?createDatabaseIfNotExist=true #change this to your database url
+    password: Ashkan1885A! #change this to your database username
+    username: root #change this to your database password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  rabbitmq:
+    host: stingray.rmq.cloudamqp.com
+    port: 5672
+    username: yfngzrvr
+    password: zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
+    queue: payments
+    addresses: amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
+
+    #spring.rabbitmq.host=stingray.rmq.cloudamqp.com
+    #spring.rabbitmq.port=5672
+    #spring.rabbitmq.password=zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
+    #spring.rabbitmq.username=yfngzrvr
+    #spring.rabbitmq.addresses=amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
