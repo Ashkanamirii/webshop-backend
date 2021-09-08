@@ -41,6 +41,8 @@ public class Users{
 	private String role;//ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
 	private String[] authorities;
 
+
+
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;

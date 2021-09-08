@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class EmailContent {
+
 	private String to;
 	private String subject;
 	private String body;

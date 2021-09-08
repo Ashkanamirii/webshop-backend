@@ -29,7 +29,7 @@ public interface UserService {
 
 	Users updateUser(Users user)
 			throws UserNotFoundException, UsernameExistException,
-			EmailExistException, IOException, NotAnImageFileException;
+			EmailExistException;
 
 	void deleteUser(String username) throws IOException;
 

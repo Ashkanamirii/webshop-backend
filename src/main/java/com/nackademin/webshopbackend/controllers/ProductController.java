@@ -17,45 +17,45 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/product")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+	@Autowired
+	private ProductService productService;
 
-    @GetMapping("/get")
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
-    }
+	@GetMapping("/get")
+	public List<Product> getAllProducts() {
+		return productService.getAllProducts();
+	}
 
-    @GetMapping("/get/{id}")
-    public Product getProductById(@PathVariable Long id){
-        return productService.getProductById(id);
-    }
+	@GetMapping("/get/{id}")
+	public Product getProductById(@PathVariable Long id) {
+		return productService.getProductById(id);
+	}
 
-    @PostMapping("/add")
-    public Product addProduct(@RequestBody Product product){
-        return productService.addProduct(product);
-    }
+	@PostMapping("/add")
+	public Product addProduct(@RequestBody Product product) {
+		return productService.addProduct(product);
+	}
 
-    @PostMapping("/add/list")
-    public List<Product> addProductList(@RequestBody List<Product> products){
-       return  productService.addProductList(products);
-    }
+	@PostMapping("/add/list")
+	public List<Product> addProductList(@RequestBody List<Product> products) {
+		return productService.addProductList(products);
+	}
 
-    @PostMapping("/update")
-    public Product updateProduct(@RequestBody Product product) {
-        return productService.updateProduct(product);
-    }
+	@PostMapping("/update")
+	public Product updateProduct(@RequestBody Product product) {
+		return productService.updateProduct(product);
+	}
 
-    @PostMapping("/delete/all")
-    public String deleteProductList(){
-        return productService.removeProducts();
-    }
+	@PostMapping("/delete/all")
+	public String deleteProductList() {
+		return productService.removeProducts();
+	}
 
-    @PostMapping("/delete/{id}")
-    public String deleteProductById(@PathVariable Long id) {
-        return productService.removeProductById(id);
-    }
+	@PostMapping("/delete/{id}")
+	public String deleteProductById(@PathVariable Long id) {
+		return productService.removeProductById(id);
+	}
 
 }

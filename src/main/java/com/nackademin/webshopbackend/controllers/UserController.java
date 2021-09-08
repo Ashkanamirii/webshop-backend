@@ -6,7 +6,6 @@ import com.nackademin.webshopbackend.exception.domain.*;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.services.UserService;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +31,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 	public static final String EMAIL_SENT = "An email with a new password was sent to: ";
 	public static final String USER_DELETED_SUCCESSFULLY = "User deleted successfully";
@@ -76,10 +76,9 @@ public class UserController {
 		return new ResponseEntity<>(newUser, OK);
 	}
 
-	@SneakyThrows
 	@PostMapping("/update")
 	public ResponseEntity<Users> updateUser(@RequestBody Users users) throws UserNotFoundException,
-			EmailExistException, IOException, UsernameExistException, NotAnImageFileException {
+			EmailExistException,UsernameExistException {
 		Users updatedUser = userService.updateUser(users);
 		return new ResponseEntity<>(updatedUser, OK);
 	}

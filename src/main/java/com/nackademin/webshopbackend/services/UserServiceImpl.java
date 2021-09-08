@@ -82,7 +82,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userDAO.findById(id).orElse(null); // Makes it possible to return User instead of Optional
 	}
 
-
 	@Override
 	public Users register(Users user) throws UserNotFoundException, UsernameExistException, EmailExistException {
 		validateNewUsernameAndEmail(EMPTY, user.getUsername(), user.getEmail());
@@ -153,7 +152,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
 	public Users updateUser(Users user) throws UserNotFoundException, EmailExistException, UsernameExistException {
-		Users currentUser = validateNewUsernameAndEmail(user.getUsername(), user.getUsername(), user.getEmail());
+		Users oldUser = userDAO.findById(user.getId()).orElse(null);
+		Users currentUser = validateNewUsernameAndEmail(oldUser.getUsername(), user.getUsername(), user.getEmail());
 		log.info(currentUser.toString());
 		currentUser.setFirstName(user.getFirstName());
 		currentUser.setLastName(user.getLastName());
