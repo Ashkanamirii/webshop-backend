@@ -2,7 +2,13 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+<<<<<<< HEAD
 import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
+=======
+import com.nackademin.webshopbackend.client.payment.PaymentClient;
+import com.nackademin.webshopbackend.client.payment.PaymentDto;
+import com.nackademin.webshopbackend.enumeration.OrderStatus;
+>>>>>>> 5c90ebc218b15ec581136825f893336f64e7a091
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
@@ -13,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
+import static com.nackademin.webshopbackend.enumeration.OrderStatus.PAID;
 
 /**
  * Created by Tomas Dahlander <br>
@@ -32,6 +39,9 @@ public class OrderService {
 	@Autowired
 	private EmailClient emailClient;
 
+	@Autowired
+	private PaymentClient paymentClient;
+
 	public List<Orders> getAllOrders() {
 		return orderDAO.findAll();
 	}
@@ -48,9 +58,17 @@ public class OrderService {
 	 * @return The order that was saved or Exception.
 	 * @throws Exception
 	 */
+
 	public Orders addOrder(Orders order) throws UserNotFoundException {
 		Users user = userDAO.findById(order.getUsers().getId()).orElseThrow(() -> new UserNotFoundException("Customer not found."));
 		Orders newOrder = orderDAO.save(order);
+
+		try {
+			paymentClient.sendPayment(new PaymentDto(newOrder.getId().toString(), newOrder.getTotalPrice()));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 
 		emailClient.sendEmail(new EmailContent(user.getEmail(),
 				"Order confirmation", CONFIRMATION + newOrder.getId()));
@@ -71,5 +89,16 @@ public class OrderService {
 		orderDAO.deleteAllInBatch();
 		return "Deleted all orders.";
 	}
+
+	public String setOrderStatusToPaid(Long id) {
+		Orders orders = orderDAO.findById(id).orElse(null);
+		if (orders != null) {
+			orders.setStatus(PAID);
+			orderDAO.save(orders);
+			return "Order " + orders.getId() + " has been PAID";
+		}
+		return "Order not found";
+	}
+
 
 }

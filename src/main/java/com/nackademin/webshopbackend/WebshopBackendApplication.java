@@ -1,6 +1,7 @@
 package com.nackademin.webshopbackend;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
+import com.nackademin.webshopbackend.client.payment.PaymentClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,11 @@ public class WebshopBackendApplication {
     public EmailClient getClientEmail() {
         return new EmailClient(getRestTemplate());
     }
+
+//    @Bean
+//    public PaymentClient paymentClient() {
+//        return new PaymentClient(getRestTemplate());
+//    }
 
 //    @Bean
 //    CommandLineRunner run(UserService userService){

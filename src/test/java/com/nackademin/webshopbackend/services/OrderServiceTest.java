@@ -3,6 +3,7 @@ package com.nackademin.webshopbackend.services;
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
 import com.nackademin.webshopbackend.constant.EmailConstant;
+import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
 import com.nackademin.webshopbackend.models.Address;
 import com.nackademin.webshopbackend.models.Orders;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
+import static com.nackademin.webshopbackend.enumeration.OrderStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -47,7 +49,7 @@ class OrderServiceTest {
     @BeforeEach
     public void init() {
         this.customer = Optional.of(new Users(1L,"email@email.se","username","pass","firstName","lastName","number","USER",new String[1],new Address(),true,true, LocalDateTime.now(),LocalDateTime.now()));
-        this.order = new Orders(1L, customer.get(),LocalDate.now().toString(), Orders.Status.PENDING,0.0,LocalDateTime.now(),LocalDateTime.now());
+        this.order = new Orders(1L, customer.get(),LocalDate.now().toString(), PENDING,0.0,LocalDateTime.now(),LocalDateTime.now());
         this.customerId = customer.get().getId();
     }
 
@@ -90,7 +92,7 @@ class OrderServiceTest {
 
         @Test
         @DisplayName("Add order unsuccessfully, user throw execption")
-        void addOrderUnsuccessfullyExpection() {
+        void addOrderUnsuccessfullyException() {
 
             UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class,() -> {
                 orderService.addOrder(order);

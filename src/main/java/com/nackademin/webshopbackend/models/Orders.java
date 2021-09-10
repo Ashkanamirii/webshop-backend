@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.models;
 
+import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,14 +33,8 @@ public class Orders {
     @JoinColumn(name="users_id")
     private Users users;
     private String date;
-    private Status status;
+    private OrderStatus status;
     private double totalPrice;
-
-    public enum Status{
-        PENDING,
-        PRINTED,
-        DELIVERED,
-    }
 
     @CreationTimestamp
     @Column(name = "create_date")
