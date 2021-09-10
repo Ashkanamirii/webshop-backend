@@ -2,13 +2,12 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
-<<<<<<< HEAD
+
 import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
-=======
+
 import com.nackademin.webshopbackend.client.payment.PaymentClient;
 import com.nackademin.webshopbackend.client.payment.PaymentDto;
-import com.nackademin.webshopbackend.enumeration.OrderStatus;
->>>>>>> 5c90ebc218b15ec581136825f893336f64e7a091
+
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
