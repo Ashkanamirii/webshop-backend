@@ -12,6 +12,7 @@ import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
+import static com.nackademin.webshopbackend.enumeration.OrderStatus.PAID;
 import static com.nackademin.webshopbackend.enumeration.OrderStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,7 +63,7 @@ class OrderServiceTest {
     class AddOrderTest {
         @Test
         @DisplayName("Add order successfully")
-        void addOrderSuccessfully() {
+        void addOrderSuccessfullyTest() {
 
             when(userDAO.findById(customerId)).thenReturn(Optional.of(customer).get());
             when(orderDAO.save(order)).thenReturn(order);
@@ -101,14 +103,15 @@ class OrderServiceTest {
         }
 
         @Test
-        @DisplayName("Add order unsuccessfully, user throw execption")
-        void addOrderUnsuccessfullyException() {
+        @DisplayName("Add order unsuccessfully, user not found (throw execption)")
+        void addOrderUnsuccessfullyExceptionTest() {
 
             UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class,() -> {
                 orderService.addOrder(order);
             });
 
             assertEquals("Customer not found.",userNotFoundException.getMessage());
+            //assertThrows()
 
             verify(userDAO, times(1)).findById(anyLong());
             verify(orderDAO, times(0)).save(any());
@@ -117,6 +120,47 @@ class OrderServiceTest {
 
 
         }
+    }
+
+    @Nested
+    class setOrderStatusToPaidTest {
+        @Test
+        @DisplayName("Set order status to paid successfully")
+        void successfullyTest() {
+            when(orderDAO.findById(anyLong())).thenReturn(Optional.ofNullable(order));
+            order.setStatus(PAID);
+            when(orderDAO.save(any())).thenReturn(order);
+            String actual = null;
+            try {
+                actual = orderService.setOrderStatusToPaid(order.getId());
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+            String expected = "Order " + order.getId() + " has been PAID";
+            assertEquals(expected,actual);
+            assertEquals(PAID,order.getStatus());
+            assertNotNull(actual);
+
+
+
+
+
+        }
+
+        @Test
+        @DisplayName("Set order status to paid unsuccessfully, order not found (null)")
+        void unsuccessfullyTest() {
+
+            assertThrows(NotFoundException.class,() -> {
+                orderService.setOrderStatusToPaid(order.getId());
+            });
+
+
+
+
+
+        }
+
     }
 
 

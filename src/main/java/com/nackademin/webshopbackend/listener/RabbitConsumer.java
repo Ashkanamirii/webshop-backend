@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
+import javassist.NotFoundException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,8 @@ public class RabbitConsumer {
 				orderService.setOrderStatusToPaid(orders.getId());
 			} catch (NumberFormatException e) {
 				System.out.println(e.getMessage());
+			} catch (NotFoundException notFoundException) {
+				notFoundException.printStackTrace();
 			}
 		} else
 			System.out.println("sending to server payments created");

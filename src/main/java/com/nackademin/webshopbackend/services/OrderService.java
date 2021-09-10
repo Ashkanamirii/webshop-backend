@@ -12,6 +12,7 @@ import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,14 +90,13 @@ public class OrderService {
 		return "Deleted all orders.";
 	}
 
-	public String setOrderStatusToPaid(Long id) {
-		Orders orders = orderDAO.findById(id).orElse(null);
-		if (orders != null) {
-			orders.setStatus(PAID);
-			orderDAO.save(orders);
-			return "Order " + orders.getId() + " has been PAID";
-		}
-		return "Order not found";
+	public String setOrderStatusToPaid(Long id) throws NotFoundException {
+		Orders orders = orderDAO.findById(id).orElseThrow(() -> new NotFoundException("Order not found"));
+
+		orders.setStatus(PAID);
+		Orders updatedOrder = orderDAO.save(orders);
+		return "Order " + updatedOrder.getId() + " has been " + updatedOrder.getStatus() ;
+
 	}
 
 

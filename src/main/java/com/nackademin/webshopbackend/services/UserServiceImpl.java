@@ -208,7 +208,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return passwordEncoder.encode(password);
 	}
 
-	private void validateLoginAttempt(Users user) {
+	public void validateLoginAttempt(Users user) {
 		if (user.isNotLocked()) {
 			if (loginAttemptService.hasExceededMaxAttempts(user.getUsername())) {
 				user.setNotLocked(false);
