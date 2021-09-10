@@ -2,6 +2,8 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+import com.nackademin.webshopbackend.client.payment.PaymentClient;
+import com.nackademin.webshopbackend.client.payment.PaymentDto;
 import com.nackademin.webshopbackend.constant.EmailConstant;
 import com.nackademin.webshopbackend.enumeration.OrderStatus;
 import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
@@ -42,6 +44,8 @@ class OrderServiceTest {
     private UserDAO userDAO;
     @Mock
     private EmailClient emailClient;
+    @Mock
+    private PaymentClient paymentClient;
 
     @InjectMocks
     private OrderService orderService;
@@ -68,17 +72,23 @@ class OrderServiceTest {
 
 
 
-                final ArgumentCaptor<EmailContent> captor = ArgumentCaptor.forClass(EmailContent.class);
+                final ArgumentCaptor<EmailContent> emailContentCaptor = ArgumentCaptor.forClass(EmailContent.class);
+                final ArgumentCaptor<PaymentDto> paymentDtoCaptor = ArgumentCaptor.forClass(PaymentDto.class);
 
                 verify(userDAO, times(1)).findById(customerId);
                 verify(orderDAO, times(1)).save(order);
-                verify(emailClient, times(1)).sendEmail(captor.capture());
+                verify(paymentClient, times(1)).sendPayment(paymentDtoCaptor.capture());
+                verify(emailClient, times(1)).sendEmail(emailContentCaptor.capture());
 
-                final EmailContent emailContentCaptor = captor.getValue();
+                final PaymentDto paymentDtoCaptorValues = paymentDtoCaptor.getValue();
+                final EmailContent emailContentCaptorValues = emailContentCaptor.getValue();
 
-                assertEquals(customer.get().getEmail(),emailContentCaptor.getTo());
-                assertEquals("Order confirmation",emailContentCaptor.getSubject());
-                assertEquals(CONFIRMATION + orderServiceReturnOrder.getId(),emailContentCaptor.getBody());
+                assertEquals(orderServiceReturnOrder.getId().toString(),paymentDtoCaptorValues.getReference());
+                assertEquals(orderServiceReturnOrder.getTotalPrice(),paymentDtoCaptorValues.getAmount());
+
+                assertEquals(customer.get().getEmail(),emailContentCaptorValues.getTo());
+                assertEquals("Order confirmation",emailContentCaptorValues.getSubject());
+                assertEquals(CONFIRMATION + orderServiceReturnOrder.getId(),emailContentCaptorValues.getBody());
 
 
                 assertEquals(order,orderServiceReturnOrder);
