@@ -2,13 +2,17 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
+
+import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
+
 import com.nackademin.webshopbackend.client.payment.PaymentClient;
 import com.nackademin.webshopbackend.client.payment.PaymentDto;
-import com.nackademin.webshopbackend.enumeration.OrderStatus;
+
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,23 +58,22 @@ public class OrderService {
 	 * @return The order that was saved or Exception.
 	 * @throws Exception
 	 */
-	public Orders addOrder(Orders order) throws Exception {
-		Users user = userDAO.findById(order.getUsers().getId()).orElse(null);
-		if (user == null) {
-			throw new Exception("The customer does not exist");
-		} else {
-			Orders newOrder = orderDAO.save(order);
-			try {
-				paymentClient.sendPayment(new PaymentDto(newOrder.getId().toString(), newOrder.getTotalPrice()));
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
 
-			emailClient.sendEmail(new EmailContent(user.getEmail(),
-					"Order confirmation", CONFIRMATION +
-					newOrder.getId()));
-			return newOrder;
+	public Orders addOrder(Orders order) throws UserNotFoundException {
+		Users user = userDAO.findById(order.getUsers().getId()).orElseThrow(() -> new UserNotFoundException("Customer not found."));
+		Orders newOrder = orderDAO.save(order);
+
+		try {
+			paymentClient.sendPayment(new PaymentDto(newOrder.getId().toString(), newOrder.getTotalPrice()));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+
+
+		emailClient.sendEmail(new EmailContent(user.getEmail(),
+				"Order confirmation", CONFIRMATION + newOrder.getId()));
+		return newOrder;
+
 	}
 
 	public List<Orders> addOrderList(List<Orders> orders) {
@@ -87,14 +90,13 @@ public class OrderService {
 		return "Deleted all orders.";
 	}
 
-	public String setOrderStatusToPaid(Long id) {
-		Orders orders = orderDAO.findById(id).orElse(null);
-		if (orders != null) {
-			orders.setStatus(PAID);
-			orderDAO.save(orders);
-			return "Order " + orders.getId() + " has been PAID";
-		}
-		return "Order not found";
+	public String setOrderStatusToPaid(Long id) throws NotFoundException {
+		Orders orders = orderDAO.findById(id).orElseThrow(() -> new NotFoundException("Order not found"));
+
+		orders.setStatus(PAID);
+		Orders updatedOrder = orderDAO.save(orders);
+		return "Order " + updatedOrder.getId() + " has been " + updatedOrder.getStatus() ;
+
 	}
 
 
