@@ -112,6 +112,7 @@ class OrderServiceTest {
 
             verify(userDAO, times(1)).findById(anyLong());
             verify(orderDAO, times(0)).save(any());
+            verify(paymentClient,times(0)).sendPayment(any());
             verify(emailClient, times(0)).sendEmail(any());
 
 
