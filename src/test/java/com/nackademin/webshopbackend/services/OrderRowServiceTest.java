@@ -13,10 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -29,23 +32,26 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(MockitoExtension.class)
 @DataJpaTest
+@ActiveProfiles("test")
 class OrderRowServiceTest {
 
 
 	@InjectMocks
 	OrderRowService orderRowService;
+
 	private OrderRow orderRow1;
 	private OrderRow orderRow2;
 	private Product product1;
 	private Product product2;
 	private List<OrderRow> orderRows;
+	private List<OrderRow> orderRowsWithOne;
 	private Orders order;
 
-//	@Mock
-//	private OrderService orderService;
+	@Mock
+	private OrderService orderService;
 
-	//	@Mock
-//	private ProductService productService;
+	@Mock
+	private ProductService productService;
 	@Mock
 	private OrderRowDAO orderRowDAO;
 	@Mock
@@ -64,28 +70,39 @@ class OrderRowServiceTest {
 		orderRow2 = new OrderRow(4L, product2, order, 20,
 				129.99, OrderStatus.PAID, null, null);
 		orderRows = List.of(orderRow1, orderRow2);
+		orderRowsWithOne = List.of(orderRow1);
 	}
 
 
 	@Test
 	void addOrderRowListShouldAddSuccessfully() throws Exception {
-//		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRows);
-		when(productDao.getOne(1L)).thenReturn(product1);
-		when(productDao.getOne(2L)).thenReturn(product2);
-		when(productDao.save(product1)).thenReturn(product1);
-		when(productDao.save(product2)).thenReturn(product2);
-
+		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRows);
 		when(orderRowDAO.saveAll(any())).thenReturn(orderRows);
 
-		List<OrderRow> expected = orderRowService.addOrderRowList(orderRows);
+		List<OrderRow> orderRowList = new ArrayList<>();
+		List<OrderRow> expected = orderRowService.addOrderRowList(orderRowList);
 		List<OrderRow> actual = orderRows;
-
 		assertEquals(expected.get(0).getProduct().getId(), actual.get(0).getProduct().getId());
-
-
 	}
 
 	@Test
-	void setTotalPriceOfOneOrder() {
+	void addOrderRowListShouldNotAddSuccessfully() throws Exception {
+		List<OrderRow> orderRowList = new ArrayList<>();
+		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRowList);
+		assertThrows(Exception.class, () -> orderRowService.addOrderRowList(orderRows));
+	}
+
+	@Test
+	void addOrderRowListShouldAddOneProduct() throws Exception {
+		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRowsWithOne);
+
+		// Nu ska vi mocka setTotalPriceOfOne
+		when(orderService.getOrderById(any())).thenReturn(order);
+		when(orderService.addOrder(order)).thenReturn(order);
+
+		when(orderRowDAO.saveAll(any())).thenReturn(orderRowsWithOne);
+		List<OrderRow> expected = orderRowService.addOrderRowList(orderRows);
+		List<OrderRow> actual = orderRowsWithOne;
+		assertEquals(expected.get(0).getProduct().getId(), actual.get(0).getProduct().getId());
 	}
 }
