@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	 * ************************************UTILS*****************************************************
 	 */
 
-	private String encodePassword(String password) {
+	public String encodePassword(String password) {
 		return passwordEncoder.encode(password);
 	}
 
@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return Role.valueOf(role.toUpperCase());
 	}
 
-	private Users validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
+	public Users validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
 			throws UserNotFoundException, UsernameExistException, EmailExistException {
 		Users userByNewUsername = findUserByUsername(newUsername);
 		Users userByNewEmail = findUserByEmail(newEmail);
