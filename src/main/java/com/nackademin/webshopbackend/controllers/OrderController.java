@@ -19,47 +19,47 @@ import java.util.List;
  * Logic is performed in OrderService.
  */
 @RestController
-@RequestMapping( "/order")
+@RequestMapping("/order")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
-    @GetMapping("/get")
-    public List<Orders> getAllOrders(){
-        return orderService.getAllOrders();
-    }
+	@GetMapping("/get")
+	public List<Orders> getAllOrders() {
+		return orderService.getAllOrders();
+	}
 
-    @GetMapping("/get/id")
-    public Orders getOrdersById(@RequestParam Long id) {
-        return orderService.getOrderById(id);
-    }
+	@GetMapping("/get/id")
+	public Orders getOrdersById(@RequestParam Long id) {
+		return orderService.getOrderById(id);
+	}
 
-    @PostMapping("/add")
-    public ResponseEntity<Object> addOrder(@RequestBody Orders order){
-        Orders o = null;
-        try {
-             o = orderService.addOrder(order);
-        } catch (UserNotFoundException userNotFoundException) {
-            return ResponseEntity.badRequest().body(userNotFoundException.getMessage());
-        }
+	@PostMapping("/add")
+	public ResponseEntity<Object> addOrder(@RequestBody Orders order) {
+		Orders o = null;
+		try {
+			o = orderService.addOrder(order);
+		} catch (UserNotFoundException userNotFoundException) {
+			return ResponseEntity.badRequest().body(userNotFoundException.getMessage());
+		}
 
-        return ResponseEntity.ok(o);
-    }
+		return ResponseEntity.ok(o);
+	}
 
-    @PostMapping("/add/list")
-    public List<Orders> addOrderList(@RequestBody List<Orders> orders){
-        return orderService.addOrderList(orders);
-    }
+	@PostMapping("/add/list")
+	public List<Orders> addOrderList(@RequestBody List<Orders> orders) {
+		return orderService.addOrderList(orders);
+	}
 
-    @PostMapping("/delete/{id}")
-    public String deleteOrderById(@PathVariable Long id) {
-        return orderService.removeOrderById(id);
-    }
+	@PostMapping("/delete/{id}")
+	public String deleteOrderById(@PathVariable Long id) {
+		return orderService.removeOrderById(id);
+	}
 
-    @PostMapping("/delete/all")
-    public String deleteAllOrders(){
-        return orderService.removeAllOrders();
-    }
+	@PostMapping("/delete/all")
+	public String deleteAllOrders() {
+		return orderService.removeAllOrders();
+	}
 }
