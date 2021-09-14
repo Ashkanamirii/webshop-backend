@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
+import static com.nackademin.webshopbackend.constant.EmailConstant.BASEURL;
+
 @SpringBootApplication
 public class WebshopBackendApplication {
 
@@ -26,7 +28,7 @@ public class WebshopBackendApplication {
 
     @Bean
     public EmailClient getClientEmail() {
-        return new EmailClient(getRestTemplate());
+        return new EmailClient(getRestTemplate(),BASEURL);
     }
 
 //    @Bean

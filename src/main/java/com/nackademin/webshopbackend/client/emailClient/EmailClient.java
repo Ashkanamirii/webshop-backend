@@ -30,12 +30,13 @@ public class EmailClient {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	private String emailServiceUrl;
+
 
 
 
 	public String sendEmail(EmailContent emailContent) {
 		restTemplate = new RestTemplate();
-		System.out.println(emailContent.toString());
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -47,9 +48,8 @@ public class EmailClient {
 		map.put("body", emailContent.getBody());
 
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
-
 		final ResponseEntity<ClientEmailDTO> response = restTemplate.
-				postForEntity(BASEURL, entity, ClientEmailDTO.class);
+				postForEntity(emailServiceUrl, entity, ClientEmailDTO.class);
 
 
 		if (response.getStatusCode().is2xxSuccessful()) {
