@@ -28,8 +28,8 @@ public class AddressController {
         return addressService.getAllAddresses();
     }
 
-    @GetMapping("/get/id")
-    public Address getAddressById(Long id){
+    @GetMapping("/get/{id}")
+    public Address getAddressById(@PathVariable Long id){
         return addressService.getAddressById(id);
     }
 

@@ -32,7 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class AddressControllerTest {
 
-    private final String baseUrl = "";
     private String token;
 
     @Autowired
@@ -43,14 +42,13 @@ class AddressControllerTest {
 
     @BeforeEach
     public void init() {
-        String[] array = {"ROLE_SUPER_ADMIN"};
-
-        Users user = new Users(1L, "test@test.com", "Test", "password", "Pelle", "Karlsson", "070-1234567", "ROLE_SUPER_ADMIN", array,
-                new Address(10L, "gatan 1", "12345", "Stockholm", LocalDateTime.now(), LocalDateTime.now()), true, true, LocalDateTime.now(), LocalDateTime.now());
+        Users user = new Users(1L, "test@test.com", "Test", "password", "Pelle", "Karlsson",
+                "070-1234567", "ROLE_SUPER_ADMIN", new String[]{"ROLE_SUPER_ADMIN"},
+                new Address(10L, "gatan 1", "12345", "Stockholm", LocalDateTime.now(), LocalDateTime.now()),
+                true, true, LocalDateTime.now(), LocalDateTime.now());
         UserPrincipal userPrincipal = new UserPrincipal(user);
         token = jwtTokenProvider.generateJwtToken(userPrincipal);
     }
-
 
     @Test
     void getAllAddressesGiveStatus403() throws Exception {
@@ -63,22 +61,52 @@ class AddressControllerTest {
     }
 
     @Test
-    void getAddressById() {
+    void getAddressByIdGiveStatus403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/address/get/10")).andExpect(status().is(403));
     }
 
     @Test
-    void addAddress() {
+    void getAddressByIdGiveStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/address/get/10").header("Authorization", "Bearer " + token)).andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void addAddresses() {
+    void addAddressGiveStatus403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/add")).andExpect(status().is(403));
     }
 
     @Test
-    void deleteAllAddresses() {
+    void addAddressGiveStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/add").header("Authorization", "Bearer " + token)).andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void deleteAddressById() {
+    void addAddressesGiveStatus403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/add/list")).andExpect(status().is(403));
+    }
+
+    @Test
+    void addAddressesGiveStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/add/list").header("Authorization", "Bearer " + token)).andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void deleteAllAddressesGiveStatus403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/delete/all")).andExpect(status().is(403));
+    }
+
+    @Test
+    void deleteAllAddressesGiveStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/delete/all").header("Authorization", "Bearer " + token)).andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void deleteAddressByIdGiveStatus403() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/delete/10")).andExpect(status().is(403));
+    }
+
+    @Test
+    void deleteAddressByIdGiveStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/address/delete/10").header("Authorization", "Bearer " + token)).andExpect(status().is2xxSuccessful());
     }
 }
