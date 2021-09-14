@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,23 +28,6 @@ class EmailClientTest {
         mockServer.stop();
     }
 
-    @Test
-    void canMakeRiskAssessment() {
-        mockServer.stubFor(post(urlEqualTo("/risk/dan")).willReturn(aResponse()
-                .withStatus(HttpStatus.OK.value())
-                .withHeader("Content-Type", "application/json")
-                .withBody("{\"message\":\"send message successfully\"}:")));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        EmailContent emailContent = new EmailContent("d","d","d");
-        HttpEntity<EmailContent> requestEntity = new HttpEntity<>(emailContent, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        final ResponseEntity<ClientEmailDTO> entity = restTemplate.postForEntity(mockServer.baseUrl() + "/risk/" + "dan",requestEntity,ClientEmailDTO.class);
-        String resultString = entity.getBody().getClientEmail().getMessage();
-        assertEquals("send message successfully",resultString);
-    }
 
     @Test
     void sendEmailSuccessful() {
@@ -60,6 +44,24 @@ class EmailClientTest {
         String response = emailClient.sendEmail(emailContent);
 
         assertEquals("send email successfully", response);
+
+    }
+
+    @Test
+    void sendEmailUnsuccessfully() {
+        mockServer.stubFor(post(urlEqualTo("/mail/send")).willReturn(aResponse()
+                .withStatus(HttpStatus.BAD_REQUEST.value())
+                .withHeader("Content-Type", "text/plain")
+                .withBody("BAD REQUEST")));
+
+        String emailServiceUrl = mockServer.baseUrl() + "/mail/send";
+        RestTemplate restTemplate = new RestTemplate();
+        EmailContent emailContent = new EmailContent();
+
+        EmailClient emailClient = new EmailClient(restTemplate, emailServiceUrl);
+        assertThrows(HttpClientErrorException.class, () -> {
+            emailClient.sendEmail(emailContent);
+        });
 
     }
 }
