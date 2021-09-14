@@ -6,9 +6,9 @@ import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.models.Users;
+import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.OrderRowDAO;
 import com.nackademin.webshopbackend.repos.ProductDAO;
-import com.nackademin.webshopbackend.repos.UserDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,7 +58,7 @@ class OrderRowServiceTest {
 	private ProductDAO productDao;
 
 	@Mock
-	private UserDAO userDao;
+	private OrderDAO orderDao;
 
 	@Mock
 	private EmailClient emailClient;
@@ -85,12 +85,7 @@ class OrderRowServiceTest {
 
 	@Test
 	void addOrderRowListShouldAddSuccessfully() throws Exception {
-		when(userDao.findById(any())).thenReturn(java.util.Optional.ofNullable(user));
-
-//		when(productDao.getOne(product2.getId())).thenReturn(product2);
-//		when(productDao.getOne(product1.getId())).thenReturn(product1);
-//		when(productDao.save(product2)).thenReturn(product2);
-//		when(productDao.save(product1)).thenReturn(product1);
+		when(orderDao.findById(any())).thenReturn(java.util.Optional.ofNullable(order));
 		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRows);
 		when(emailClient.sendEmail(any())).thenReturn("Email has been send");
 		when(orderRowDAO.saveAll(any())).thenReturn(orderRows);
@@ -101,15 +96,18 @@ class OrderRowServiceTest {
 
 	@Test
 	void addOrderRowListShouldNotAddSuccessfully() throws Exception {
-		when(userDao.findById(any())).thenReturn(java.util.Optional.ofNullable(user));
+		when(orderDao.findById(any())).thenReturn(java.util.Optional.ofNullable(order));
 		List<OrderRow> orderRowList = new ArrayList<>();
 		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRowList);
-		assertThrows(Exception.class, () -> orderRowService.addOrderRowList(orderRows));
+		Exception exception = assertThrows(Exception.class, () -> orderRowService.addOrderRowList(orderRows));
+		String actual = exception.getMessage();
+		String expected = "Lagersaldona var mindre i lager än i beställningen";
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void addOrderRowListShouldAddOneProduct() throws Exception {
-		when(userDao.findById(any())).thenReturn(java.util.Optional.ofNullable(user));
+		when(orderDao.findById(any())).thenReturn(java.util.Optional.ofNullable(order));
 		when(productService.checkQuantityAndPrice(any())).thenReturn(orderRowsWithOne);
 
 		// Nu ska vi mocka setTotalPriceOfOne
@@ -121,5 +119,6 @@ class OrderRowServiceTest {
 		List<OrderRow> expected = orderRowService.addOrderRowList(orderRows);
 		List<OrderRow> actual = orderRowsWithOne;
 		assertEquals(expected.get(0).getProduct().getId(), actual.get(0).getProduct().getId());
+		assertEquals(1, expected.size());
 	}
 }
