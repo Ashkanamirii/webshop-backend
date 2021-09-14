@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private EmailClient emailClient;
 
 	public UserServiceImpl(UserDAO userDAO, OrderDAO orderDAO, LoginAttemptService loginAttemptService,
-	                       BCryptPasswordEncoder passwordEncoder,EmailClient emailClient) {
+	                       BCryptPasswordEncoder passwordEncoder, EmailClient emailClient) {
 		this.userDAO = userDAO;
 		this.orderDAO = orderDAO;
 		this.loginAttemptService = loginAttemptService;
@@ -63,12 +63,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Users user = userDAO.findByUsername(username);
+		Users user = userDAO.findByUsername(username);// when(
 		if (user == null) {
 			log.error("User not found by username: " + username);
 			throw new UsernameNotFoundException("User not found by username: " + username);
 		} else {
-			validateLoginAttempt(user);
+			validateLoginAttempt(user);// when
 			userDAO.save(user);
 			UserPrincipal userPrincipal = new UserPrincipal(user);
 			log.info(FOUND_USER_BY_USERNAME + username);
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		userDAO.save(u);
 
 		log.info("New  password: " + u.getPassword());
-		emailClient.sendEmail(new EmailContent(user.getEmail(),"Register User",REGISTRATION));
+		emailClient.sendEmail(new EmailContent(user.getEmail(), "Register User", REGISTRATION));
 		return u;
 
 	}
@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	 * ************************************UTILS*****************************************************
 	 */
 
-	private String encodePassword(String password) {
+	public String encodePassword(String password) {
 		return passwordEncoder.encode(password);
 	}
 
@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return Role.valueOf(role.toUpperCase());
 	}
 
-	private Users validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
+	public Users validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
 			throws UserNotFoundException, UsernameExistException, EmailExistException {
 		Users userByNewUsername = findUserByUsername(newUsername);
 		Users userByNewEmail = findUserByEmail(newEmail);

@@ -21,8 +21,10 @@ public class OrderRowService {
 
 	@Autowired
 	OrderRowDAO orderRowDAO;
+
 	@Autowired
 	OrderService orderService;
+
 	@Autowired
 	private ProductService productService;
 
@@ -39,10 +41,7 @@ public class OrderRowService {
 	}
 
 	public List<OrderRow> addOrderRowList(List<OrderRow> orderRows) throws Exception {
-		//TODO check incoming product with DB
-
-		List<OrderRow> correctInStock = productService.checkQuantity(orderRows);
-
+		List<OrderRow> correctInStock = productService.checkQuantityAndPrice(orderRows);
 		if (correctInStock.isEmpty()) { // Om ingenting fanns i lager
 			orderService.removeOrderById(orderRows.get(0).getOrder().getId());
 			throw new Exception("Lagersaldona var mindre i lager än i beställningen");
