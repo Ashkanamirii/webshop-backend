@@ -97,7 +97,7 @@ public class ProductService {
 				product.setQuantity(newQuantity);
 				Product p = productDAO.save(product);
 				orderRows.get(i).setProductPriceWhenOrdering(p.getPrice());
-				list.add(orderRows.remove(i));
+				list.add(orderRows.get(i));
 			}
 		}
 		return list;

@@ -59,7 +59,7 @@ public class OrderRowService {
 		if (correctInStock.isEmpty()) { // Om ingenting fanns i lager
 			orderService.removeOrderById(orderRows.get(0).getOrder().getId());
 			throw new Exception("Lagersaldona var mindre i lager än i beställningen");
-		} else if (orderRows.isEmpty()) { // Om allt går bra
+		} else if (orderRows.size() == correctInStock.size()) { // Om allt går bra
 			emailClient.sendEmail(new EmailContent(user.getEmail(),
 					"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
 			return orderRowDAO.saveAll(correctInStock);
