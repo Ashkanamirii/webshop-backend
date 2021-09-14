@@ -83,7 +83,7 @@ public class ProductService {
 			long id = orderRows.get(i).getProduct().getId();
 			Product product = productDAO.getOne(id);
 			// check price with DB
-			if (orderRows.get(i).getProduct().getPrice() == product.getPrice()) {
+			if (orderRows.get(i).getProduct().getPrice() != product.getPrice()) {
 				throw new Exception("Produkt data är korrumperad");
 			}
 
