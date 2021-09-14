@@ -3,6 +3,7 @@ package com.nackademin.webshopbackend.services;
 import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Product;
+import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class ProductService {
 
 	@Autowired
 	private ProductDAO productDAO;
+
+	@Autowired
+	private OrderDAO orderDAO;
 
 	public List<Product> getAllProducts() {
 		return productDAO.findAll();
@@ -84,6 +88,7 @@ public class ProductService {
 			Product product = productDAO.getOne(id);
 			// check price with DB
 			if (orderRows.get(i).getProduct().getPrice() != product.getPrice()) {
+				orderDAO.deleteById(orderRows.get(i).getOrder().getId());
 				throw new Exception("Produkt data är korrumperad");
 			}
 

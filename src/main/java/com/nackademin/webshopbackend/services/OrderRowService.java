@@ -1,12 +1,18 @@
 package com.nackademin.webshopbackend.services;
 
+import com.nackademin.webshopbackend.client.emailClient.EmailClient;
+import com.nackademin.webshopbackend.client.emailClient.EmailContent;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Orders;
+import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderRowDAO;
+import com.nackademin.webshopbackend.repos.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
 
 /**
  * Created by Ashkan Amiri
@@ -28,6 +34,12 @@ public class OrderRowService {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private EmailClient emailClient;
+
+	@Autowired
+	private UserDAO userDao;
+
 	public List<OrderRow> getAllOrderRow() {
 		return orderRowDAO.findAll();
 	}
@@ -41,16 +53,22 @@ public class OrderRowService {
 	}
 
 	public List<OrderRow> addOrderRowList(List<OrderRow> orderRows) throws Exception {
+		Users user = userDao.findById(orderRows.get(0).getOrder().getUsers().getId()).get();
+
 		List<OrderRow> correctInStock = productService.checkQuantityAndPrice(orderRows);
 		if (correctInStock.isEmpty()) { // Om ingenting fanns i lager
 			orderService.removeOrderById(orderRows.get(0).getOrder().getId());
 			throw new Exception("Lagersaldona var mindre i lager än i beställningen");
 		} else if (orderRows.isEmpty()) { // Om allt går bra
+			emailClient.sendEmail(new EmailContent(user.getEmail(),
+					"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
 			return orderRowDAO.saveAll(correctInStock);
 		} else { // Om bara några saker finns i lager
 			// Uppdatera totalpriset
 			setTotalPriceOfOneOrder(correctInStock, orderRows);
 		}
+		emailClient.sendEmail(new EmailContent(user.getEmail(),
+				"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
 		return orderRowDAO.saveAll(orderRows);
 	}
 
