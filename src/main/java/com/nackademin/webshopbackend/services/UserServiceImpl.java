@@ -197,7 +197,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		user.setPassword(encodePassword(newPassword));
 		userDAO.save(user);
 		log.info("New user password: " + newPassword);
-		//SEND EMAIL
+		emailClient.sendEmail(new EmailContent(user.getEmail(),
+				"Change password", "Your password has been updated successfully"));
 	}
 
 	/*
