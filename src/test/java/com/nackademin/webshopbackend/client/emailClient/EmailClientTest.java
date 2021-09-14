@@ -19,7 +19,7 @@ class EmailClientTest {
 
     @BeforeEach
     public void before() {
-        mockServer = new WireMockServer(9090);
+        mockServer = new WireMockServer(PORT);
         mockServer.start();
     }
 
