@@ -40,7 +40,7 @@ public class CategoryController {
 
     @PostMapping("/add/list")
     public List<Category> addCategoryList(@RequestBody List<Category> categories){
-       return  categoryService.addCategoryList(categories);
+       return categoryService.addCategoryList(categories);
     }
 
     @PostMapping("/delete/all")
