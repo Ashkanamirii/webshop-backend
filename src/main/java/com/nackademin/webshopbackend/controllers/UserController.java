@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.nackademin.webshopbackend.constant.SecurityConstant.JWT_TOKEN_HEADER;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -56,6 +57,7 @@ public class UserController {
 		HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
 		return new ResponseEntity<>(loginUser, jwtHeader, OK);
 	}
+
 	@PostMapping("/register")
 	public ResponseEntity<Users> register(@RequestBody Users user) throws UserNotFoundException, UsernameExistException,
 			EmailExistException {
@@ -78,7 +80,7 @@ public class UserController {
 
 	@PostMapping("/update")
 	public ResponseEntity<Users> updateUser(@RequestBody Users users) throws UserNotFoundException,
-			EmailExistException,UsernameExistException {
+			EmailExistException, UsernameExistException {
 		Users updatedUser = userService.updateUser(users);
 		return new ResponseEntity<>(updatedUser, OK);
 	}
@@ -98,12 +100,14 @@ public class UserController {
 
 	@GetMapping("/resetpassword")
 	public ResponseEntity<HttpResponse> resetPassword(@RequestParam("email") String email,
-	                                                  @RequestParam("newPassword") String newPassword)
-			throws  EmailNotFoundException {
-		userService.resetPassword(email,newPassword);
+	                                                  @RequestParam("newPassword") String newPassword) {
+		try {
+			userService.resetPassword(email, newPassword);
+		} catch (EmailNotFoundException e) {
+			return response(BAD_REQUEST, e.getMessage());
+		}
 		return response(OK, EMAIL_SENT + email);
 	}
-
 
 
 //////////////******************************************************************************************//////

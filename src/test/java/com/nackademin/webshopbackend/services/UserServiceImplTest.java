@@ -61,6 +61,7 @@ class UserServiceImplTest {
 		u.setAddress(a);
 		u.setRole(ROLE_USER.name());
 		u.setAuthorities(ROLE_USER.getAuthorities());
+		u.setNumber("073997****");
 
 		users.add(u);
 
@@ -126,5 +127,21 @@ class UserServiceImplTest {
 		String actualMessage = exception.getMessage();
 
 		assertTrue(actualMessage.contains(expectedMessage));
+	}
+
+	@Test
+	void updateUserShouldUpdateOneUser() throws UserNotFoundException, EmailExistException, UsernameExistException {
+		when(repository.findById(any())).thenReturn(java.util.Optional.ofNullable(users.get(0)));
+		when(userService.findUserByUsername(any())).thenReturn(users.get(0));
+		when(userService.findUserByEmail(any())).thenReturn(users.get(0));
+		when(userService.findUserByEmail(users.get(0).getEmail())).thenReturn(users.get(0));
+		System.out.println(users.get(0).getNumber());
+		users.get(0).setNumber("newNumber");
+		when(repository.save(any())).thenReturn(users.get(0));
+
+		Users expected = userService.updateUser(users.get(0));
+		Users actual = users.get(0);
+
+		assertEquals(expected.getNumber(), actual.getNumber());
 	}
 }

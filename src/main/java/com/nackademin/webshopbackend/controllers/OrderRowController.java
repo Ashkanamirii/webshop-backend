@@ -4,7 +4,6 @@ package com.nackademin.webshopbackend.controllers;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.services.OrderRowService;
 import com.nackademin.webshopbackend.services.OrderService;
-import com.nackademin.webshopbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +30,6 @@ public class OrderRowController {
 	@Autowired
 	OrderService orderService;
 
-	@Autowired
-	private ProductService productService;
 
 	@GetMapping("/get")
 	public List<OrderRow> getAllOrderRow() {

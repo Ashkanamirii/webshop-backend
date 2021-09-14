@@ -1,13 +1,8 @@
 package com.nackademin.webshopbackend.services;
 
-import com.nackademin.webshopbackend.client.emailClient.EmailClient;
-import com.nackademin.webshopbackend.client.emailClient.EmailContent;
-
-import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
-
 import com.nackademin.webshopbackend.client.payment.PaymentClient;
 import com.nackademin.webshopbackend.client.payment.PaymentDto;
-
+import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
 import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.repos.OrderDAO;
@@ -18,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
 import static com.nackademin.webshopbackend.enumeration.OrderStatus.PAID;
 
 /**
@@ -36,8 +30,6 @@ public class OrderService {
 	@Autowired
 	private UserDAO userDAO;
 
-	@Autowired
-	private EmailClient emailClient;
 
 	@Autowired
 	private PaymentClient paymentClient;
@@ -68,12 +60,7 @@ public class OrderService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
-
-		emailClient.sendEmail(new EmailContent(user.getEmail(),
-				"Order confirmation", CONFIRMATION + newOrder.getId()));
 		return newOrder;
-
 	}
 
 	public List<Orders> addOrderList(List<Orders> orders) {
@@ -95,7 +82,7 @@ public class OrderService {
 
 		orders.setStatus(PAID);
 		Orders updatedOrder = orderDAO.save(orders);
-		return "Order " + updatedOrder.getId() + " has been " + updatedOrder.getStatus() ;
+		return "Order " + updatedOrder.getId() + " has been " + updatedOrder.getStatus();
 
 	}
 
