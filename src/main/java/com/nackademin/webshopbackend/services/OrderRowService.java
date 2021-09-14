@@ -4,9 +4,10 @@ import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
 import com.nackademin.webshopbackend.models.OrderRow;
 import com.nackademin.webshopbackend.models.Orders;
-import com.nackademin.webshopbackend.models.Users;
+import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.OrderRowDAO;
 import com.nackademin.webshopbackend.repos.UserDAO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
  * Class that performs logic on OrderRow objects.
  */
 @Service
+@Slf4j
 public class OrderRowService {
 
 	@Autowired
@@ -40,6 +42,9 @@ public class OrderRowService {
 	@Autowired
 	private UserDAO userDao;
 
+	@Autowired
+	private OrderDAO orderDao;
+
 	public List<OrderRow> getAllOrderRow() {
 		return orderRowDAO.findAll();
 	}
@@ -53,23 +58,33 @@ public class OrderRowService {
 	}
 
 	public List<OrderRow> addOrderRowList(List<OrderRow> orderRows) throws Exception {
-		Users user = userDao.findById(orderRows.get(0).getOrder().getUsers().getId()).get();
-
+		Orders o = orderDao.findById(orderRows.get(0).getOrder().getId()).orElseThrow();
 		List<OrderRow> correctInStock = productService.checkQuantityAndPrice(orderRows);
 		if (correctInStock.isEmpty()) { // Om ingenting fanns i lager
 			orderService.removeOrderById(orderRows.get(0).getOrder().getId());
 			throw new Exception("Lagersaldona var mindre i lager än i beställningen");
 		} else if (orderRows.size() == correctInStock.size()) { // Om allt går bra
-			emailClient.sendEmail(new EmailContent(user.getEmail(),
-					"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
+			try {
+				emailClient.sendEmail(new EmailContent(o.getUsers().getEmail(),
+						"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				log.error("Error to send email");
+			}
 			return orderRowDAO.saveAll(correctInStock);
 		} else { // Om bara några saker finns i lager
 			// Uppdatera totalpriset
 			setTotalPriceOfOneOrder(correctInStock, orderRows);
 		}
-		emailClient.sendEmail(new EmailContent(user.getEmail(),
-				"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
-		return orderRowDAO.saveAll(orderRows);
+		try {
+			emailClient.sendEmail(new EmailContent(o.getUsers().getEmail(),
+					"Order confirmation", CONFIRMATION + orderRows.get(0).getOrder().getId()));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			log.error("Error to send email");
+		}
+
+		return orderRowDAO.saveAll(correctInStock);
 	}
 
 	public void removeOrderRows() {
