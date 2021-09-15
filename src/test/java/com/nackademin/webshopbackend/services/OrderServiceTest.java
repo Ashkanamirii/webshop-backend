@@ -1,6 +1,5 @@
 package com.nackademin.webshopbackend.services;
 
-import com.nackademin.webshopbackend.client.emailClient.EmailClient;
 import com.nackademin.webshopbackend.client.emailClient.EmailContent;
 import com.nackademin.webshopbackend.client.payment.PaymentClient;
 import com.nackademin.webshopbackend.client.payment.PaymentDto;
@@ -25,7 +24,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.nackademin.webshopbackend.constant.EmailConstant.CONFIRMATION;
 import static com.nackademin.webshopbackend.enumeration.OrderStatus.PAID;
 import static com.nackademin.webshopbackend.enumeration.OrderStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;

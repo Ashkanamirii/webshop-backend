@@ -1,20 +1,9 @@
 package com.nackademin.webshopbackend.client.payment;
 
-import com.nackademin.webshopbackend.client.emailClient.ClientEmailDTO;
-import com.nackademin.webshopbackend.client.emailClient.EmailContent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.nackademin.webshopbackend.constant.EmailConstant.BASEURL;
 
 /**
  * Created by Ashkan Amiri
@@ -25,24 +14,24 @@ import static com.nackademin.webshopbackend.constant.EmailConstant.BASEURL;
  */
 
 @Component
+@Data
 public class PaymentClient {
 
-    private RestTemplate restTemplate;
-    private final String url = "https://hakimlivs-payment-gateway.herokuapp.com/payment";
+	private RestTemplate restTemplate;
+	private String url = "https://hakimlivs-payment-gateway.herokuapp.com/payment";
 
-    public PaymentClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+	public PaymentClient(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
 
-    public String sendPayment(PaymentDto paymentDto) {
+	public String sendPayment(PaymentDto paymentDto) {
 
-        final ResponseEntity<Void> response = restTemplate.
-                postForEntity(url, paymentDto, Void.class);
+		final ResponseEntity<Void> response = restTemplate.
+				postForEntity(url, paymentDto, Void.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getStatusCode().toString();
-        }
-
-        throw new RuntimeException("Could not handle payment");
-    }
+		if (response.getStatusCode().is2xxSuccessful()) {
+			return response.getStatusCode().toString();
+		}
+		return "Payment transaction went wrong";
+	}
 }
