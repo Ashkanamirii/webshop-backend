@@ -1,7 +1,9 @@
 package com.nackademin.webshopbackend.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nackademin.webshopbackend.domain.UserPrincipal;
 import com.nackademin.webshopbackend.models.Address;
+import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.Users;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +16,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 
+import static com.nackademin.webshopbackend.enumeration.Role.ROLE_SUPER_ADMIN;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -37,7 +42,7 @@ class CategoryControllerTest {
     @BeforeEach
     void init() {
         Users user = new Users(1L, "test@test.com", "Test", "password", "Pelle", "Karlsson",
-                "070-1234567", "ROLE_SUPER_ADMIN", new String[]{"ROLE_SUPER_ADMIN"},
+                "070-1234567", ROLE_SUPER_ADMIN.name(), ROLE_SUPER_ADMIN.getAuthorities(),
                 new Address(10L, "gatan 1", "12345", "Stockholm", LocalDateTime.now(), LocalDateTime.now()),
                 true, true, LocalDateTime.now(), LocalDateTime.now());
         UserPrincipal userPrincipal = new UserPrincipal(user);
@@ -119,6 +124,7 @@ class CategoryControllerTest {
 
         @Test
         void addCategoryListGiveStatus2xx() throws Exception {
+            System.out.println(token + " **************************************************************************");
             String jsonList = "[" + json + "]";
             mockMvc.perform(MockMvcRequestBuilders
                             .post("/category/add/list")
@@ -142,12 +148,19 @@ class CategoryControllerTest {
 
         @Test
         void deleteCategoryByIdGiveStatus2xx() throws Exception{
-            mockMvc.perform(MockMvcRequestBuilders.post("/category/add")
+            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/category/add")
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(json));
+                    .content(json)).andExpect(status().is2xxSuccessful()).andReturn();
 
-            mockMvc.perform(MockMvcRequestBuilders.post("/category/delete/1")
+//            String object = mvcResult.getResponse().getContentAsString();
+
+//            System.out.println("object = " + object);
+            Category cat = new ObjectMapper().readValue(json,Category.class);
+
+            System.out.println(cat.getId() + "********************* VÅRT ID ******************");
+
+            mockMvc.perform(MockMvcRequestBuilders.post("/category/delete/"+cat.getId())
                     .header("Authorization", "Bearer " + token))
                     .andExpect(status().is2xxSuccessful());
         }
