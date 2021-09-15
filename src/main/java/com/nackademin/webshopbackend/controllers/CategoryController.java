@@ -43,7 +43,7 @@ public class CategoryController {
     @PreAuthorize("hasAnyAuthority('user:create')")
     @PostMapping("/add/list")
     public List<Category> addCategoryList(@RequestBody List<Category> categories){
-       return  categoryService.addCategoryList(categories);
+       return categoryService.addCategoryList(categories);
     }
 
     @PreAuthorize("hasAnyAuthority('user:delete')")
