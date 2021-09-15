@@ -3,6 +3,7 @@ package com.nackademin.webshopbackend.controllers;
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,26 +34,31 @@ public class ProductController {
 		return productService.getProductById(id);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:create')")
 	@PostMapping("/add")
 	public Product addProduct(@RequestBody Product product) {
 		return productService.addProduct(product);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:create')")
 	@PostMapping("/add/list")
 	public List<Product> addProductList(@RequestBody List<Product> products) {
 		return productService.addProductList(products);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@PostMapping("/update")
 	public Product updateProduct(@RequestBody Product product) {
 		return productService.updateProduct(product);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/all")
 	public String deleteProductList() {
 		return productService.removeProducts();
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/{id}")
 	public String deleteProductById(@PathVariable Long id) {
 		return productService.removeProductById(id);

@@ -6,6 +6,7 @@ import com.nackademin.webshopbackend.services.OrderRowService;
 import com.nackademin.webshopbackend.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,11 +32,13 @@ public class OrderRowController {
 	OrderService orderService;
 
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@GetMapping("/get")
 	public List<OrderRow> getAllOrderRow() {
 		return orderRowService.getAllOrderRow();
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@GetMapping("/get/id")
 	public OrderRow getOrderRowById(Long id) {
 		return orderRowService.getOrderRowById(id);
@@ -55,22 +58,25 @@ public class OrderRowController {
 		}
 	}
 
-
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/id")
 	public void deleteOrderRowById(Long id) {
 		orderRowService.removeOrderRowsById(id);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/orderid")
 	public void deleteOrderRowsByOrderId(Long id) {
 		orderRowService.removeOrderRowsByOrderId(id);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/all")
 	public void deleteOrderRowList() {
 		orderRowService.removeOrderRows();
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@GetMapping("/get/byOrderID/{orderId}")
 	public List<OrderRow> getByOrderId(@PathVariable Long orderId) {
 		return orderRowService.getByOrderId(orderId);
