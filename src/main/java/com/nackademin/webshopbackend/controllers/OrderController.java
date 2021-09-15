@@ -6,6 +6,7 @@ import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,11 +27,13 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@GetMapping("/get")
 	public List<Orders> getAllOrders() {
 		return orderService.getAllOrders();
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@GetMapping("/get/id")
 	public Orders getOrdersById(@RequestParam Long id) {
 		return orderService.getOrderById(id);
@@ -50,16 +53,19 @@ public class OrderController {
 		return ResponseEntity.ok(o);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/add/list")
 	public List<Orders> addOrderList(@RequestBody List<Orders> orders) {
 		return orderService.addOrderList(orders);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/{id}")
 	public String deleteOrderById(@PathVariable Long id) {
 		return orderService.removeOrderById(id);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:delete')")
 	@PostMapping("/delete/all")
 	public String deleteAllOrders() {
 		return orderService.removeAllOrders();

@@ -43,8 +43,6 @@ class OrderServiceTest {
 	@Mock
 	private UserDAO userDAO;
 	@Mock
-	private EmailClient emailClient;
-	@Mock
 	private PaymentClient paymentClient;
 
 	@InjectMocks
@@ -73,25 +71,17 @@ class OrderServiceTest {
 			try {
 				Orders orderServiceReturnOrder = orderService.addOrder(order);
 
-
 				final ArgumentCaptor<EmailContent> emailContentCaptor = ArgumentCaptor.forClass(EmailContent.class);
 				final ArgumentCaptor<PaymentDto> paymentDtoCaptor = ArgumentCaptor.forClass(PaymentDto.class);
 
 				verify(userDAO, times(1)).findById(customerId);
 				verify(orderDAO, times(1)).save(order);
 				verify(paymentClient, times(1)).sendPayment(paymentDtoCaptor.capture());
-				verify(emailClient, times(1)).sendEmail(emailContentCaptor.capture());
 
 				final PaymentDto paymentDtoCaptorValues = paymentDtoCaptor.getValue();
-				final EmailContent emailContentCaptorValues = emailContentCaptor.getValue();
 
 				assertEquals(orderServiceReturnOrder.getId().toString(), paymentDtoCaptorValues.getReference());
 				assertEquals(orderServiceReturnOrder.getTotalPrice(), paymentDtoCaptorValues.getAmount());
-
-				assertEquals(customer.get().getEmail(), emailContentCaptorValues.getTo());
-				assertEquals("Order confirmation", emailContentCaptorValues.getSubject());
-				assertEquals(CONFIRMATION + orderServiceReturnOrder.getId(), emailContentCaptorValues.getBody());
-
 
 				assertEquals(order, orderServiceReturnOrder);
 				assertNotNull(orderServiceReturnOrder);
@@ -111,14 +101,10 @@ class OrderServiceTest {
 			});
 
 			assertEquals("Customer not found.", userNotFoundException.getMessage());
-			//assertThrows()
 
 			verify(userDAO, times(1)).findById(anyLong());
 			verify(orderDAO, times(0)).save(any());
 			verify(paymentClient, times(0)).sendPayment(any());
-			verify(emailClient, times(0)).sendEmail(any());
-
-
 		}
 	}
 
@@ -140,7 +126,6 @@ class OrderServiceTest {
 			assertEquals(expected, actual);
 			assertEquals(PAID, order.getStatus());
 			assertNotNull(actual);
-
 
 		}
 

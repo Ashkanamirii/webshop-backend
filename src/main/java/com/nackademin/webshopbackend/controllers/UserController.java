@@ -70,7 +70,7 @@ public class UserController {
 		return userService.getUserById(id);
 	}
 
-
+	@PreAuthorize("hasAnyAuthority('user:create')")
 	@PostMapping("/add")
 	public ResponseEntity<Users> addNewUser(@RequestBody Users user)
 			throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
@@ -86,12 +86,12 @@ public class UserController {
 	}
 
 	@DeleteMapping("/delete/{username}")
-	@PreAuthorize("hasAnyAuthority('user:delete')")
 	public ResponseEntity<HttpResponse> deleteUser(@PathVariable("username") String username) throws IOException {
 		userService.deleteUser(username);
 		return response(OK, USER_DELETED_SUCCESSFULLY);
 	}
 
+	@PreAuthorize("hasAnyAuthority('user:update')")
 	@GetMapping("/list")
 	public ResponseEntity<List<Users>> getAllUsers() {
 		List<Users> users = userService.getUsers();
