@@ -102,9 +102,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		address.setZipcode(user.getAddress().getZipcode());
 		u.setAddress(address);
 		userDAO.save(u);
-
+		try {
+			emailClient.sendEmail(new EmailContent(user.getEmail(),
+					"Register User", REGISTRATION));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		log.info("New  password: " + u.getPassword());
-		emailClient.sendEmail(new EmailContent(user.getEmail(), "Register User", REGISTRATION));
+
 		return u;
 
 	}
