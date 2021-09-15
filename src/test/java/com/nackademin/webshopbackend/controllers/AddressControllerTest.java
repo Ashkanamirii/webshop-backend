@@ -1,5 +1,6 @@
 package com.nackademin.webshopbackend.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nackademin.webshopbackend.domain.UserPrincipal;
 import com.nackademin.webshopbackend.exception.domain.EmailExistException;
 import com.nackademin.webshopbackend.exception.domain.NotAnImageFileException;
@@ -7,6 +8,7 @@ import com.nackademin.webshopbackend.exception.domain.UserNotFoundException;
 import com.nackademin.webshopbackend.exception.domain.UsernameExistException;
 import com.nackademin.webshopbackend.models.Address;
 import com.nackademin.webshopbackend.models.Users;
+import com.nackademin.webshopbackend.repos.AddressDAO;
 import com.nackademin.webshopbackend.services.AddressService;
 import com.nackademin.webshopbackend.services.UserService;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
@@ -17,11 +19,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.nackademin.webshopbackend.enumeration.Role.ROLE_SUPER_ADMIN;
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,6 +49,9 @@ class AddressControllerTest {
     MockMvc mockMvc;
 
     @Autowired
+    AddressDAO addressDAO;
+
+    @Autowired
     JWTTokenProvider jwtTokenProvider;
 
     @BeforeEach
@@ -59,13 +66,20 @@ class AddressControllerTest {
 
     @Nested()
     class GiveStatus2xx {
-        String json = "" +
-                "{\n" +
-                "\"id\": \"1\",\n" +
-                "\"street\": \"Torget 333\",\n" +
-                "\"city\": \"Botkyrka\",\n" +
-                "\"zipcode\": \"14555\"\n" +
-                "}";
+//        String json = "" +
+//                "{\n" +
+//                "\"id\": \"1\",\n" +
+//                "\"street\": \"Torget 333\",\n" +
+//                "\"city\": \"Botkyrka\",\n" +
+//                "\"zipcode\": \"14555\"\n" +
+//                "}";
+
+        String json = "{\n" +
+                "        \"street\": \"Torget 33\",\n" +
+                "        \"city\": \"Botkyrka\",\n" +
+                "        \"zipcode\": \"14555\"\n" +
+                "    }";
+
 
         @Test
         @DisplayName("Adding a list of addresses that should give status code 2xx")
@@ -92,16 +106,19 @@ class AddressControllerTest {
         }
 
         @Test
-        @DisplayName("Deleting one address that should give status code 2xx")
+        @DisplayName("Deleting one address that should give status code 2xx") // TODO fixa!!!
         void deleteAddressByIdGiveStatus200() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders
-                    .post("/address/add")
+            mockMvc.perform(MockMvcRequestBuilders.post("/address/add")
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(json));
+                    .content(json)).andExpect(status().is2xxSuccessful()).andReturn();
+
+            List<Address> adresses = addressDAO.findAll();
+
+            System.out.println("ADRESSER"+adresses);
 
             mockMvc.perform(MockMvcRequestBuilders
-                            .post("/address/delete/1")
+                            .post("/address/delete/"+adresses.get(0).getId())
                             .header("Authorization", "Bearer " + token))
                     .andExpect(status().is2xxSuccessful());
         }

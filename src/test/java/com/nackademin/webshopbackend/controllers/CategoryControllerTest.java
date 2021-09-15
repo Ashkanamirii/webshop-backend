@@ -5,6 +5,7 @@ import com.nackademin.webshopbackend.domain.UserPrincipal;
 import com.nackademin.webshopbackend.models.Address;
 import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.Users;
+import com.nackademin.webshopbackend.repos.CategoryDAO;
 import com.nackademin.webshopbackend.utility.JWTTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.nackademin.webshopbackend.enumeration.Role.ROLE_SUPER_ADMIN;
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +40,9 @@ class CategoryControllerTest {
 
     @Autowired
     JWTTokenProvider jwtTokenProvider;
+
+    @Autowired
+    CategoryDAO categoryDAO;
 
     @BeforeEach
     void init() {
@@ -148,23 +153,18 @@ class CategoryControllerTest {
 
         @Test
         void deleteCategoryByIdGiveStatus2xx() throws Exception{
+            json = "{\n" + "\"name\": \"Gröt\"\n" + "}";
+
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/category/add")
                     .header("Authorization", "Bearer " + token)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)).andExpect(status().is2xxSuccessful()).andReturn();
 
-//            String object = mvcResult.getResponse().getContentAsString();
+            List<Category> cat = categoryDAO.findAll();
 
-//            System.out.println("object = " + object);
-            Category cat = new ObjectMapper().readValue(json,Category.class);
-
-            System.out.println(cat.getId() + "********************* VÅRT ID ******************");
-
-            mockMvc.perform(MockMvcRequestBuilders.post("/category/delete/"+cat.getId())
+            mockMvc.perform(MockMvcRequestBuilders.post("/category/delete/"+cat.get(0).getId())
                     .header("Authorization", "Bearer " + token))
                     .andExpect(status().is2xxSuccessful());
         }
     }
-
-
 }
