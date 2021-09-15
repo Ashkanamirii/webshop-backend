@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Project: webshop-backend <br>
  */
 @DataJpaTest
-class OrderDAOTest {
+class ITOrderDAOTest {
 
     @Autowired
     OrderDAO orderDAO;
