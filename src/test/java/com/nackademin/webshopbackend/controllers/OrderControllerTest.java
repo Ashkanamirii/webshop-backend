@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDateTime;
 
+import static com.nackademin.webshopbackend.enumeration.Role.ROLE_SUPER_ADMIN;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,7 +57,7 @@ class OrderControllerTest {
 
     @BeforeEach
     void init() throws Exception {
-        user = new Users(1L, "test@test.com", "Test", "password", "Pelle", "Karlsson", "070-1234567", "ROLE_SUPER_ADMIN", new String[]{"ROLE_SUPER_ADMIN"},
+        user = new Users(1L, "test@test.com", "Test", "password", "Pelle", "Karlsson", "070-1234567", ROLE_SUPER_ADMIN.name(), ROLE_SUPER_ADMIN.getAuthorities(),
                 new Address(10L, "gatan 1", "12345", "Stockholm", LocalDateTime.now(), LocalDateTime.now()),
                 true, true, LocalDateTime.now(), LocalDateTime.now());
         UserPrincipal userPrincipal = new UserPrincipal(user);
@@ -73,19 +74,10 @@ class OrderControllerTest {
     @Test
     void addOrderShouldGiveStatus2xx() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/order/add")
-                //.header("Authorization", "Bearer " + token)
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonOrder)).andExpect(status()
                 .is2xxSuccessful());
     }
 
-/*    @Test
-    void addOrderShouldReturnCorrectOrderObject() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/order/add")
-                .header("Authorization", "Bearer " + token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonOrder))
-                .andExpect(status().is2xxSuccessful());
-
-    }*/
 }
