@@ -47,6 +47,7 @@ class ITOrderRowDAOTest {
     @AfterEach
     void clearDb() {
         orderRowDAO.deleteAll();
+        orderDAO.deleteAll();
     }
 
     @Test
