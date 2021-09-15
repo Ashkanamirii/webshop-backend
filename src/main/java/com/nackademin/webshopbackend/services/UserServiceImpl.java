@@ -197,14 +197,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		user.setPassword(encodePassword(newPassword));
 		userDAO.save(user);
 		log.info("New user password: " + newPassword);
-		//SEND EMAIL
+		emailClient.sendEmail(new EmailContent(user.getEmail(),
+				"Change password", "Your password has been updated successfully"));
 	}
 
 	/*
 	 * ************************************UTILS*****************************************************
 	 */
 
-	private String encodePassword(String password) {
+	public String encodePassword(String password) {
 		return passwordEncoder.encode(password);
 	}
 
@@ -224,7 +225,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return Role.valueOf(role.toUpperCase());
 	}
 
-	private Users validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
+	public Users validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
 			throws UserNotFoundException, UsernameExistException, EmailExistException {
 		Users userByNewUsername = findUserByUsername(newUsername);
 		Users userByNewEmail = findUserByEmail(newEmail);

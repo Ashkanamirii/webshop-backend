@@ -3,10 +3,30 @@ jwt:
   secret: s2meBcgRWnODgza34+abFcStUXx49Ozju+Pd532YT1mfDMS8/Twv6wnjhLHdUJBkwbRoWP+N0vlBw4hSmY2HZ/WJYNRyOzD5f0wr3J3gyZC5fiWgs5lEJcygzTEvTufmRWPB10A8Est3o6co0lxom0ALe4q/mAU3046lm4T0QXDlazelWHVRbaYg07cHQGiIBGNJzEdi8CvzlsU3ArNiYgPw2fIREMVDM5axmg==
   validMinutes: 10
 server:
-  port: 8082
+  port: 8085
 spring:
   datasource:
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
     username: sa
     password: sa
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    mvc:
+      throw-exception-if-no-handler-found: true
+      web:
+        resources:
+          add-mappings: false
+    rabbitmq:
+      host: stingray.rmq.cloudamqp.com
+      port: 5672
+      username: yfngzrvr
+      password: zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3
+      queue: payments
+      addresses: amqps://yfngzrvr:zJk-mAu-2qn8ET5Yn4KtzDYGLI5KtWE3@stingray.rmq.cloudamqp.com/yfngzrvr
