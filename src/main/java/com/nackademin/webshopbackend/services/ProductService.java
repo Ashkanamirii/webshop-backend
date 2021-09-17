@@ -105,8 +105,9 @@ public class ProductService {
 				list.add(orderRows.get(i));
 			}
 		}
+		if(price <= 250) price += 49;
 		if(price != o.getTotalPrice()){
-
+			orderDAO.deleteById(orderRows.get(0).getOrder().getId());
 			throw new Exception("Kvantitet måste vara heltal!");
 		}
 		return list;
