@@ -87,7 +87,9 @@ public class ProductService {
 			long id = orderRows.get(i).getProduct().getId();
 			Product product = productDAO.getOne(id);
 			// check price with DB
-			if (orderRows.get(i).getProduct().getPrice() != product.getPrice()) {
+			if (orderRows.get(i).getProduct().getPrice() != product.getPrice()
+			|| orderRows.get(i).getQuantity() <= 0
+			|| orderRows.get(i).getQuantity() % 1 != 0) {
 				orderDAO.deleteById(orderRows.get(i).getOrder().getId());
 				throw new Exception("Produkt data är korrumperad");
 			}
