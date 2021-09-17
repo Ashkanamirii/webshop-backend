@@ -47,9 +47,6 @@ public class OrderController {
 		} catch (UserNotFoundException userNotFoundException) {
 			return ResponseEntity.badRequest().body(userNotFoundException.getMessage());
 		}
-		if (o == null) {
-			return ResponseEntity.badRequest().body(new Exception("Hej"));
-		}
 		return ResponseEntity.ok(o);
 	}
 

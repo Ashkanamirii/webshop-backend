@@ -2,6 +2,7 @@ package com.nackademin.webshopbackend.services;
 
 import com.nackademin.webshopbackend.models.Category;
 import com.nackademin.webshopbackend.models.OrderRow;
+import com.nackademin.webshopbackend.models.Orders;
 import com.nackademin.webshopbackend.models.Product;
 import com.nackademin.webshopbackend.repos.OrderDAO;
 import com.nackademin.webshopbackend.repos.ProductDAO;
@@ -81,15 +82,17 @@ public class ProductService {
 
 	public List<OrderRow> checkQuantityAndPrice(List<OrderRow> orderRows) throws Exception {
 		List<OrderRow> list = new ArrayList<>();
+		Orders o = orderDAO.getOne(orderRows.get(0).getOrder().getId());
+		double price = 0;
 
 		// manuellt för att ändra orderRows till att bara felaktiga är kvar samt att lagerstatus hämtas från databasen.
 		for (int i = orderRows.size() - 1; i >= 0; i--) {
 			long id = orderRows.get(i).getProduct().getId();
 			Product product = productDAO.getOne(id);
+			price += product.getPrice() * orderRows.get(i).getQuantity();
 			// check price with DB
 			if (orderRows.get(i).getProduct().getPrice() != product.getPrice()
-			|| orderRows.get(i).getQuantity() <= 0
-			|| orderRows.get(i).getQuantity() % 1 != 0) {
+			|| orderRows.get(i).getQuantity() <= 0 ){
 				orderDAO.deleteById(orderRows.get(i).getOrder().getId());
 				throw new Exception("Produkt data är korrumperad");
 			}
@@ -101,6 +104,10 @@ public class ProductService {
 				orderRows.get(i).setProductPriceWhenOrdering(p.getPrice());
 				list.add(orderRows.get(i));
 			}
+		}
+		if(price != o.getTotalPrice()){
+
+			throw new Exception("Kvantitet måste vara heltal!");
 		}
 		return list;
 	}

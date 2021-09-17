@@ -69,18 +69,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurerAdapter() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**").allowedOrigins("*")
-//                        .allowedMethods("PUT", "DELETE","POST", "GET")
-//                        .allowedHeaders("Jwt-token", "Authorization")
-//                        .exposedHeaders("Jwt-token", "Authorization")
-//                        .allowCredentials(false).maxAge(3600);
-//            }
-//        };
-//    }
 }
